@@ -70,7 +70,7 @@ class QuizResultPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 Text("Percentage: $userPercentage%", style: titleMediumStyle),
                 const SizedBox(height: 40),
-          
+
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -79,19 +79,35 @@ class QuizResultPage extends StatelessWidget {
                       Get.offAllNamed(AppRoutes.home);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: skyColor,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
+                      elevation: 3,
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.black.withOpacity(0.2),
                     ),
-                    child: Text(
-                      userPercentage > 50 ? 'Play Again' : 'Try Again',
-                      style: bodyLargeStyle,
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [kLightGreen1, kDarkGreen2],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        alignment: Alignment.center,
+                        child: Text(
+                          userPercentage > 50 ? 'Play Again' : 'Try Again',
+                          style: bodyLargeStyle.copyWith(color: Colors.white),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                )
+
               ],
             ),
           ),

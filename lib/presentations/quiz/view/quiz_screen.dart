@@ -35,14 +35,18 @@ class QuizQuestionPage extends StatelessWidget {
 
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
-                decoration: const BoxDecoration(
-                  color: skyColor,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [kLightGreen1, kDarkGreen2],
+                    begin: Alignment.topRight,
+                    end: Alignment.topLeft,
+                ),
                 ),
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        //const Icon(Icons.arrow_back, color: Colors.white),
+
                         const SizedBox(width: 10),
                         Text(category, style: headlineSmallStyle),
                         const Spacer(),

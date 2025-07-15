@@ -4,10 +4,8 @@ import 'package:ai_app/presentations/pages.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ai_app/core/common_wgt/common.dart';
 
-
-import '../../quiz/controller/quiz_controller.dart';
-import '../../quiz/view/quiz_screen.dart';
 
 
 class HomePage extends GetView<HomeController> {
@@ -17,155 +15,163 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
+      body: SafeArea(
+        child: Column(
+          children: [
 
-          ClipPath(
-            clipper: BottomCurveClipper(),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [skyColor, skyColor],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+            ClipPath(
+              clipper: BottomCurveClipper(),
+              child: Stack(
+                children: [
+                  // Gradient Background
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          kLightGreen1,
+                          kDarkGreen2,
+                        ],
+                      ),
+                    ),
+                  ),
+
+
+                  Positioned(
+                    top: MediaQuery.of(context).size.height * 0.15,
+                    right: -80,
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kDarkGreen1.withOpacity(0.80),
+                      ),
+                    ),
+                  ),
+
+                  // Top-left Circle
+                  Positioned(
+                    top: MediaQuery.of(context).size.height * 0.02,
+                    left: -80,
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kDarkGreen1.withOpacity(0.35),
+                      ),
+                    ),
+                  ),
+
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: MediaQuery.of(context).size.height * 0.10,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            'QUIZ DUEL',
+                            style: headlineMediumStyle,
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'AI RIVAL',
+                            style: headlineSmallStyle,
+                          ),
+                          const SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/man-avatar_home_Screen.png',
+                                height: MediaQuery.of(context).size.height * 0.15,
+                              ),
+                              const SizedBox(width: 12),
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [kLightGreen1, kDarkGreen2],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: const Text(
+                                  'VS',
+                                  style: headlineSmallStyle,
+                                ),
+                              ),
+
+                              const SizedBox(width: 12),
+                              Image.asset(
+                                'assets/images/robot-assistant.png',
+                                height: MediaQuery.of(context).size.height * 0.15,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  childAspectRatio: 1.1,
+                  children: [
+                    CategoryTile(
+                      title: "General Knowledge",
+                      imagePath: "assets/images/general.png",
+                      color: skyColor,
+                    ),
+                    CategoryTile(
+                      title: "Science",
+                      imagePath: "assets/images/science.png",
+                      color: skyColor,
+                    ),
+                    CategoryTile(
+                      title: "History",
+                      imagePath: "assets/images/history.png",
+                      color: skyColor,
+                    ),
+                    CategoryTile(
+                      title: "Word Power",
+                      imagePath: "assets/images/word_power.png",
+                      color: skyColor,
+                    ),
+        
+        
+                  ],
                 ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 20),
-                  const Text(
-                    'QUIZ DUEL',
-                    style: headlineMediumStyle,
-                  ),
-                  const SizedBox(height: 6),
-                  const Text(
-                    'AI RIVAL',
-                    style: headlineSmallStyle,
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/man-avatar_home_Screen.png',
-                        height: 120,
-                      ),
-                      const SizedBox(width: 12),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: circleWhiteBorderDecoration,
-                        child: const Text(
-                          'VS',
-                          style: headlineSmallStyle,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Image.asset(
-                        'assets/images/robot-assistant.png',
-                        height: 120,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
             ),
-          ),
-
-
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  buildQuizButton("General Knowledge", onTap: () async {
-
-
-
-                    Get.dialog(
-                      const Center(child: CircularProgressIndicator()),
-                      barrierDismissible: false,
-                    );
-
-                    final controller = Get.put(QuizController());
-
-                    try {
-                      await controller.loadQuestions("General Knowledge");
-                      Get.back();
-                      Get.to(() => const QuizQuestionPage(category: "General Knowledge"));
-                    } catch (e) {
-                      Get.back();
-                      Get.snackbar("Error", e.toString());
-                    }
-                  }),
-
-
-
-
-
-
-                  buildQuizButton("Science", onTap: () async {
-
-                    Get.dialog(
-                      const Center(child: CircularProgressIndicator()),
-                      barrierDismissible: false,
-                    );
-
-                    final controller = Get.put(QuizController());
-
-                    try {
-                      await controller.loadQuestions("Science");
-                      Get.back();
-                      Get.to(() => const QuizQuestionPage(category: "Science"));
-                    } catch (e) {
-                      Get.back();
-                      Get.snackbar("Error", e.toString());
-                    }
-                  }),
-                  buildQuizButton("History", onTap: () async {
-
-                    Get.dialog(
-                      const Center(child: CircularProgressIndicator()),
-                      barrierDismissible: false,
-                    );
-
-                    final controller = Get.put(QuizController());
-
-                    try {
-                      await controller.loadQuestions("History");
-                      Get.back();
-                      Get.to(() => const QuizQuestionPage(category: "History"));
-                    } catch (e) {
-                      Get.back();
-                      Get.snackbar("Error", e.toString());
-                    }
-                  }),
-                  buildQuizButton("Word Power", onTap: () async {
-
-                    Get.dialog(
-                      const Center(child: CircularProgressIndicator()),
-                      barrierDismissible: false,
-                    );
-
-                    final controller = Get.put(QuizController());
-
-                    try {
-                      await controller.loadQuestions("Word Power");
-                      Get.back();
-                      Get.to(() => const QuizQuestionPage(category: "Word Power"));
-                    } catch (e) {
-                      Get.back();
-                      Get.snackbar("Error", e.toString());
-                    }
-                  }),
-                ],
-              ),
-            ),
-          ),
-        ],
+        
+          ],
+        ),
       ),
     );
   }
