@@ -1,0 +1,1 @@
+String global_key='Amhk9GcM4KM14dEXPQwrdVYC5FjwA8Ry';

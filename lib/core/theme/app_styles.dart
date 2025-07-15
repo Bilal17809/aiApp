@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../constant/constant.dart';
+import '../constants/constants.dart';
 import 'app_colors.dart';
 
 const TextStyle headlineMediumStyle = TextStyle(
   fontFamily: fontFamily,
   fontSize: 30,
   fontWeight: FontWeight.w700,
-  color: blackTextColor,
+  color: textWhiteColor,
 );
 const TextStyle headlineSmallStyle = TextStyle(
   fontFamily: fontFamily,
   fontSize: 24,
   fontWeight: FontWeight.w500,
-  color: blackTextColor,
+  color: textWhiteColor,
 );
 
 const TextStyle titleLargeStyle = TextStyle(
@@ -105,6 +105,21 @@ final BoxDecoration roundedGreenBorderDecoration = BoxDecoration(
   ),
 );
 
+final BoxDecoration roundedgreyBorderDecoration = BoxDecoration(
+  color: bgColor,
+  borderRadius: BorderRadius.circular(12),
+  border: Border.all(color: greyColor ),
+);
+
+final BoxDecoration circleWhiteBorderDecoration = BoxDecoration(
+  color: skyColor,
+  shape: BoxShape.circle,
+  border: Border.all(color: Colors.white, width: 2),
+
+);
+
+
+
 final BoxDecoration rounderGreyBorderDecoration = BoxDecoration(
   color: kWhite,
   borderRadius: BorderRadius.circular(12),
@@ -112,6 +127,14 @@ final BoxDecoration rounderGreyBorderDecoration = BoxDecoration(
     color: greyBorderColor,
   ),
 );
+
+final BoxDecoration circleAvatarDecoration =  BoxDecoration(
+  color: primaryColor,
+  shape: BoxShape.circle,
+  border: Border.all(color: Colors.white, width: 2),
+);
+
+
 
 final boxShadow = BoxShadow(
   color: Colors.grey.withValues(alpha: 0.2),
