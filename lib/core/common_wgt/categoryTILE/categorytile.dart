@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../presentations/quiz/controller/quiz_controller.dart';
-import '../../presentations/quiz/view/quiz_screen.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_styles.dart';
+import '../../../presentations/quiz/controller/quiz_controller.dart';
+import '../../../presentations/quiz/view/quiz_screen.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_styles.dart';
 class CategoryTile extends StatelessWidget {
   final String title;
   final String imagePath;
@@ -38,18 +38,18 @@ class CategoryTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-
           color: kWhite,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withAlpha(38),
+
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
           ],
         ),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(18),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -61,13 +61,17 @@ class CategoryTile extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0x99E8F5E9),
-                    Color(0x991B5E20)
+                    Color(0x26E8F5E9), // 15% opacity
+                    Color(0x261B5E20), // 15% opacity
+                    // Color(0x1AE8F5E9), //  @ 10%
+                    // Color(0x1A1B5E20),//  @ 10%
+                    // Color(0x33E8F5E9), // 20% opacity
+                    // Color(0x331B5E20), // 20% opacity
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-
                 ),
+
 
                 borderRadius: BorderRadius.circular(12),
 
@@ -78,7 +82,7 @@ class CategoryTile extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
 
             Text(
               title,

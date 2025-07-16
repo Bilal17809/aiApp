@@ -1,139 +1,220 @@
-import 'package:ai_app/core/theme/app_colors.dart';
-import 'package:ai_app/core/theme/app_styles.dart';
 import 'package:ai_app/presentations/pages.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ai_app/core/common_wgt/common.dart';
-
-
-
+import 'package:ai_app/core/common_wgt/CategoryTILE/categorytile.dart';
+import '../../../core/common_wgt/clippers/bottom_curve_clipper.dart';
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+   return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-
             ClipPath(
               clipper: BottomCurveClipper(),
-              child: Stack(
-                children: [
-                  // Gradient Background
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          kLightGreen1,
-                          kDarkGreen2,
-                        ],
-                      ),
-                    ),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF65DF94),
+                      Color(0xFF02A6A5),
+                    ],
                   ),
+                ),
+                child: Stack(
+                  children: [
+
+                    Positioned(
+                      top: MediaQuery.of(context).size.height * 0.02,
+                      left: -100,
+                      child: Opacity(
+                        opacity: 0.2,
+                        child: Container(
+                          width: 160,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xFF65DF94),
+                                Color(0xFF00ADA3),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withAlpha((0.2 * 255).round()),
 
 
-                  Positioned(
-                    top: MediaQuery.of(context).size.height * 0.15,
-                    right: -80,
-                    child: Container(
-                      width: 160,
-                      height: 160,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: kDarkGreen1.withOpacity(0.80),
-                      ),
-                    ),
-                  ),
-
-                  // Top-left Circle
-                  Positioned(
-                    top: MediaQuery.of(context).size.height * 0.02,
-                    left: -80,
-                    child: Container(
-                      width: 160,
-                      height: 160,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: kDarkGreen1.withOpacity(0.35),
-                      ),
-                    ),
-                  ),
-
-
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: MediaQuery.of(context).size.height * 0.10,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text(
-                            'QUIZ DUEL',
-                            style: headlineMediumStyle,
+                                blurRadius: 12,
+                                spreadRadius: 4,
+                                offset: Offset(0, 6),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'AI RIVAL',
-                            style: headlineSmallStyle,
+                        ),
+                      ),
+                    ),
+
+
+
+
+                    Positioned(
+                      top: MediaQuery.of(context).size.height * 0.15,
+                      right: -90,
+                      child: Opacity(
+                        opacity: 0.2,
+                        child: Container(
+                          width: 160,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xFF65DF94),
+                                Color(0xFF00ADA3),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withAlpha((0.2 * 255).round()),
+                                blurRadius: 12,
+                                spreadRadius: 4,
+                                offset: Offset(0, 6),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 30),
-                          Row(
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(80.0),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'QUIZ DUEL',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'AI RIVAL',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white70,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      top: (MediaQuery.of(context).size.height * 0.5) - 200,
+
+                      left: 0,
+                      right: 0,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          double totalWidth = constraints.maxWidth;
+                          double avatarWidth = totalWidth * 0.35;
+                          double vsSize = totalWidth * 0.20;
+
+                          return Row(
+
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                'assets/images/man-avatar_home_Screen.png',
-                                height: MediaQuery.of(context).size.height * 0.15,
+                              // Left Avatar
+                              ClipOval(
+                                child: Container(
+                                  width: avatarWidth,
+                                  height: avatarWidth,
+                                  color: Colors.white.withAlpha((0.2 * 255).round()),
+                                  child: Image.asset(
+                                    'assets/images/man-avatar_home_Screen.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
-                              const SizedBox(width: 12),
+
+                              SizedBox(width: totalWidth * 0.02),
+
+                              // VS Circle
                               Container(
-                                padding: const EdgeInsets.all(12),
+                                width: vsSize,
+                                height: vsSize,
+                                alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   gradient: LinearGradient(
-                                    colors: [kLightGreen1, kDarkGreen2],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
+                                    colors: [Color(0xFF65DF94), Color(0xFF00ADA3)],
                                   ),
                                   boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black26,
-                                      blurRadius: 4,
-                                      offset: Offset(0, 2),
+                                      blurRadius: 6,
+                                      offset: Offset(0, 3),
                                     ),
                                   ],
                                 ),
-                                child: const Text(
+                                child: Text(
                                   'VS',
-                                  style: headlineSmallStyle,
+                                  style: TextStyle(
+                                    fontSize: vsSize * 0.35,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontFamily: 'Poppins',
+                                  ),
                                 ),
                               ),
 
-                              const SizedBox(width: 12),
-                              Image.asset(
-                                'assets/images/robot-assistant.png',
-                                height: MediaQuery.of(context).size.height * 0.15,
+                              SizedBox(width: totalWidth * 0.02),
+
+                              // Right Avatar
+                              ClipOval(
+                                child: Container(
+                                  width: avatarWidth,
+                                  height: avatarWidth,
+                                  color: Colors.white.withAlpha((0.2 * 255).round()),
+                                  child: Image.asset(
+                                    'assets/images/robot-assistant.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                             ],
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     ),
-                  ),
-                ],
+
+
+                  ],
+                ),
               ),
             ),
 
+            // Expanded GridView section (unchanged)
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -146,75 +227,27 @@ class HomePage extends GetView<HomeController> {
                     CategoryTile(
                       title: "General Knowledge",
                       imagePath: "assets/images/general.png",
-                      color: skyColor,
                     ),
                     CategoryTile(
                       title: "Science",
                       imagePath: "assets/images/science.png",
-                      color: skyColor,
                     ),
                     CategoryTile(
                       title: "History",
                       imagePath: "assets/images/history.png",
-                      color: skyColor,
                     ),
                     CategoryTile(
                       title: "Word Power",
                       imagePath: "assets/images/word_power.png",
-                      color: skyColor,
                     ),
-        
-        
                   ],
                 ),
               ),
             ),
-        
           ],
         ),
       ),
     );
   }
-
-
-  Widget buildQuizButton(String label, {required VoidCallback onTap}) {
-    return SizedBox(
-      width: double.infinity,
-      height: 55,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 3,
-        ),
-        child: Text(
-          label,
-          style: buttonTextStyle,
-        ),
-      ),
-    );
-  }
 }
 
-
-class BottomCurveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0, size.height - 60);
-    path.quadraticBezierTo(
-      size.width / 2, size.height,
-      size.width, size.height - 60,
-    );
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/routes/app_routes.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_styles.dart';
 import '../controller/quiz_controller.dart';
 import 'package:lottie/lottie.dart';
@@ -85,12 +84,16 @@ class QuizResultPage extends StatelessWidget {
                       ),
                       elevation: 3,
                       backgroundColor: Colors.transparent,
-                      shadowColor: Colors.black.withOpacity(0.2),
-                    ),
+                      shadowColor:  Colors.white.withAlpha((0.2 * 255).round()),
+
+                ),
                     child: Ink(
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [kLightGreen1, kDarkGreen2],
+                          colors: [
+                            Color(0xFF02A6A5),
+                            Color(0xFF65DF94),
+                          ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),

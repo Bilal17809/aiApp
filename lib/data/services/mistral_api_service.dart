@@ -41,7 +41,7 @@ Output:
     if (res.statusCode != 200) {
       throw Exception('HTTP ${res.statusCode}: ${res.body}');
     }
-    print("1");
+
     final resp = jsonDecode(res.body);
     final raw = resp['choices'][0]['message']['content'] as String;
 
@@ -52,6 +52,7 @@ Output:
 
     final jsonString = match.group(0)!;
     final list = jsonDecode(jsonString) as List;
+
 
     return list.cast<Map<String, dynamic>>();
   }

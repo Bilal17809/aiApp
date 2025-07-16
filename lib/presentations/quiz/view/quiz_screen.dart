@@ -32,43 +32,153 @@ class QuizQuestionPage extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [kLightGreen1, kDarkGreen2],
-                    begin: Alignment.topRight,
-                    end: Alignment.topLeft,
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Color(0xFF02A6A5),
+                      Color(0xFF65DF94),
+                    ],
+                  ),
                 ),
-                ),
-                child: Column(
+                child: Stack(
                   children: [
-                    Row(
-                      children: [
+                    // Left circular decoration
+                    Positioned(
+                      top: 0,
+                      left: -50,
+                      child: Opacity(
+                        opacity: 0.3,
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xFF65DF94),
+                                Color(0xFF00ADA3),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withAlpha((0.2 * 255).round()),
+                                blurRadius: 12,
+                                spreadRadius: 4,
+                                offset: Offset(0, 6),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
 
-                        const SizedBox(width: 10),
-                        Text(category, style: headlineSmallStyle),
-                        const Spacer(),
-                        Text(
-                          "${controller.currentQuestionIndex.value + 1}/${controller.questions.length}",
-                          style: headlineSmallStyle,
+                    // Right circular decoration
+                    Positioned(
+                      top: 0,
+                      right: -50,
+                      child: Opacity(
+                        opacity: 0.3,
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xFF65DF94),
+                                Color(0xFF00ADA3),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withAlpha((0.2 * 255).round()),
+                                blurRadius: 12,
+                                spreadRadius: 4,
+                                offset: Offset(0, 6),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Main Content
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(width: 10),
+                            Text(category, style: headlineSmallStyle),
+                            const Spacer(),
+                            Text(
+                              "${controller.currentQuestionIndex.value + 1}/${controller.questions.length}",
+                              style: headlineSmallStyle,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        LinearProgressIndicator(
+                          value: (controller.currentQuestionIndex.value + 1) / controller.questions.length,
+                          backgroundColor: kBlue,
+                          color: kWhite,
+                          minHeight: 6,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    LinearProgressIndicator(
-                      value: (controller.currentQuestionIndex.value + 1) / controller.questions.length,
-                      backgroundColor: kBlue,
-                      color: kWhite,
-                      minHeight: 6,
-                    ),
                   ],
                 ),
-              ),
+              )
 
 
-              Padding(
+              // Container(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
+              //   decoration: BoxDecoration(
+              //     gradient: LinearGradient(
+              //       begin: Alignment.bottomCenter,
+              //       end: Alignment.topCenter,
+              //       colors: [
+              //
+              //         Color(0xFF02A6A5),
+              //         Color(0xFF65DF94),
+              //
+              //     ]
+              //     ),
+              //   ),
+              //   child: Column(
+              //     children: [
+              //       Row(
+              //         children: [
+              //
+              //           const SizedBox(width: 10),
+              //           Text(category, style: headlineSmallStyle),
+              //           const Spacer(),
+              //           Text(
+              //             "${controller.currentQuestionIndex.value + 1}/${controller.questions.length}",
+              //             style: headlineSmallStyle,
+              //           ),
+              //         ],
+              //       ),
+              //       const SizedBox(height: 10),
+              //       LinearProgressIndicator(
+              //         value: (controller.currentQuestionIndex.value + 1) / controller.questions.length,
+              //         backgroundColor: kBlue,
+              //         color: kWhite,
+              //         minHeight: 6,
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
+
+              ,Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
