@@ -24,7 +24,6 @@ class QuizResultPage extends StatelessWidget {
 
     final double screenHeight = MediaQuery.of(context).size.height;
     final double imageHeight =  userPercentage > 50?screenHeight * 0.4:screenHeight*0.3;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -59,18 +58,14 @@ class QuizResultPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 30),
-
-
                 Lottie.asset(
                   resultImage,
                   height: imageHeight,
                   fit: BoxFit.contain,
                 ),
-          
                 const SizedBox(height: 30),
                 Text("Percentage: $userPercentage%", style: titleMediumStyle),
                 const SizedBox(height: 40),
-
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -104,7 +99,6 @@ class QuizResultPage extends StatelessWidget {
                     ),
                   ),
                 )
-
               ],
             ),
           ),

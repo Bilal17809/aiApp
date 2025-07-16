@@ -13,19 +13,20 @@ class NetworkUtils {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => AlertDialog(
-        title: const Text("No Internet"),
-        content: const Text("Please connect to the internet to continue."),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              checkInternet(context);
-            },
-            child: const Text("Retry"),
+      builder:
+          (_) => AlertDialog(
+            title: const Text("No Internet"),
+            content: const Text("Please connect to the internet to continue."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  checkInternet(context);
+                },
+                child: const Text("Retry"),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }

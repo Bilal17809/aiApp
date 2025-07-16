@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:ai_app/presentations/pages.dart';
 import '../../home/controller/home_contrl.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +16,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       NetworkUtils.checkInternet(context);
-
     });
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -27,24 +24,15 @@ class HomePage extends GetView<HomeController> {
             ClipPath(
               clipper: BottomCurveClipper(),
               child: Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.5,
-                decoration: BoxDecoration(
-                    color: skyColor
-                ),
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: BoxDecoration(color: skyColor),
                 child: Stack(
                   children: [
-
-
                     Padding(
-
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.12,
                         vertical: MediaQuery.of(context).size.height * 0.04,
                       ),
-
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: Column(
@@ -70,7 +58,6 @@ class HomePage extends GetView<HomeController> {
                               ),
                             ),
                             const SizedBox(height: 40),
-
                           ],
                         ),
                       ),
@@ -82,9 +69,9 @@ class HomePage extends GetView<HomeController> {
                       child: Center(
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            final double imageSize = constraints.maxWidth * 0.90;
+                            final double imageSize =
+                                constraints.maxWidth * 0.90;
                             final double vsOffset = imageSize * 0.25;
-
 
                             return Stack(
                               alignment: Alignment.center,
@@ -92,12 +79,14 @@ class HomePage extends GetView<HomeController> {
                                 Stack(
                                   alignment: Alignment.center,
                                   children: [
-
                                     Positioned(
                                       top: 4,
                                       left: 4,
                                       child: ImageFiltered(
-                                        imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                                        imageFilter: ImageFilter.blur(
+                                          sigmaX: 8,
+                                          sigmaY: 8,
+                                        ),
                                         child: Image.asset(
                                           'assets/images/person_robot.png',
                                           width: imageSize,
@@ -108,7 +97,6 @@ class HomePage extends GetView<HomeController> {
                                         ),
                                       ),
                                     ),
-
 
                                     Image.asset(
                                       'assets/images/person_robot.png',
@@ -126,7 +114,10 @@ class HomePage extends GetView<HomeController> {
                                     decoration: BoxDecoration(
                                       color: skyColor,
                                       shape: BoxShape.circle,
-                                      border: Border.all(color: Colors.white, width: 2),
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
                                       boxShadow: const [
                                         BoxShadow(
                                           color: Colors.black26,
@@ -152,21 +143,16 @@ class HomePage extends GetView<HomeController> {
                         ),
                       ),
                     ),
-
-
-
-
-
                   ],
                 ),
               ),
             ),
-
-
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: 20),
+                  horizontal: 16,
+                  vertical: 20,
+                ),
                 child: GridView.count(
                   crossAxisCount: 2,
                   mainAxisSpacing: 16,
@@ -200,9 +186,7 @@ class HomePage extends GetView<HomeController> {
   }
 }
 
-
-
-class _CategoryTile extends StatelessWidget{
+class _CategoryTile extends StatelessWidget {
   final String title;
   final String imagePath;
   final Color? color;
@@ -218,8 +202,6 @@ class _CategoryTile extends StatelessWidget{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-
-
         final controller = Get.put(QuizController());
         if (controller.isLoading.value) return;
 
@@ -249,7 +231,6 @@ class _CategoryTile extends StatelessWidget{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             Container(
               height: 70,
               width: 70,
@@ -257,14 +238,9 @@ class _CategoryTile extends StatelessWidget{
               decoration: BoxDecoration(
                 color: skyColor.withAlpha(60),
 
-
                 borderRadius: BorderRadius.circular(12),
-
               ),
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.contain,
-              ),
+              child: Image.asset(imagePath, fit: BoxFit.contain),
             ),
 
             const SizedBox(height: 8),
@@ -282,10 +258,6 @@ class _CategoryTile extends StatelessWidget{
           ],
         ),
       ),
-
     );
   }
 }
-
-
-

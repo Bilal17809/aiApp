@@ -8,11 +8,11 @@ import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
 
 void main() {
-
   Get.put(QuizController());
 
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.home,
-      getPages:appPages,
+      getPages: appPages,
     );
   }
 }

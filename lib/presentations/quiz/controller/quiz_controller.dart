@@ -19,17 +19,11 @@ class QuizController extends GetxController {
   final RxInt currentQuestionIndex = 0.obs;
   final RxBool isLoading = false.obs;
   final RxInt selectedIndex = (-1).obs;
-
-
-
-
   final RxInt userScore = 0.obs;
   final RxInt aiScore = 0.obs;
   final RxInt wrongAnswersCount = 0.obs;
   final RxBool aiShouldHelp = false.obs;
   final RxString aiMessage = ''.obs;
-
-
   Future<void> loadQuestions(String category) async {
     if (isLoading.value) return;
     isLoading.value = true;
@@ -41,11 +35,6 @@ class QuizController extends GetxController {
     currentQuestionIndex.value = 0;
     wrongAnswersCount.value=0;
     aiShouldHelp.value=false;
-
-
-
-
-
     try {
       final questionsList = await MistralApiService.fetchQuestions(category, 5);
 
@@ -60,10 +49,6 @@ class QuizController extends GetxController {
       isLoading.value = false;
     }
   }
-
-
-  
-
   void nextQuestion() {
     aiMessage.value = '';
 
@@ -75,7 +60,6 @@ class QuizController extends GetxController {
 
     }
   }
-
   void resetQuiz() {
     questions.clear();
     currentQuestionIndex.value = 0;
@@ -124,7 +108,4 @@ class QuizController extends GetxController {
 
     Future.delayed(const Duration(seconds: 2), nextQuestion);
   }
-
-
-
 }

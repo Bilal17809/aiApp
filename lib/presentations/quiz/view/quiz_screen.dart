@@ -14,9 +14,7 @@ class QuizQuestionPage extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        );
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
       }
 
       if (controller.questions.isEmpty) {
@@ -25,7 +23,8 @@ class QuizQuestionPage extends StatelessWidget {
         );
       }
 
-      final question = controller.questions[controller.currentQuestionIndex.value];
+      final question =
+          controller.questions[controller.currentQuestionIndex.value];
 
       return Scaffold(
         backgroundColor: Colors.white,
@@ -33,10 +32,11 @@ class QuizQuestionPage extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
-                decoration: const BoxDecoration(
-                  color: skyColor
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 30,
                 ),
+                decoration: const BoxDecoration(color: skyColor),
                 child: Column(
                   children: [
                     Row(
@@ -52,7 +52,9 @@ class QuizQuestionPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     LinearProgressIndicator(
-                      value: (controller.currentQuestionIndex.value + 1) / controller.questions.length,
+                      value:
+                          (controller.currentQuestionIndex.value + 1) /
+                          controller.questions.length,
                       backgroundColor: kBlue,
                       color: kWhite,
                       minHeight: 6,
@@ -61,7 +63,10 @@ class QuizQuestionPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -84,17 +89,22 @@ class QuizQuestionPage extends StatelessWidget {
                       ],
                     ),
                     Flexible(
-                      child: Obx(() => Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: roundedDecoration,
-                        child: Text(
-                          controller.aiMessage.value,
-                          style: bodyMediumStyle,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2, // optional: limit to 2 lines
+                      child: Obx(
+                        () => Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: roundedDecoration,
+                          child: Text(
+                            controller.aiMessage.value,
+                            style: bodyMediumStyle,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2, // optional: limit to 2 lines
+                          ),
                         ),
-                      )),
+                      ),
                     ),
 
                     Column(
@@ -120,19 +130,22 @@ class QuizQuestionPage extends StatelessWidget {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Text(question.question, style: titleLargeStyle),
                       const SizedBox(height: 30),
 
-
                       ...List.generate(question.options.length, (index) {
-                        final isSelected = controller.selectedIndex.value == index;
+                        final isSelected =
+                            controller.selectedIndex.value == index;
                         final isCorrect = index == question.answerIndex;
-                        final hasAnswered = controller.selectedIndex.value != -1;
+                        final hasAnswered =
+                            controller.selectedIndex.value != -1;
 
                         Color bgColor = kWhite;
                         Widget? trailingIcon;
@@ -140,10 +153,16 @@ class QuizQuestionPage extends StatelessWidget {
                         if (hasAnswered) {
                           if (isSelected && isCorrect) {
                             bgColor = kLightGreen1;
-                            trailingIcon = const Icon(Icons.check, color: Colors.green);
+                            trailingIcon = const Icon(
+                              Icons.check,
+                              color: Colors.green,
+                            );
                           } else if (isSelected && !isCorrect) {
                             bgColor = kLightRed;
-                            trailingIcon = const Icon(Icons.close, color: Colors.red);
+                            trailingIcon = const Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            );
                           }
                         }
 
@@ -151,18 +170,29 @@ class QuizQuestionPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             GestureDetector(
-                              onTap: !hasAnswered
-                                  ? () => controller.selectAnswer(index)
-                                  : null,
+                              onTap:
+                                  !hasAnswered
+                                      ? () => controller.selectAnswer(index)
+                                      : null,
                               child: Container(
                                 width: double.infinity,
                                 margin: const EdgeInsets.only(bottom: 14),
-                                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-                                decoration: roundedgreyBorderDecoration.copyWith(color: bgColor),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                  horizontal: 20,
+                                ),
+                                decoration: roundedgreyBorderDecoration
+                                    .copyWith(color: bgColor),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Flexible(child: Text(question.options[index], style: titleSmallStyle)),
+                                    Flexible(
+                                      child: Text(
+                                        question.options[index],
+                                        style: titleSmallStyle,
+                                      ),
+                                    ),
                                     if (trailingIcon != null) trailingIcon,
                                   ],
                                 ),
@@ -171,11 +201,15 @@ class QuizQuestionPage extends StatelessWidget {
 
                             if (isSelected && hasAnswered)
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 8, left: 12),
+                                padding: const EdgeInsets.only(
+                                  bottom: 8,
+                                  left: 12,
+                                ),
                                 child: Text(
                                   isCorrect ? "Correct ✅" : "Wrong ❌",
                                   style: TextStyle(
-                                    color: isCorrect ? Colors.green : Colors.red,
+                                    color:
+                                        isCorrect ? Colors.green : Colors.red,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
@@ -188,8 +222,7 @@ class QuizQuestionPage extends StatelessWidget {
                   ),
                 ),
               ),
-
-            ]
+            ],
           ),
         ),
       );
