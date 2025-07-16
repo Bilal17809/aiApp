@@ -1,3 +1,4 @@
+import 'package:ai_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/routes/app_routes.dart';
@@ -89,14 +90,7 @@ class QuizResultPage extends StatelessWidget {
                 ),
                     child: Ink(
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF02A6A5),
-                            Color(0xFF65DF94),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        color: skyColor,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Container(

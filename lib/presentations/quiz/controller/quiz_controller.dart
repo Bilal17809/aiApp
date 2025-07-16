@@ -17,8 +17,11 @@ class QuizQuestion {
 class QuizController extends GetxController {
   final RxList<QuizQuestion> questions = <QuizQuestion>[].obs;
   final RxInt currentQuestionIndex = 0.obs;
-  final RxBool isLoading = true.obs;
+  final RxBool isLoading = false.obs;
   final RxInt selectedIndex = (-1).obs;
+
+
+
 
   final RxInt userScore = 0.obs;
   final RxInt aiScore = 0.obs;
@@ -28,12 +31,18 @@ class QuizController extends GetxController {
 
 
   Future<void> loadQuestions(String category) async {
+    if (isLoading.value) return;
     isLoading.value = true;
+
     questions.clear();
     selectedIndex.value = -1;
     userScore.value = 0;
     aiScore.value = 0;
     currentQuestionIndex.value = 0;
+    wrongAnswersCount.value=0;
+    aiShouldHelp.value=false;
+
+
 
 
 
@@ -71,6 +80,7 @@ class QuizController extends GetxController {
     questions.clear();
     currentQuestionIndex.value = 0;
     userScore.value = 0;
+    wrongAnswersCount.value=0;
     aiScore.value = 0;
     selectedIndex.value = -1;
     isLoading.value = false;
