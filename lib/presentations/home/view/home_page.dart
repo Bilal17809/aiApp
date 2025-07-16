@@ -81,85 +81,21 @@ class HomePage extends GetView<HomeController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  buildQuizButton("General Knowledge", onTap: () async {
-
-
-
-                    Get.dialog(
-                      const Center(child: CircularProgressIndicator()),
-                      barrierDismissible: false,
-                    );
-
+                  buildQuizButton("General Knowledge",
+                      onTap: () async {
                     final controller = Get.put(QuizController());
+                    Get.to(() => const QuizQuestionPage(category: "General Knowledge"));
+                      }),
 
-                    try {
-                      await controller.loadQuestions("General Knowledge");
-                      Get.back();
-                      Get.to(() => const QuizQuestionPage(category: "General Knowledge"));
-                    } catch (e) {
-                      Get.back();
-                      Get.snackbar("Error", e.toString());
-                    }
-                  }),
-
-
-
-
-
-
-                  buildQuizButton("Science", onTap: () async {
-
-                    Get.dialog(
-                      const Center(child: CircularProgressIndicator()),
-                      barrierDismissible: false,
-                    );
-
-                    final controller = Get.put(QuizController());
-
-                    try {
-                      await controller.loadQuestions("Science");
-                      Get.back();
-                      Get.to(() => const QuizQuestionPage(category: "Science"));
-                    } catch (e) {
-                      Get.back();
-                      Get.snackbar("Error", e.toString());
-                    }
+                  buildQuizButton("Science",
+                      onTap: () async {
+                        Get.to(() => const QuizQuestionPage(category: "Science"));
                   }),
                   buildQuizButton("History", onTap: () async {
-
-                    Get.dialog(
-                      const Center(child: CircularProgressIndicator()),
-                      barrierDismissible: false,
-                    );
-
-                    final controller = Get.put(QuizController());
-
-                    try {
-                      await controller.loadQuestions("History");
-                      Get.back();
-                      Get.to(() => const QuizQuestionPage(category: "History"));
-                    } catch (e) {
-                      Get.back();
-                      Get.snackbar("Error", e.toString());
-                    }
+                    Get.to(() => const QuizQuestionPage(category: "History"));
                   }),
                   buildQuizButton("Word Power", onTap: () async {
-
-                    Get.dialog(
-                      const Center(child: CircularProgressIndicator()),
-                      barrierDismissible: false,
-                    );
-
-                    final controller = Get.put(QuizController());
-
-                    try {
-                      await controller.loadQuestions("Word Power");
-                      Get.back();
-                      Get.to(() => const QuizQuestionPage(category: "Word Power"));
-                    } catch (e) {
-                      Get.back();
-                      Get.snackbar("Error", e.toString());
-                    }
+                    Get.to(() => const QuizQuestionPage(category: "Word Power"));
                   }),
                 ],
               ),
@@ -172,25 +108,6 @@ class HomePage extends GetView<HomeController> {
 
 
   Widget buildQuizButton(String label, {required VoidCallback onTap}) {
-    return SizedBox(
-      width: double.infinity,
-      height: 55,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 3,
-        ),
-        child: Text(
-          label,
-          style: buttonTextStyle,
-        ),
-      ),
-    );
   }
 }
 
@@ -211,4 +128,35 @@ class BottomCurveClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+
+
+class _CardClass extends StatelessWidget {
+  final String label
+  final callback;
+  const _CardClass({super.key,required this.label,required VoidCallback onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return  SizedBox(
+      width: double.infinity,
+      height: 55,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 3,
+        ),
+        child: Text(
+          label,
+          style: buttonTextStyle,
+        ),
+      ),
+    );
+  }
 }

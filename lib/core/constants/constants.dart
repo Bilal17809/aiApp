@@ -1,2 +1,2 @@
-const fontFamily='Montserrat';
-const double bodyHp=16.0;
+const fontFamily = 'Montserrat';
+const double kBodyHp=16;
