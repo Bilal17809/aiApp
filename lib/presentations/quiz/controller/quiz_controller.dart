@@ -123,6 +123,9 @@ class QuizController extends GetxController {
       }
     }
 
+    // yjjjjjjjjjjjjjj
+    // jjjjjjjjjjhhhhhhhh
+
     Future.delayed(const Duration(seconds: 3), checkAndFinishQuiz);
   }
 }
