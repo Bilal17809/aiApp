@@ -1,6 +1,7 @@
 import 'package:ai_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/constants.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import '../controller/quiz_controller.dart';
@@ -12,18 +13,12 @@ class QuizResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<QuizController>();
-    final int userScore = controller.userScore.value;
-    final int aiScore = controller.aiScore.value;
-    final int totalQuestions = controller.questions.length;
-    final int userPercentage =
-    ((userScore / (totalQuestions * 10)) * 100).round();
-
-    final String resultImage = userPercentage > 50
+    final String resultImage = ((controller.userScore.value / (controller.questions.length * 10)) * 100).round()> 50
         ? 'assets/images/Winner.json'
         : 'assets/images/Error_Occurred!.json';
 
     final double screenHeight = MediaQuery.of(context).size.height;
-    final double imageHeight =  userPercentage > 50?screenHeight * 0.4:screenHeight*0.3;
+    final double imageHeight =  ((controller.userScore.value / (controller.questions.length * 10)) * 100).round() > 50?screenHeight * 0.4:screenHeight*0.3;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -44,7 +39,7 @@ class QuizResultPage extends StatelessWidget {
                     _scoreCard(
                       title: 'You',
                       image: 'assets/images/man-avatar_home_Screen.png',
-                      score: userScore,
+                      score: controller.userScore.value,
                     ),
                     const Text(
                       'VS',
@@ -53,7 +48,7 @@ class QuizResultPage extends StatelessWidget {
                     _scoreCard(
                       title: 'AI',
                       image: 'assets/images/robot-assistant.png',
-                      score: aiScore,
+                      score: controller.aiScore.value,
                     ),
                   ],
                 ),
@@ -63,9 +58,16 @@ class QuizResultPage extends StatelessWidget {
                   height: imageHeight,
                   fit: BoxFit.contain,
                 ),
-                const SizedBox(height: 30),
-                Text("Percentage: $userPercentage%", style: titleMediumStyle),
+                /*
+                use mobile height and width like mediaQuery
+                */
+                SizedBox(height: mobileHeight(context)*0.02),
+                Text("Percentage: ${((controller.userScore.value / (controller.questions.length * 10)) * 100).round()}%", style: titleMediumStyle),
                 const SizedBox(height: 40),
+                /*
+                create file for button inside the common
+                keep less and clean code here
+                */
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -92,7 +94,7 @@ class QuizResultPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         alignment: Alignment.center,
                         child: Text(
-                          userPercentage > 50 ? 'Play Again' : 'Try Again',
+                          ((controller.userScore.value / (controller.questions.length * 10)) * 100).round() > 50 ? 'Play Again' : 'Try Again',
                           style: bodyLargeStyle.copyWith(color: Colors.white),
                         ),
                       ),

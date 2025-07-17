@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import '../../../core/common_wgt/bottom_curve_clipper.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_styles.dart';
-import '../../quiz/controller/quiz_controller.dart';
 import '../../quiz/view/quiz_screen.dart';
 import 'package:ai_app/core/utils/network_utils.dart';
 
@@ -202,17 +201,10 @@ class _CategoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final controller = Get.put(QuizController());
-        if (controller.isLoading.value) return;
 
-        try {
-          await controller.loadQuestions(title);
-          Get.back();
-          Get.to(() => QuizQuestionPage(category: title));
-        } catch (e) {
-          Get.back();
-          Get.snackbar("Error", e.toString());
-        }
+        Get.to(() => QuizQuestionPage(category: title));
+
+
       },
       child: Container(
         decoration: BoxDecoration(
