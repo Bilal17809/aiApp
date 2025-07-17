@@ -3,19 +3,8 @@ import 'package:ai_app/data/services/mistral_api_service.dart';
 
 import '../view/quiz_result_page.dart';
 
-class QuizQuestion {
-  final String question;
-  final List<String> options;
-  final int answerIndex;
-
-  QuizQuestion({
-    required this.question,
-    required this.options,
-    required this.answerIndex,
-  });
-}
 class QuizController extends GetxController {
-  final RxList<QuizQuestion> questions = <QuizQuestion>[].obs;
+  final RxList<_QuizQuestion> questions = <_QuizQuestion>[].obs;
   final RxInt currentQuestionIndex = 0.obs;
   final RxBool isLoading = false.obs;
   final RxInt selectedIndex = (-1).obs;
@@ -24,10 +13,17 @@ class QuizController extends GetxController {
   final RxInt wrongAnswersCount = 0.obs;
   final RxBool aiShouldHelp = false.obs;
   final RxString aiMessage = ''.obs;
+
+
+  @override
+  void onInit() {
+    super.onInit();
+
+  }
+
   Future<void> loadQuestions(String category) async {
     if (isLoading.value) return;
     isLoading.value = true;
-
     questions.clear();
     selectedIndex.value = -1;
     userScore.value = 0;
@@ -36,9 +32,8 @@ class QuizController extends GetxController {
     wrongAnswersCount.value=0;
     aiShouldHelp.value=false;
     try {
-      final questionsList = await MistralApiService.fetchQuestions(category, 5);
-
-      questions.assignAll(questionsList.map((q) => QuizQuestion(
+      final questionsList = await MistralApiService.fetchQuestions(category,1);
+      questions.assignAll(questionsList.map((q) => _QuizQuestion(
         question: q['question'],
         options: List<String>.from(q['options']),
         answerIndex: q['answer'],
@@ -56,6 +51,10 @@ class QuizController extends GetxController {
       currentQuestionIndex.value++;
       selectedIndex.value = -1;
     } else {
+      /*
+      Navigation always inside ui user
+      will be navigae from ui not from controller
+      */
       Get.off(() => const QuizResultPage());
 
     }
@@ -91,6 +90,12 @@ class QuizController extends GetxController {
         wrongAnswersCount.value++;
         aiScore.value += 10;
         final messageIndex = (wrongAnswersCount.value - 1).clamp(0, 3);
+
+        /*
+        create a separate file give more and more
+        concise show more messages
+        */
+
         aiMessage.value = [
           "Hmm... interesting choice 😅",
           "You sure about that? 🤔",
@@ -104,8 +109,20 @@ class QuizController extends GetxController {
         }
       }
     }
-
-
     Future.delayed(const Duration(seconds: 2), nextQuestion);
   }
+}
+
+
+
+class _QuizQuestion {
+  final String question;
+  final List<String> options;
+  final int answerIndex;
+
+  _QuizQuestion({
+    required this.question,
+    required this.options,
+    required this.answerIndex,
+  });
 }

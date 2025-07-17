@@ -202,17 +202,22 @@ class _CategoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final controller = Get.put(QuizController());
-        if (controller.isLoading.value) return;
+        print("########### click successfully");
+        /*
+        still use try and catch in ui ??????
+        don't use it here..... this is repeated
+        */
+        // final controller = Get.put(QuizController());
+        // if (controller.isLoading.value) return;
+        Get.to(() => QuizQuestionPage(category: title));
 
-        try {
-          await controller.loadQuestions(title);
-          Get.back();
-          Get.to(() => QuizQuestionPage(category: title));
-        } catch (e) {
-          Get.back();
-          Get.snackbar("Error", e.toString());
-        }
+        // try {
+        //   // await controller.loadQuestions(title);
+        //   // Get.back();
+        // } catch (e) {
+        //   Get.back();
+        //   Get.snackbar("Error", e.toString());
+        // }
       },
       child: Container(
         decoration: BoxDecoration(

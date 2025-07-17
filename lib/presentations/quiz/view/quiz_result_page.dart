@@ -1,6 +1,7 @@
 import 'package:ai_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/constants.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import '../controller/quiz_controller.dart';
@@ -12,6 +13,11 @@ class QuizResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<QuizController>();
+
+    /*
+    hit all these directly from controller
+    don't define variable here / this is ui
+    */
     final int userScore = controller.userScore.value;
     final int aiScore = controller.aiScore.value;
     final int totalQuestions = controller.questions.length;
@@ -63,9 +69,16 @@ class QuizResultPage extends StatelessWidget {
                   height: imageHeight,
                   fit: BoxFit.contain,
                 ),
-                const SizedBox(height: 30),
+                /*
+                use mobile height and width like mediaQuery
+                */
+                SizedBox(height: mobileHeight(context)*0.02),
                 Text("Percentage: $userPercentage%", style: titleMediumStyle),
                 const SizedBox(height: 40),
+                /*
+                create file for button inside the common
+                keep less and clean code here
+                */
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

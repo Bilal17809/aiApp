@@ -4,14 +4,23 @@ import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controller/quiz_controller.dart';
 
-class QuizQuestionPage extends StatelessWidget {
+class QuizQuestionPage extends StatefulWidget {
   final String category;
   const QuizQuestionPage({super.key, required this.category});
 
   @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<QuizController>();
+  State<QuizQuestionPage> createState() => _QuizQuestionPageState();
+}
 
+class _QuizQuestionPageState extends State<QuizQuestionPage> {
+  final controller = Get.find<QuizController>();
+@override
+  void initState() {
+  controller.loadQuestions(widget.category);
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
         return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -42,7 +51,7 @@ class QuizQuestionPage extends StatelessWidget {
                     Row(
                       children: [
                         const SizedBox(width: 10),
-                        Text(category, style: headlineSmallStyle),
+                        Text(widget.category, style: headlineSmallStyle),
                         const Spacer(),
                         Text(
                           "${controller.currentQuestionIndex.value + 1}/${controller.questions.length}",
