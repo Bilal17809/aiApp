@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:ai_app/data/services/mistral_api_service.dart';
+import 'package:ai_app/data/services/api_service.dart';
 
 import '../view/quiz_result_page.dart';
 
@@ -36,7 +36,7 @@ class QuizController extends GetxController {
     wrongAnswersCount.value=0;
     aiShouldHelp.value=false;
     try {
-      final questionsList = await MistralApiService.fetchQuestions(category, 5);
+      final questionsList = await ApiService.fetchQuestions(category, 5);
 
       questions.assignAll(questionsList.map((q) => QuizQuestion(
         question: q['question'],
