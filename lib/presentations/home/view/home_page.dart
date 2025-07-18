@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:ai_app/presentations/pages.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import '../../../Banner/interstitial_ad_controller.dart';
+
+import '../../Banner/banner_ad_controller.dart';
+import '../../Banner/interstitial_ad_controller.dart';
 import '../../Drawer/view/customdrawer.dart';
 import '../../home/controller/home_contrl.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../quiz/view/quiz_screen.dart';
 import 'package:ai_app/core/utils/network_utils.dart';
-import '../../../Banner/banner_ad_controller.dart';
+
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
