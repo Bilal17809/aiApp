@@ -10,5 +10,10 @@ class SoundPlayer {
     } catch (e) {
 
     }
+
+  }
+
+  static Future<void> stop() async {
+    await _player.stop();
   }
 }

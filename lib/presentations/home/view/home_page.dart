@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:ai_app/presentations/pages.dart';
+import '../../Drawer/view/customdrawer.dart';
 import '../../home/controller/home_contrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,16 +18,32 @@ class HomePage extends GetView<HomeController> {
       NetworkUtils.checkInternet(context);
     });
     return Scaffold(
+      drawer: const CustomDrawer(),
+      extendBodyBehindAppBar: true,
       body: SafeArea(
         child: Column(
           children: [
+        
+        
             ClipPath(
               clipper: BottomCurveClipper(),
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.5,
-                decoration: BoxDecoration(color: skyColor),
+                color: skyColor,
                 child: Stack(
                   children: [
+                    Positioned(
+
+                      left: 8,
+                      child: Builder(
+                        builder: (context) => IconButton(
+                          icon: const Icon(Icons.menu, color: Colors.white),
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.12,
@@ -37,24 +54,15 @@ class HomePage extends GetView<HomeController> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+        
                             Text(
                               'QUIZ DUEL',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontFamily: 'Poppins',
-                              ),
+                              style: headlineMediumStyle
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'AI RIVAL',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white70,
-                                fontFamily: 'Poppins',
-                              ),
+                              style: titleMediumStyle
                             ),
                             const SizedBox(height: 40),
                           ],
@@ -71,7 +79,7 @@ class HomePage extends GetView<HomeController> {
                             final double imageSize =
                                 constraints.maxWidth * 0.90;
                             final double vsOffset = imageSize * 0.25;
-
+        
                             return Stack(
                               alignment: Alignment.center,
                               children: [
@@ -91,12 +99,12 @@ class HomePage extends GetView<HomeController> {
                                           width: imageSize,
                                           height: imageSize,
                                           fit: BoxFit.contain,
-                                          color: Colors.grey.withOpacity(0.9),
+                                          color: greyBorderColor.withOpacity(0.7),
                                           colorBlendMode: BlendMode.srcATop,
                                         ),
                                       ),
                                     ),
-
+        
                                     Image.asset(
                                       'assets/images/person_robot.png',
                                       width: imageSize,
@@ -105,34 +113,15 @@ class HomePage extends GetView<HomeController> {
                                     ),
                                   ],
                                 ),
-
+        
                                 Positioned(
                                   bottom: vsOffset,
                                   child: Container(
                                     padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: skyColor,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 2,
-                                      ),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black26,
-                                          blurRadius: 12,
-                                          offset: Offset(0, 3),
-                                        ),
-                                      ],
-                                    ),
+                                    decoration:circleWhiteShadowDecoration,
                                     child: Text(
                                       'VS',
-                                      style: TextStyle(
-                                        fontSize: imageSize * 0.08,
-                                        fontWeight: FontWeight.bold,
-                                        color: kWhite,
-                                        fontFamily: 'Poppins',
-                                      ),
+                                      style: headlineMediumStyle
                                     ),
                                   ),
                                 ),
@@ -160,19 +149,19 @@ class HomePage extends GetView<HomeController> {
                   children: [
                     _CategoryTile(
                       title: "General Knowledge",
-                      imagePath: "assets/images/general.png",
+                      imagePath: "assets/images/book.png",
                     ),
                     _CategoryTile(
                       title: "Science",
-                      imagePath: "assets/images/science.png",
+                      imagePath: "assets/images/search.png",
                     ),
                     _CategoryTile(
                       title: "History",
-                      imagePath: "assets/images/history.png",
+                      imagePath: "assets/images/employment-records.png",
                     ),
                     _CategoryTile(
                       title: "Word Power",
-                      imagePath: "assets/images/word_power.png",
+                      imagePath: "assets/images/spell-check.png",
                     ),
                   ],
                 ),
@@ -188,13 +177,13 @@ class HomePage extends GetView<HomeController> {
 class _CategoryTile extends StatelessWidget {
   final String title;
   final String imagePath;
-  final Color? color;
+
 
   const _CategoryTile({
-    super.key,
+
     required this.title,
     required this.imagePath,
-    this.color,
+
   });
 
   @override
@@ -207,19 +196,8 @@ class _CategoryTile extends StatelessWidget {
 
       },
       child: Container(
-        decoration: BoxDecoration(
-          color: kWhite,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(38),
-
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.all(18),
+        decoration: roundedDecorationWithShadow,
+          padding: const EdgeInsets.all(18),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -227,11 +205,7 @@ class _CategoryTile extends StatelessWidget {
               height: 70,
               width: 70,
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: skyColor.withAlpha(60),
-
-                borderRadius: BorderRadius.circular(12),
-              ),
+              decoration: skyTransparentBoxDecoration,
               child: Image.asset(imagePath, fit: BoxFit.contain),
             ),
 
@@ -239,10 +213,7 @@ class _CategoryTile extends StatelessWidget {
 
             Text(
               title,
-              style: titleSmallStyle.copyWith(
-                color: kBlack,
-                fontWeight: FontWeight.bold,
-              ),
+              style: titleSmallStyle,
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

@@ -1,20 +1,26 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../core/GlobalKey/global_key.dart';
+import '../../core/constants/constants.dart';
 
 class MistralApiService {
   static final String _apiKey = global_key;
   static const String _url = 'https://api.mistral.ai/v1/chat/completions';
+  static final Map<String, int> _hintIndices = {};
 
   static Future<List<Map<String, dynamic>>> fetchQuestions(String category, int count) async {
-    count=10;
+
     final hint = _getHint(category);
     final timestamp = DateTime.now().millisecondsSinceEpoch;
+
+    final randomizer = DateTime.now().microsecondsSinceEpoch % 1000;
 
     final prompt = '''
 Generate $count quiz questions about "$category", focusing on "$hint".
 
-Respond in this plain text format (no JSON):
+Each question must be different from the previous question generated at [$timestamp] (ID: $randomizer).
+
+Follow this plain text format (no JSON):
 Q: What is the capital of France?
 A. Berlin
 B. Madrid
@@ -23,12 +29,13 @@ D. Rome
 Answer: C
 
 Rules:
-- Return exactly $count questions in this format.
+- Return exactly $count unique questions in this format.
+- Ensure the questions are fresh and not commonly repeated.
 - Randomize the order of the options.
 - Provide only plain text in this format — do not return JSON.
-- Use a mix of difficulties.
-[$timestamp]
+- Use a mix of difficulties (easy/medium/hard).
 ''';
+
 
     final res = await http.post(
       Uri.parse(_url),
@@ -37,7 +44,7 @@ Rules:
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
-        "model": "mistral-medium",
+        "model": "mistral-small",
         "messages": [
           {"role": "user", "content": prompt}
         ],
@@ -45,6 +52,7 @@ Rules:
     );
 
     if (res.statusCode != 200) {
+      print('${res.statusCode}: ${res.body}');
       throw Exception('HTTP ${res.statusCode}: ${res.body}');
     }
 
@@ -89,20 +97,23 @@ Rules:
     return questions;
   }
 
+
+
+
   static String _getHint(String category) {
-    final base = category.toLowerCase();
-    final hints = {
-      "science": ['biology', 'space', 'physics', 'chemistry'],
-      "history": ['world wars', 'ancient civilizations', 'leaders', 'empires'],
-      "word": ['synonyms', 'antonyms', 'idioms', 'vocabulary'],
-    };
+    final key = hints.keys.firstWhere(
+          (k) => category.toLowerCase().contains(k),
+      orElse: () => 'general',
+    );
 
-    final fallback = ['geography', 'inventions', 'current affairs', 'records'];
-    final list = hints.entries.firstWhere(
-          (e) => base.contains(e.key),
-      orElse: () => MapEntry('other', fallback),
-    ).value;
+    final list = hints[key]!;
+    final index = (_hintIndices[key] ?? 0) % list.length;
 
-    return list[DateTime.now().second % list.length];
+
+    _hintIndices[key] = index + 1;
+
+    return list[index];
   }
+
+
 }

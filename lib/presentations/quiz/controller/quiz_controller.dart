@@ -15,6 +15,9 @@ class QuizController extends GetxController {
   final RxBool aiShouldHelp = false.obs;
   final RxString aiMessage = ''.obs;
   final isQuizCompleted = false.obs;
+  final RxList<_QuizQuestion> preloadedQuestionQueue = <_QuizQuestion>[].obs;
+  final RxString selectedCategory = ''.obs;
+
 
   @override
   void onInit() {
@@ -23,9 +26,13 @@ class QuizController extends GetxController {
 
   Future<void> loadQuestions(String category) async {
     if (isLoading.value) return;
+
     isLoading.value = true;
-    aiMessage.value='';
+    selectedCategory.value = category;
+
+    aiMessage.value = '';
     questions.clear();
+    preloadedQuestionQueue.clear();
     selectedIndex.value = -1;
     userScore.value = 0;
     aiScore.value = 0;
@@ -33,17 +40,18 @@ class QuizController extends GetxController {
     wrongAnswersCount.value = 0;
     aiShouldHelp.value = false;
     isQuizCompleted.value = false;
+
     try {
-      final questionsList = await MistralApiService.fetchQuestions(category, 1);
-      questions.assignAll(
-        questionsList.map(
-          (q) => _QuizQuestion(
-            question: q['question'],
-            options: List<String>.from(q['options']),
-            answerIndex: q['answer'],
-          ),
+      final list = await MistralApiService.fetchQuestions(category, 1);
+      questions.add(
+        _QuizQuestion(
+          question: list[0]['question'],
+          options: List<String>.from(list[0]['options']),
+          answerIndex: list[0]['answer'],
         ),
       );
+
+      _preloadNextQuestion();
     } catch (e) {
       Get.snackbar("Error", e.toString());
     } finally {
@@ -60,14 +68,54 @@ class QuizController extends GetxController {
     }
   }
 
-  void checkAndFinishQuiz() {
-    final isLastQuestion = currentQuestionIndex.value >= questions.length - 1;
+  void checkAndFinishQuiz() async {
+    final isLast = questions.length >= 10;
 
-    if (isLastQuestion) {
+    if (isLast) {
       isQuizCompleted.value = true;
-    } else {
-      nextQuestion();
+      return;
     }
+
+    if (preloadedQuestionQueue.isNotEmpty) {
+      questions.add(preloadedQuestionQueue.removeAt(0));
+      currentQuestionIndex.value++;
+
+      _preloadNextQuestion();
+    } else {
+      final list = await MistralApiService.fetchQuestions(
+        selectedCategory.value,
+        1,
+      );
+      questions.add(
+        _QuizQuestion(
+          question: list[0]['question'],
+          options: List<String>.from(list[0]['options']),
+          answerIndex: list[0]['answer'],
+        ),
+      );
+      currentQuestionIndex.value++;
+    }
+
+    selectedIndex.value = -1;
+    aiMessage.value = '';
+  }
+
+  void _preloadNextQuestion() async {
+    try {
+      if (questions.length + preloadedQuestionQueue.length >= 10) return;
+
+      final list = await MistralApiService.fetchQuestions(
+        selectedCategory.value,
+        1,
+      );
+      preloadedQuestionQueue.add(
+        _QuizQuestion(
+          question: list[0]['question'],
+          options: List<String>.from(list[0]['options']),
+          answerIndex: list[0]['answer'],
+        ),
+      );
+    } catch (_) {}
   }
 
   void resetQuiz() {
@@ -87,7 +135,7 @@ class QuizController extends GetxController {
 
     if (aiShouldHelp.value) {
       selectedIndex.value = currentQuestion.answerIndex;
-      userScore.value += 10;
+      userScore.value += 1;
       final fixMsg = AIFeedbackMessages.getFixMessage();
       aiMessage.value = fixMsg.text;
       SoundPlayer.play(fixMsg.soundPath);
@@ -98,33 +146,26 @@ class QuizController extends GetxController {
       selectedIndex.value = index;
 
       if (index == currentQuestion.answerIndex) {
-        userScore.value += 10;
+        userScore.value += 1;
         final praiseMsg = AIFeedbackMessages.getPraiseMessage();
         aiMessage.value = praiseMsg.text;
         SoundPlayer.play(praiseMsg.soundPath);
-
       } else {
         wrongAnswersCount.value++;
-        aiScore.value += 10;
-        final messageIndex = (wrongAnswersCount.value - 1).clamp(0, 3);
+        aiScore.value += 1;
 
+        final feedback = AIFeedbackMessages.getRandomFeedback();
+        aiMessage.value = feedback.text;
 
-        aiMessage.value = AIFeedbackMessages.getRandomFeedback().text;
-
-
-        if (AIFeedbackMessages.getRandomFeedback().soundPath != null) {
-          SoundPlayer.play(AIFeedbackMessages.getRandomFeedback().soundPath!);
+        if (feedback.soundPath.isNotEmpty) {
+          SoundPlayer.play(feedback.soundPath);
         }
-
 
         if (wrongAnswersCount.value >= 3) {
           aiShouldHelp.value = true;
         }
       }
     }
-
-    // yjjjjjjjjjjjjjj
-    // jjjjjjjjjjhhhhhhhh
 
     Future.delayed(const Duration(seconds: 3), checkAndFinishQuiz);
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/audio_player.dart';
 import '../controller/quiz_controller.dart';
 
 class QuizQuestionPage extends StatefulWidget {
@@ -15,11 +16,10 @@ class QuizQuestionPage extends StatefulWidget {
 
 class _QuizQuestionPageState extends State<QuizQuestionPage> {
   final controller = Get.find<QuizController>();
-@override
+  @override
   void initState() {
-  super.initState();
-  controller.loadQuestions(widget.category);
-
+    super.initState();
+    controller.loadQuestions(widget.category);
 
     ever(controller.isQuizCompleted, (completed) {
       if (completed == true) {
@@ -28,14 +28,16 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
         });
       }
     });
-
-
   }
+
+  @override
+  void dispose() {
+    SoundPlayer.stop();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-
-
     return Obx(() {
       if (controller.isLoading.value) {
         return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -60,7 +62,7 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
                   horizontal: 16,
                   vertical: 30,
                 ),
-                decoration: const BoxDecoration(color: skyColor),
+                color: skyColor,
                 child: Column(
                   children: [
                     Row(
@@ -69,16 +71,14 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
                         Text(widget.category, style: headlineSmallStyle),
                         const Spacer(),
                         Text(
-                          "${controller.currentQuestionIndex.value + 1}/${controller.questions.length}",
+                          "${controller.currentQuestionIndex.value + 1}/${10}",
                           style: headlineSmallStyle,
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
                     LinearProgressIndicator(
-                      value:
-                          (controller.currentQuestionIndex.value + 1) /
-                          controller.questions.length,
+                      value: (controller.currentQuestionIndex.value + 1) / 10,
                       backgroundColor: kBlue,
                       color: kWhite,
                       minHeight: 6,
@@ -113,22 +113,27 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
                       ],
                     ),
                     Flexible(
-                      child: Obx(
-                        () => Container(
+                      child: Obx(() {
+                        final msg = controller.aiMessage.value.trim();
+                        if (msg.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 8,
                           ),
                           decoration: roundedDecoration,
                           child: Text(
-                            controller.aiMessage.value,
+                            msg,
                             style: bodyMediumStyle,
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 2, // optional: limit to 2 lines
+                            maxLines: 2,
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                     ),
 
                     Column(
@@ -161,7 +166,12 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(question.question, style: titleLargeStyle),
+                      Text(
+                        question.question,
+                        style: questiontextStyle,
+                        textAlign: TextAlign.left,
+                      ),
+
                       const SizedBox(height: 30),
 
                       ...List.generate(question.options.length, (index) {
@@ -179,14 +189,11 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
                             bgColor = kLightGreen1;
                             trailingIcon = const Icon(
                               Icons.check,
-                              color: Colors.green,
+                              color: kMediumGreen2,
                             );
                           } else if (isSelected && !isCorrect) {
                             bgColor = kLightRed;
-                            trailingIcon = const Icon(
-                              Icons.close,
-                              color: Colors.red,
-                            );
+                            trailingIcon = const Icon(Icons.close, color: kRed);
                           }
                         }
 
@@ -232,8 +239,7 @@ class _QuizQuestionPageState extends State<QuizQuestionPage> {
                                 child: Text(
                                   isCorrect ? "Correct ✅" : "Wrong ❌",
                                   style: TextStyle(
-                                    color:
-                                        isCorrect ? Colors.green : Colors.red,
+                                    color: isCorrect ? kMediumGreen2 : kRed,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),

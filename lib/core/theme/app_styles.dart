@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants/constants.dart';
 import 'app_colors.dart';
 
-const TextStyle headlineMediumStyle = TextStyle(
+const TextStyle headlineMediumStyle = TextStyle(     // use in 'QUIZ DUEL' in Home_page,use in VS text
   fontFamily: fontFamily,
   fontSize: 30,
   fontWeight: FontWeight.w700,
@@ -22,11 +22,11 @@ const TextStyle titleLargeStyle = TextStyle(
   color: blackTextColor,
 );
 
-const TextStyle titleMediumStyle = TextStyle(
+const TextStyle titleMediumStyle = TextStyle(     // use in 'AI RIVAL' in Home_page
     fontFamily: fontFamily,
     fontSize: 20,
     fontWeight: FontWeight.w500,
-    color: blackTextColor);
+    color: textWhiteColor);
 
 const TextStyle titleSmallStyle = TextStyle(
   fontFamily: fontFamily,
@@ -74,18 +74,18 @@ const TextStyle labelSmallStyle = TextStyle(
 );
 //decoration
 
-final BoxDecoration roundedDecorationWithShadow = BoxDecoration(
+final BoxDecoration roundedDecorationWithShadow = BoxDecoration( // use in category button decoration
   color: Colors.white,
-  borderRadius: BorderRadius.circular(10),
+  borderRadius: BorderRadius.circular(20),
   boxShadow: [
     BoxShadow(
-      color: Colors.grey.withValues(alpha: 0.2),
+      color: Colors.grey.withValues(alpha: 0.5),
       blurRadius: 6,
       offset: Offset(0, 2),
     ),
   ],
 );
-final BoxDecoration roundedDecoration = BoxDecoration(
+final BoxDecoration roundedDecoration = BoxDecoration(  // use for Ai message value on quiz screen
   color: Colors.white,
   borderRadius: BorderRadius.circular(10),
   boxShadow: [
@@ -128,11 +128,12 @@ final BoxDecoration rounderGreyBorderDecoration = BoxDecoration(
   ),
 );
 
-final BoxDecoration circleAvatarDecoration =  BoxDecoration(
-  color: primaryColor,
+final BoxDecoration circleAvatarDecoration =  BoxDecoration( // use in Quiz screen for Avartar decoration
+  color: skyColor,
   shape: BoxShape.circle,
   border: Border.all(color: Colors.white, width: 2),
 );
+
 
 
 
@@ -141,3 +142,35 @@ final boxShadow = BoxShadow(
   blurRadius: 6,
   offset: Offset(0, 2),
 );
+
+final BoxDecoration circleWhiteShadowDecoration = BoxDecoration( //use in VS decoration in home screen
+  color: skyColor,
+  shape: BoxShape.circle,
+  border: Border.all(
+    color: Colors.white,
+    width: 2,
+  ),
+  boxShadow: const [
+    BoxShadow(
+      color: Colors.black26,
+      blurRadius: 12,
+      offset: Offset(0, 3),
+    ),
+  ],
+);
+
+final BoxDecoration skyTransparentBoxDecoration = BoxDecoration(  // use in category button image container button
+  color: skyColor.withAlpha(60),
+  borderRadius: BorderRadius.circular(12),
+);
+
+const TextStyle questiontextStyle = TextStyle(  // use in Question Text
+  fontFamily: fontFamily,
+  fontSize: 20,
+  fontWeight: FontWeight.w400,
+  color: blackTextColor,
+  height: 1.5,
+);
+
+
+

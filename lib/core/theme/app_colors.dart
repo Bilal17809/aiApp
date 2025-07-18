@@ -18,7 +18,7 @@ const Color greyColor = Color(0xff626262);
 const greenColor = Color(0xff00AB3F);
 
 //red
-const kRed = Color(0xffE1020A);
+const kRed = Color(0xffE1020A);// use
 const kLightRed = Color(0xffF9DEDF);
 const kOrange = Color(0xffFF7600);
 const kYellow = Color(0xffFFBB00);
@@ -44,7 +44,7 @@ const bgColor = Colors.white;
 const Color borderColor = Colors.grey;
 const skyBorderColor = Color(0xFF569CD4);
 const Color suffixIconColor = Color(0xff8E8E8E);
-const Color greyBorderColor = Color(0xffADADAD);
+const Color greyBorderColor = Color(0xffADADAD); // use in home_page image shadow
 const Color dividerColor = Color(0xffEDEDED);
 
 
@@ -65,3 +65,8 @@ const kGradient = LinearGradient(
     Color(0xFFF2A78D),
   ],
 );
+
+const Color whiteShadowColor = Color.fromARGB(51, 255, 255, 255); // 0.2 opacity // for elevated button
+const Color buttonBlueColor = Color(0xFF42A5F5);
+const BorderRadius defaultButtonBorderRadius = BorderRadius.all(Radius.circular(12));
+
