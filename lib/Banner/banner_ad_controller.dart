@@ -6,13 +6,12 @@ class BannerAdController extends GetxController {
   late BannerAd bannerAd;
   var isAdLoaded = false.obs;
 
-  // ✅ Your real Ad Unit ID from AdMob
   final String realAdUnitId = 'ca-app-pub-9147322774066422/4288161923';
 
-  /// ✅ Official test Banner Ad Unit from Google
+
   final String testAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
 
-  /// ✅ Switch based on debug/release mode
+
   String get adUnitId => kReleaseMode ? realAdUnitId : testAdUnitId;
 
   @override
