@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:ai_app/presentations/pages.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../../../Banner/interstitial_ad_controller.dart';
 import '../../Drawer/view/customdrawer.dart';
 import '../../home/controller/home_contrl.dart';
 import 'package:flutter/material.dart';
@@ -9,22 +11,35 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../quiz/view/quiz_screen.dart';
 import 'package:ai_app/core/utils/network_utils.dart';
+import '../../../Banner/banner_ad_controller.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    final BannerAdController adController = Get.put(BannerAdController());
+    final interstitialAdController = Get.put(InterstitialAdController());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       NetworkUtils.checkInternet(context);
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      final interstitialAdController = Get.find<InterstitialAdController>();
+      if (interstitialAdController.isAdLoaded.value) {
+        interstitialAdController.showAd();
+      }
     });
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   NetworkUtils.checkInternet(context);
+    // });
     return Scaffold(
       drawer: const CustomDrawer(),
       extendBodyBehindAppBar: true,
       body: SafeArea(
         child: Column(
           children: [
-        
-        
             ClipPath(
               clipper: BottomCurveClipper(),
               child: Container(
@@ -33,15 +48,15 @@ class HomePage extends GetView<HomeController> {
                 child: Stack(
                   children: [
                     Positioned(
-
                       left: 8,
                       child: Builder(
-                        builder: (context) => IconButton(
-                          icon: const Icon(Icons.menu, color: Colors.white),
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                        ),
+                        builder:
+                            (context) => IconButton(
+                              icon: const Icon(Icons.menu, color: Colors.white),
+                              onPressed: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                            ),
                       ),
                     ),
                     Padding(
@@ -54,16 +69,9 @@ class HomePage extends GetView<HomeController> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-        
-                            Text(
-                              'QUIZ DUEL',
-                              style: headlineMediumStyle
-                            ),
+                            Text('QUIZ DUEL', style: headlineMediumStyle),
                             const SizedBox(height: 8),
-                            Text(
-                              'AI RIVAL',
-                              style: titleMediumStyle
-                            ),
+                            Text('AI RIVAL', style: titleMediumStyle),
                             const SizedBox(height: 40),
                           ],
                         ),
@@ -79,7 +87,7 @@ class HomePage extends GetView<HomeController> {
                             final double imageSize =
                                 constraints.maxWidth * 0.90;
                             final double vsOffset = imageSize * 0.25;
-        
+
                             return Stack(
                               alignment: Alignment.center,
                               children: [
@@ -99,12 +107,14 @@ class HomePage extends GetView<HomeController> {
                                           width: imageSize,
                                           height: imageSize,
                                           fit: BoxFit.contain,
-                                          color: greyBorderColor.withOpacity(0.7),
+                                          color: greyBorderColor.withOpacity(
+                                            0.7,
+                                          ),
                                           colorBlendMode: BlendMode.srcATop,
                                         ),
                                       ),
                                     ),
-        
+
                                     Image.asset(
                                       'assets/images/person_robot.png',
                                       width: imageSize,
@@ -113,15 +123,15 @@ class HomePage extends GetView<HomeController> {
                                     ),
                                   ],
                                 ),
-        
+
                                 Positioned(
                                   bottom: vsOffset,
                                   child: Container(
                                     padding: const EdgeInsets.all(10),
-                                    decoration:circleWhiteShadowDecoration,
+                                    decoration: circleWhiteShadowDecoration,
                                     child: Text(
                                       'VS',
-                                      style: headlineMediumStyle
+                                      style: headlineMediumStyle,
                                     ),
                                   ),
                                 ),
@@ -150,23 +160,40 @@ class HomePage extends GetView<HomeController> {
                     _CategoryTile(
                       title: "General Knowledge",
                       imagePath: "assets/images/book.png",
+                      interstitialAdController: interstitialAdController,
                     ),
                     _CategoryTile(
                       title: "Science",
                       imagePath: "assets/images/search.png",
+                      interstitialAdController: interstitialAdController,
                     ),
                     _CategoryTile(
                       title: "History",
                       imagePath: "assets/images/employment-records.png",
+                      interstitialAdController: interstitialAdController,
                     ),
                     _CategoryTile(
                       title: "Word Power",
                       imagePath: "assets/images/spell-check.png",
+                      interstitialAdController: interstitialAdController,
                     ),
                   ],
                 ),
               ),
             ),
+
+            /// BANNER AD AREA
+            Obx(() {
+              if (adController.isAdLoaded.value) {
+                return SizedBox(
+                  height: adController.bannerAd.size.height.toDouble(),
+                  width: adController.bannerAd.size.width.toDouble(),
+                  child: AdWidget(ad: adController.bannerAd),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
           ],
         ),
       ),
@@ -177,27 +204,26 @@ class HomePage extends GetView<HomeController> {
 class _CategoryTile extends StatelessWidget {
   final String title;
   final String imagePath;
-
+  final InterstitialAdController interstitialAdController;
 
   const _CategoryTile({
-
     required this.title,
     required this.imagePath,
-
+    required this.interstitialAdController,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-
+        if (interstitialAdController.isAdLoaded.value) {
+          interstitialAdController.showAd();
+        }
         Get.to(() => QuizQuestionPage(category: title));
-
-
       },
       child: Container(
         decoration: roundedDecorationWithShadow,
-          padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(18),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
