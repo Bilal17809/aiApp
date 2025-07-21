@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "category": "Science",
+    "fact": "Octopuses have three hearts — two pump blood to the gills, and one to the rest of the body."
+  },
+  {
+    "id": 2,
+    "category": "Science",
+    "fact": "Bananas are berries, but strawberries aren’t."
+  },
+  {
+    "id": 3,
+    "category": "Science",
+    "fact": "A day on Venus is longer than its year."
+  },
+  {
+    "id": 4,
+    "category": "Science",
+    "fact": "Hot water can freeze faster than cold water — this is called the Mpemba effect."
+  },
+  {
+    "id": 5,
+    "category": "Science",
+    "fact": "Your brain uses more energy when you’re asleep than when watching TV."
+  },
+  {
+    "id": 6,
+    "category": "Nature",
+    "fact": "Wombat poop is cube-shaped to keep it from rolling away."
+  },
+  {
+    "id": 7,
+    "category": "Nature",
+    "fact": "Sloths can hold their breath longer than dolphins — up to 40 minutes."
+  },
+  {
+    "id": 8,
+    "category": "Nature",
+    "fact": "Sharks existed before trees — they’ve been around for over 400 million years."
+  },
+  {
+    "id": 9,
+    "category": "Nature",
+    "fact": "Butterflies can taste with their feet."
+  },
+  {
+    "id": 10,
+    "category": "Nature",
+    "fact": "Goats have rectangular pupils for wide-angle vision."
+  },
+  {
+    "id": 11,
+    "category": "History",
+    "fact": "Cleopatra lived closer in time to the Moon landing than to the construction of the Great Pyramid."
+  },
+  {
+    "id": 12,
+    "category": "History",
+    "fact": "Oxford University is older than the Aztec Empire."
+  },
+  {
+    "id": 13,
+    "category": "History",
+    "fact": "Napoleon was likely of average height — the myth of shortness was due to unit conversion."
+  },
+  {
+    "id": 14,
+    "category": "History",
+    "fact": "Ancient Romans used urine to whiten their teeth because of the ammonia content."
+  },
+  {
+    "id": 15,
+    "category": "History",
+    "fact": "In the 1800s, ketchup was sold as medicine."
+  },
+  {
+    "id": 16,
+    "category": "Weird World",
+    "fact": "There's a town in Norway where it’s illegal to die — Longyearbyen."
+  },
+  {
+    "id": 17,
+    "category": "Nature",
+    "fact": "You can hear a blue whale’s heartbeat from over 2 miles away."
+  },
+  {
+    "id": 18,
+    "category": "Space",
+    "fact": "It rains diamonds on Jupiter and Saturn."
+  },
+  {
+    "id": 19,
+    "category": "Science",
+    "fact": "The Eiffel Tower grows about 6 inches in summer due to heat expansion."
+  },
+  {
+    "id": 20,
+    "category": "Nature",
+    "fact": "You can smell rain — the scent is called petrichor."
+  },
+  {
+    "id": 21,
+    "category": "Space",
+    "fact": "Neutron stars are so dense that a sugar-cube-sized amount of their material would weigh about a billion tons on Earth."
+  },
+  {
+    "id": 22,
+    "category": "Science",
+    "fact": "Sound travels about four times faster in water than in air."
+  },
+  {
+    "id": 23,
+    "category": "Nature",
+    "fact": "A group of flamingos is called a 'flamboyance'."
+  },
+  {
+    "id": 24,
+    "category": "Weird World",
+    "fact": "There's a species of jellyfish that can essentially live forever — Turritopsis dohrnii."
+  },
+  {
+    "id": 25,
+    "category": "Science",
+    "fact": "A bolt of lightning is five times hotter than the surface of the Sun."
+  },
+  {
+    "id": 26,
+    "category": "History",
+    "fact": "The Eiffel Tower was originally intended to be dismantled after 20 years."
+  },
+  {
+    "id": 27,
+    "category": "Animal",
+    "fact": "Cows have best friends and get stressed when they are separated."
+  },
+  {
+    "id": 28,
+    "category": "Food",
+    "fact": "Honey never spoils — archaeologists have found 3,000-year-old pots of honey in Egyptian tombs that are still edible."
+  },
+  {
+    "id": 29,
+    "category": "Tech",
+    "fact": "The first computer virus was created in 1986 and was called 'Brain'."
+  },
+  {
+    "id": 30,
+    "category": "Nature",
+    "fact": "Rainbows can appear as full circles — we usually see only half from the ground."
+  },
+  {
+    "id": 31,
+    "category": "Space",
+    "fact": "One day on Mercury lasts 1,408 hours — that's nearly 59 Earth days."
+  },
+  {
+    "id": 32,
+    "category": "Animal",
+    "fact": "Male seahorses are the ones who get pregnant and give birth."
+  },
+  {
+    "id": 33,
+    "category": "Science",
+    "fact": "A teaspoon of neutron star material would weigh about 6 billion tons."
+  },
+  {
+    "id": 34,
+    "category": "History",
+    "fact": "In ancient Egypt, servants were sometimes smeared with honey to attract flies away from the pharaoh."
+  },
+  {
+    "id": 35,
+    "category": "Weird World",
+    "fact": "There's a museum in Sweden dedicated entirely to failed products."
+  },
+  {
+    "id": 36,
+    "category": "Nature",
+    "fact": "Bamboo can grow up to 3 feet in a single day."
+  },
+  {
+    "id": 37,
+    "category": "Science",
+    "fact": "Water can boil and freeze at the same time — it's called the 'triple point'."
+  },
+  {
+    "id": 38,
+    "category": "Space",
+    "fact": "Venus rotates in the opposite direction of most planets in the solar system."
+  },
+  {
+    "id": 39,
+    "category": "Animal",
+    "fact": "Octopuses have blue blood due to a copper-rich protein called hemocyanin."
+  },
+  {
+    "id": 40,
+    "category": "History",
+    "fact": "The Great Fire of London in 1666 destroyed 80% of the city but only six people were recorded as killed."
+  },
+  {
+    "id": 41,
+    "category": "Space",
+    "fact": "Neutron stars are so dense that a sugar-cube-sized amount of their material would weigh about a billion tons on Earth."
+  },
+  {
+    "id": 42,
+    "category": "Science",
+    "fact": "Sound travels about four times faster in water than in air."
+  },
+  {
+    "id": 43,
+    "category": "Nature",
+    "fact": "A group of flamingos is called a 'flamboyance'."
+  },
+  {
+    "id": 44,
+    "category": "Weird World",
+    "fact": "There's a species of jellyfish that can essentially live forever — Turritopsis dohrnii."
+  },
+  {
+    "id": 45,
+    "category": "Science",
+    "fact": "A bolt of lightning is five times hotter than the surface of the Sun."
+  },
+  {
+    "id": 46,
+    "category": "History",
+    "fact": "The Eiffel Tower was originally intended to be dismantled after 20 years."
+  },
+  {
+    "id": 47,
+    "category": "Animal",
+    "fact": "Cows have best friends and get stressed when they are separated."
+  },
+  {
+    "id": 48,
+    "category": "Food",
+    "fact": "Honey never spoils — archaeologists have found 3,000-year-old pots of honey in Egyptian tombs that are still edible."
+  },
+  {
+    "id": 49,
+    "category": "Tech",
+    "fact": "The first computer virus was created in 1986 and was called 'Brain'."
+  },
+  {
+    "id": 50,
+    "category": "Nature",
+    "fact": "Rainbows can appear as full circles — we usually see only half from the ground."
+  },
+  {
+    "id": 51,
+    "category": "Space",
+    "fact": "One day on Mercury lasts 1,408 hours — that's nearly 59 Earth days."
+  },
+  {
+    "id": 52,
+    "category": "Animal",
+    "fact": "Male seahorses are the ones who get pregnant and give birth."
+  },
+  {
+    "id": 53,
+    "category": "Science",
+    "fact": "A teaspoon of neutron star material would weigh about 6 billion tons."
+  },
+  {
+    "id": 54,
+    "category": "History",
+    "fact": "In ancient Egypt, servants were sometimes smeared with honey to attract flies away from the pharaoh."
+  },
+  {
+    "id": 55,
+    "category": "Weird World",
+    "fact": "There's a museum in Sweden dedicated entirely to failed products."
+  },
+  {
+    "id": 56,
+    "category": "Nature",
+    "fact": "Bamboo can grow up to 3 feet in a single day."
+  },
+  {
+    "id": 57,
+    "category": "Science",
+    "fact": "Water can boil and freeze at the same time — it's called the 'triple point'."
+  },
+  {
+    "id": 58,
+    "category": "Space",
+    "fact": "Venus rotates in the opposite direction of most planets in the solar system."
+  },
+  {
+    "id": 59,
+    "category": "Animal",
+    "fact": "Octopuses have blue blood due to a copper-rich protein called hemocyanin."
+  },
+  {
+    "id": 60,
+    "category": "History",
+    "fact": "The Great Fire of London in 1666 destroyed 80% of the city but only six people were recorded as killed."
+  },
+  {
+    "id": 61,
+    "category": "Space",
+    "fact": "Neutron stars are so dense that a sugar-cube-sized amount of their material would weigh about a billion tons on Earth."
+  },
+  {
+    "id": 62,
+    "category": "Science",
+    "fact": "Sound travels about four times faster in water than in air."
+  },
+  {
+    "id": 63,
+    "category": "Nature",
+    "fact": "A group of flamingos is called a 'flamboyance'."
+  },
+  {
+    "id": 64,
+    "category": "Weird World",
+    "fact": "There's a species of jellyfish that can essentially live forever — Turritopsis dohrnii."
+  },
+  {
+    "id": 65,
+    "category": "Science",
+    "fact": "A bolt of lightning is five times hotter than the surface of the Sun."
+  },
+  {
+    "id": 66,
+    "category": "History",
+    "fact": "The Eiffel Tower was originally intended to be dismantled after 20 years."
+  },
+  {
+    "id": 67,
+    "category": "Animal",
+    "fact": "Cows have best friends and get stressed when they are separated."
+  },
+  {
+    "id": 68,
+    "category": "Food",
+    "fact": "Honey never spoils — archaeologists have found 3,000-year-old pots of honey in Egyptian tombs that are still edible."
+  },
+  {
+    "id": 69,
+    "category": "Tech",
+    "fact": "The first computer virus was created in 1986 and was called 'Brain'."
+  },
+  {
+    "id": 70,
+    "category": "Nature",
+    "fact": "Rainbows can appear as full circles — we usually see only half from the ground."
+  },
+  {
+    "id": 71,
+    "category": "Space",
+    "fact": "One day on Mercury lasts 1,408 hours — that's nearly 59 Earth days."
+  },
+  {
+    "id": 72,
+    "category": "Animal",
+    "fact": "Male seahorses are the ones who get pregnant and give birth."
+  },
+  {
+    "id": 73,
+    "category": "Science",
+    "fact": "A teaspoon of neutron star material would weigh about 6 billion tons."
+  },
+  {
+    "id": 74,
+    "category": "History",
+    "fact": "In ancient Egypt, servants were sometimes smeared with honey to attract flies away from the pharaoh."
+  },
+  {
+    "id": 75,
+    "category": "Weird World",
+    "fact": "There's a museum in Sweden dedicated entirely to failed products."
+  },
+  {
+    "id": 76,
+    "category": "Nature",
+    "fact": "Bamboo can grow up to 3 feet in a single day."
+  },
+  {
+    "id": 77,
+    "category": "Science",
+    "fact": "Water can boil and freeze at the same time — it's called the 'triple point'."
+  },
+  {
+    "id": 78,
+    "category": "Space",
+    "fact": "Venus rotates in the opposite direction of most planets in the solar system."
+  },
+  {
+    "id": 79,
+    "category": "Animal",
+    "fact": "Octopuses have blue blood due to a copper-rich protein called hemocyanin."
+  },
+  {
+    "id": 80,
+    "category": "History",
+    "fact": "The Great Fire of London in 1666 destroyed 80% of the city but only six people were recorded as killed."
+  },
+  {
+    "id": 81,
+    "category": "Space",
+    "fact": "Neutron stars are so dense that a sugar-cube-sized amount of their material would weigh about a billion tons on Earth."
+  },
+  {
+    "id": 82,
+    "category": "Science",
+    "fact": "Sound travels about four times faster in water than in air."
+  },
+  {
+    "id": 83,
+    "category": "Nature",
+    "fact": "A group of flamingos is called a 'flamboyance'."
+  },
+  {
+    "id": 84,
+    "category": "Weird World",
+    "fact": "There's a species of jellyfish that can essentially live forever — Turritopsis dohrnii."
+  },
+  {
+    "id": 85,
+    "category": "Science",
+    "fact": "A bolt of lightning is five times hotter than the surface of the Sun."
+  },
+  {
+    "id": 86,
+    "category": "History",
+    "fact": "The Eiffel Tower was originally intended to be dismantled after 20 years."
+  },
+  {
+    "id": 87,
+    "category": "Animal",
+    "fact": "Cows have best friends and get stressed when they are separated."
+  },
+  {
+    "id": 88,
+    "category": "Food",
+    "fact": "Honey never spoils — archaeologists have found 3,000-year-old pots of honey in Egyptian tombs that are still edible."
+  },
+  {
+    "id": 89,
+    "category": "Tech",
+    "fact": "The first computer virus was created in 1986 and was called 'Brain'."
+  },
+  {
+    "id": 90,
+    "category": "Nature",
+    "fact": "Rainbows can appear as full circles — we usually see only half from the ground."
+  },
+  {
+    "id": 91,
+    "category": "Space",
+    "fact": "One day on Mercury lasts 1,408 hours — that's nearly 59 Earth days."
+  },
+  {
+    "id": 92,
+    "category": "Animal",
+    "fact": "Male seahorses are the ones who get pregnant and give birth."
+  },
+  {
+    "id": 93,
+    "category": "Science",
+    "fact": "A teaspoon of neutron star material would weigh about 6 billion tons."
+  },
+  {
+    "id": 94,
+    "category": "History",
+    "fact": "In ancient Egypt, servants were sometimes smeared with honey to attract flies away from the pharaoh."
+  },
+  {
+    "id": 95,
+    "category": "Weird World",
+    "fact": "There's a museum in Sweden dedicated entirely to failed products."
+  },
+  {
+    "id": 96,
+    "category": "Nature",
+    "fact": "Bamboo can grow up to 3 feet in a single day."
+  },
+  {
+    "id": 97,
+    "category": "Science",
+    "fact": "Water can boil and freeze at the same time — it's called the 'triple point'."
+  },
+  {
+    "id": 98,
+    "category": "Space",
+    "fact": "Venus rotates in the opposite direction of most planets in the solar system."
+  },
+  {
+    "id": 99,
+    "category": "Animal",
+    "fact": "Octopuses have blue blood due to a copper-rich protein called hemocyanin."
+  },
+  {
+    "id": 100,
+    "category": "History",
+    "fact": "The Great Fire of London in 1666 destroyed 80% of the city but only six people were recorded as killed."
+  },
+  {
+    "id": 101,
+    "category": "Space",
+    "fact": "Neutron stars are so dense that a sugar-cube-sized amount of their material would weigh about a billion tons on Earth."
+  },
+  {
+    "id": 102,
+    "category": "Science",
+    "fact": "Sound travels about four times faster in water than in air."
+  },
+  {
+    "id": 103,
+    "category": "Nature",
+    "fact": "A group of flamingos is called a 'flamboyance'."
+  },
+  {
+    "id": 104,
+    "category": "Weird World",
+    "fact": "There's a species of jellyfish that can essentially live forever — Turritopsis dohrnii."
+  },
+  {
+    "id": 105,
+    "category": "Science",
+    "fact": "A bolt of lightning is five times hotter than the surface of the Sun."
+  },
+  {
+    "id": 106,
+    "category": "History",
+    "fact": "The Eiffel Tower was originally intended to be dismantled after 20 years."
+  },
+  {
+    "id": 107,
+    "category": "Animal",
+    "fact": "Cows have best friends and get stressed when they are separated."
+  },
+  {
+    "id": 108,
+    "category": "Food",
+    "fact": "Honey never spoils — archaeologists have found 3,000-year-old pots of honey in Egyptian tombs that are still edible."
+  },
+  {
+    "id": 109,
+    "category": "Tech",
+    "fact": "The first computer virus was created in 1986 and was called 'Brain'."
+  },
+  {
+    "id": 110,
+    "category": "Nature",
+    "fact": "Rainbows can appear as full circles — we usually see only half from the ground."
+  },
+  {
+    "id": 111,
+    "category": "Space",
+    "fact": "One day on Mercury lasts 1,408 hours — that's nearly 59 Earth days."
+  },
+  {
+    "id": 112,
+    "category": "Animal",
+    "fact": "Male seahorses are the ones who get pregnant and give birth."
+  },
+  {
+    "id": 113,
+    "category": "Science",
+    "fact": "A teaspoon of neutron star material would weigh about 6 billion tons."
+  },
+  {
+    "id": 114,
+    "category": "History",
+    "fact": "In ancient Egypt, servants were sometimes smeared with honey to attract flies away from the pharaoh."
+  },
+  {
+    "id": 115,
+    "category": "Weird World",
+    "fact": "There's a museum in Sweden dedicated entirely to failed products."
+  },
+  {
+    "id": 116,
+    "category": "Nature",
+    "fact": "Bamboo can grow up to 3 feet in a single day."
+  },
+  {
+    "id": 117,
+    "category": "Science",
+    "fact": "Water can boil and freeze at the same time — it's called the 'triple point'."
+  },
+  {
+    "id": 118,
+    "category": "Space",
+    "fact": "Venus rotates in the opposite direction of most planets in the solar system."
+  },
+  {
+    "id": 119,
+    "category": "Animal",
+    "fact": "Octopuses have blue blood due to a copper-rich protein called hemocyanin."
+  },
+  {
+    "id": 120,
+    "category": "History",
+    "fact": "The Great Fire of London in 1666 destroyed 80% of the city but only six people were recorded as killed."
+  }
+]

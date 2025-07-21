@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:ai_app/presentations/pages.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../Banner/banner_ad_controller.dart';
 import '../../Banner/interstitial_ad_controller.dart';
 import '../../Drawer/view/customdrawer.dart';
@@ -185,7 +186,13 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
 
-          /// Banner Ad Area
+          ElevatedButton(
+            onPressed: () {
+              Get.offAllNamed(AppRoutes.facts);
+            },
+            child: const Text("View Fun Facts"),
+          ),
+
           Obx(() {
             if (adController.isAdLoaded.value) {
               return SizedBox(

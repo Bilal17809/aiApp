@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../home/view/home_page.dart';
 import '../controller/splash_controller.dart';
 import '../../../core/theme/app_colors.dart';
@@ -122,7 +123,8 @@ class SplashScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Get.off(() => const HomePage());
+                            //Get.off(() => const HomePage());
+                            Get.offAllNamed(AppRoutes.home);
                           },
                           child: Text(
                             'Let\'s Go',
