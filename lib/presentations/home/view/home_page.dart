@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:ai_app/presentations/pages.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 import '../../Banner/banner_ad_controller.dart';
 import '../../Banner/interstitial_ad_controller.dart';
 import '../../Drawer/view/customdrawer.dart';
@@ -14,9 +13,9 @@ import '../../../core/theme/app_styles.dart';
 import '../../quiz/view/quiz_screen.dart';
 import 'package:ai_app/core/utils/network_utils.dart';
 
-
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final BannerAdController adController = Get.put(BannerAdController());
@@ -27,177 +26,178 @@ class HomePage extends GetView<HomeController> {
 
       await Future.delayed(const Duration(seconds: 1));
 
-      final interstitialAdController = Get.find<InterstitialAdController>();
       if (interstitialAdController.isAdLoaded.value) {
-        interstitialAdController.showAd();
+        interstitialAdController.showAdOnce();
       }
     });
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   NetworkUtils.checkInternet(context);
-    // });
     return Scaffold(
       drawer: const CustomDrawer(),
       extendBodyBehindAppBar: true,
-      body: SafeArea(
-        child: Column(
-          children: [
-            ClipPath(
-              clipper: BottomCurveClipper(),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                color: skyColor,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 8,
-                      child: Builder(
-                        builder:
-                            (context) => IconButton(
-                              icon: const Icon(Icons.menu, color: Colors.white),
-                              onPressed: () {
-                                Scaffold.of(context).openDrawer();
-                              },
-                            ),
+      body: Column(
+        children: [
+          ClipPath(
+            clipper: BottomCurveClipper(),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.50,
+              color: skyColor,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: MediaQuery.of(context).size.width * 0.05,
+                    top: MediaQuery.of(context).size.height * 0.06,
+                    child: Builder(
+                      builder: (context) => IconButton(
+                        icon: const Icon(Icons.menu, color: Colors.white),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width * 0.12,
-                        vertical: MediaQuery.of(context).size.height * 0.04,
-                      ),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('QUIZ DUEL', style: headlineMediumStyle),
-                            const SizedBox(height: 8),
-                            Text('AI RIVAL', style: titleMediumStyle),
-                            const SizedBox(height: 40),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: (MediaQuery.of(context).size.height * 0.5) - 300,
-                      left: 0,
-                      right: 0,
-                      child: Center(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            final double imageSize =
-                                constraints.maxWidth * 0.90;
-                            final double vsOffset = imageSize * 0.25;
+                  ),
 
-                            return Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Positioned(
-                                      top: 4,
-                                      left: 4,
-                                      child: ImageFiltered(
-                                        imageFilter: ImageFilter.blur(
-                                          sigmaX: 8,
-                                          sigmaY: 8,
-                                        ),
-                                        child: Image.asset(
-                                          'assets/images/person_robot.png',
-                                          width: imageSize,
-                                          height: imageSize,
-                                          fit: BoxFit.contain,
-                                          color: greyBorderColor.withOpacity(
-                                            0.7,
-                                          ),
-                                          colorBlendMode: BlendMode.srcATop,
-                                        ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.12,
+                      vertical: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('QUIZ DUEL', style: headlineMediumStyle),
+                          const SizedBox(height: 8),
+                          Text('AI RIVAL', style: titleMediumStyle),
+                          const SizedBox(height: 40),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: (MediaQuery.of(context).size.height * 0.5) - 300,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          final double imageSize = constraints.maxWidth * 0.90;
+                          final double vsOffset = imageSize * 0.25;
+
+                          return Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Positioned(
+                                    top: 4,
+                                    left: 4,
+                                    child: ImageFiltered(
+                                      imageFilter: ImageFilter.blur(
+                                        sigmaX: 8,
+                                        sigmaY: 8,
+                                      ),
+                                      child: Image.asset(
+                                        'assets/images/person_robot.png',
+                                        width: imageSize,
+                                        height: imageSize,
+                                        fit: BoxFit.contain,
+                                        color:
+                                        greyBorderColor.withOpacity(0.7),
+                                        colorBlendMode: BlendMode.srcATop,
                                       ),
                                     ),
-
-                                    Image.asset(
-                                      'assets/images/person_robot.png',
-                                      width: imageSize,
-                                      height: imageSize,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ],
-                                ),
-
-                                Positioned(
-                                  bottom: vsOffset,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: circleWhiteShadowDecoration,
-                                    child: Text(
-                                      'VS',
-                                      style: headlineMediumStyle,
-                                    ),
+                                  ),
+                                  Image.asset(
+                                    'assets/images/person_robot.png',
+                                    width: imageSize,
+                                    height: imageSize,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                              Positioned(
+                                bottom: vsOffset,
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: circleWhiteShadowDecoration,
+                                  child: Text(
+                                    'VS',
+                                    style: headlineMediumStyle,
                                   ),
                                 ),
-                              ],
-                            );
-                          },
-                        ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: _CategoryTile(
+                        title: "General Knowledge",
+                        imagePath: "assets/images/book.png",
+                        interstitialAdController: interstitialAdController,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: _CategoryTile(
+                        title: "Science",
+                        imagePath: "assets/images/search.png",
+                        interstitialAdController: interstitialAdController,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 20,
-                ),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 1.1,
+                const SizedBox(height: 16),
+                Row(
                   children: [
-                    _CategoryTile(
-                      title: "General Knowledge",
-                      imagePath: "assets/images/book.png",
-                      interstitialAdController: interstitialAdController,
+                    Expanded(
+                      child: _CategoryTile(
+                        title: "History",
+                        imagePath: "assets/images/employment-records.png",
+                        interstitialAdController: interstitialAdController,
+                      ),
                     ),
-                    _CategoryTile(
-                      title: "Science",
-                      imagePath: "assets/images/search.png",
-                      interstitialAdController: interstitialAdController,
-                    ),
-                    _CategoryTile(
-                      title: "History",
-                      imagePath: "assets/images/employment-records.png",
-                      interstitialAdController: interstitialAdController,
-                    ),
-                    _CategoryTile(
-                      title: "Word Power",
-                      imagePath: "assets/images/spell-check.png",
-                      interstitialAdController: interstitialAdController,
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: _CategoryTile(
+                        title: "Word Power",
+                        imagePath: "assets/images/spell-check.png",
+                        interstitialAdController: interstitialAdController,
+                      ),
                     ),
                   ],
                 ),
-              ),
+              ],
             ),
+          ),
 
-            /// BANNER AD AREA
-            Obx(() {
-              if (adController.isAdLoaded.value) {
-                return SizedBox(
-                  height: adController.bannerAd.size.height.toDouble(),
-                  width: adController.bannerAd.size.width.toDouble(),
-                  child: AdWidget(ad: adController.bannerAd),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            }),
-          ],
-        ),
+          /// Banner Ad Area
+          Obx(() {
+            if (adController.isAdLoaded.value) {
+              return SizedBox(
+                height: adController.bannerAd.size.height.toDouble(),
+                width: adController.bannerAd.size.width.toDouble(),
+                child: AdWidget(ad: adController.bannerAd),
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          }),
+        ],
       ),
     );
   }
@@ -219,7 +219,7 @@ class _CategoryTile extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (interstitialAdController.isAdLoaded.value) {
-          interstitialAdController.showAd();
+          interstitialAdController.showAdOnce();
         }
         Get.to(() => QuizQuestionPage(category: title));
       },
@@ -236,9 +236,7 @@ class _CategoryTile extends StatelessWidget {
               decoration: skyTransparentBoxDecoration,
               child: Image.asset(imagePath, fit: BoxFit.contain),
             ),
-
             const SizedBox(height: 8),
-
             Text(
               title,
               style: titleSmallStyle,

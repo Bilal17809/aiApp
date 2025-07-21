@@ -25,7 +25,7 @@ class CustomDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image.asset(
-                      'assets/images/person_robot.png',
+                      'assets/images/logo.png',
                       width: 55,
                       height: 55,
                       fit: BoxFit.contain,

@@ -17,6 +17,9 @@ class QuizController extends GetxController {
   final isQuizCompleted = false.obs;
   final RxList<_QuizQuestion> preloadedQuestionQueue = <_QuizQuestion>[].obs;
   final RxString selectedCategory = ''.obs;
+  final RxInt userSelectedIndex = (-1).obs;
+  final RxInt aiCorrectedIndex = (-1).obs;
+
 
 
   @override
@@ -40,6 +43,9 @@ class QuizController extends GetxController {
     wrongAnswersCount.value = 0;
     aiShouldHelp.value = false;
     isQuizCompleted.value = false;
+    userSelectedIndex.value = -1;
+    aiCorrectedIndex.value = -1;
+
 
     try {
       final list = await MistralApiService.fetchQuestions(category, 1);
@@ -75,6 +81,10 @@ class QuizController extends GetxController {
       isQuizCompleted.value = true;
       return;
     }
+    selectedIndex.value = -1;
+    userSelectedIndex.value = -1;
+    aiCorrectedIndex.value = -1;
+    aiMessage.value = '';
 
     if (preloadedQuestionQueue.isNotEmpty) {
       questions.add(preloadedQuestionQueue.removeAt(0));
@@ -126,6 +136,9 @@ class QuizController extends GetxController {
     aiScore.value = 0;
     selectedIndex.value = -1;
     isLoading.value = false;
+    userSelectedIndex.value = -1;
+    aiCorrectedIndex.value = -1;
+
   }
 
   void selectAnswer(int index) {
@@ -133,25 +146,31 @@ class QuizController extends GetxController {
 
     final currentQuestion = questions[currentQuestionIndex.value];
 
+    userSelectedIndex.value = index;
+
     if (aiShouldHelp.value) {
       selectedIndex.value = currentQuestion.answerIndex;
-      userScore.value += 1;
+      aiCorrectedIndex.value = currentQuestion.answerIndex;
+
       final fixMsg = AIFeedbackMessages.getFixMessage();
       aiMessage.value = fixMsg.text;
       SoundPlayer.play(fixMsg.soundPath);
 
+      userScore.value += 1;
       aiShouldHelp.value = false;
       wrongAnswersCount.value = 0;
     } else {
       selectedIndex.value = index;
+      aiCorrectedIndex.value = -1;
 
       if (index == currentQuestion.answerIndex) {
         userScore.value += 1;
+
         final praiseMsg = AIFeedbackMessages.getPraiseMessage();
         aiMessage.value = praiseMsg.text;
         SoundPlayer.play(praiseMsg.soundPath);
       } else {
-        wrongAnswersCount.value++;
+        wrongAnswersCount.value += 1;
         aiScore.value += 1;
 
         final feedback = AIFeedbackMessages.getRandomFeedback();
@@ -169,6 +188,7 @@ class QuizController extends GetxController {
 
     Future.delayed(const Duration(seconds: 3), checkAndFinishQuiz);
   }
+
 }
 
 class _QuizQuestion {

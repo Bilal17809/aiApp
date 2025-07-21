@@ -1,19 +1,22 @@
-import 'package:ai_app/core/bindings/app_binding.dart';
-import 'package:ai_app/presentations/home/view/home_page.dart';
 import 'package:get/get.dart';
-
+import '../../presentations/home/view/home_page.dart';
 import '../../presentations/quiz/view/quiz_result_page.dart';
+import '../../presentations/splash/view/splash_screen.dart';
+import '../bindings/app_binding.dart';
 import 'app_routes.dart';
 
-final List<GetPage> appPages=[
+final List<GetPage> appPages = [
   GetPage(
-      name: AppRoutes.home,
-      page:()=>HomePage(),
-
+    name: AppRoutes.splash,
+    page: () => SplashScreen(),
+  ),
+  GetPage(
+    name: AppRoutes.home,
+    page: () => const HomePage(),
     binding: HomeBinding(),
   ),
   GetPage(
-    name: '/quiz-result',
+    name: AppRoutes.quizResult,
     page: () => const QuizResultPage(),
   ),
 ];

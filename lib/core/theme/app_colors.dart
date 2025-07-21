@@ -70,3 +70,5 @@ const Color whiteShadowColor = Color.fromARGB(51, 255, 255, 255); // 0.2 opacity
 const Color buttonBlueColor = Color(0xFF42A5F5);
 const BorderRadius defaultButtonBorderRadius = BorderRadius.all(Radius.circular(12));
 
+const Color yellowButtonColor = Color(0xFFFDD835); // similar to yellow.shade700
+

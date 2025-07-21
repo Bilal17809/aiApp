@@ -12,9 +12,6 @@ Future<void> main() async {
   Get.put(QuizController());
   await MobileAds.instance.initialize();
 
-  // MobileAds.instance.updateRequestConfiguration(
-  //   RequestConfiguration(testDeviceIds: ['D663F6F540C94E58BF4113EA3A656B54']),
-  // );
 
 
 
@@ -27,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.splash,
       getPages: appPages,
     );
   }
