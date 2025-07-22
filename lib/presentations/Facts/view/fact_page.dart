@@ -1,7 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/core/theme/app_colors.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
+import '../../../core/theme/app_theme.dart';
 import '../controller/fact_controller.dart';
 
 class FactPage extends StatelessWidget {
@@ -10,73 +13,171 @@ class FactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FactController>();
+    final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: skyColor,
-      appBar: AppBar(
-        backgroundColor: skyColor,
-        title: const Text(
-          'Fun Facts',
-          style: titleMediumStyle,
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: kWhite,),
-          onPressed: () => Get.back(),
-        ),
-        elevation: 0,
-      ),
-      body: Obx(() {
-        if (controller.facts.isEmpty) {
-          return const Center(
-              child: CircularProgressIndicator(color: kWhite));
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        Get.offAllNamed(AppRoutes.home);
+        return false;
+      },
+      child: Scaffold(
 
-        return PageView.builder(
-          itemCount: controller.facts.length,
-          onPageChanged: controller.onPageChanged,
-          itemBuilder: (context, index) {
-            final fact = controller.facts[index];
+        backgroundColor: bgColor,
+        body: Obx(() {
+          if (controller.facts.isEmpty) {
+            return const Center(child: CircularProgressIndicator(color: kWhite));
+          }
 
-            return Padding(
-              padding: const EdgeInsets.all(16),
-              child: Center(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.55,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Container(
-                    decoration: roundedDecorationWithShadow,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            fact.category,
-                            style: titleSmallStyle.copyWith(
-                              color: kIndigo,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            fact.fact,
-                            textAlign: TextAlign.center,
-                            style: questiontextStyle.copyWith(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: blackTextColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+          final currentFact = controller.facts[controller.currentPage.value];
+
+          return Stack(
+            children: [
+
+              Positioned(
+                top: -size.width * 0.4,
+                left: -size.width * 0.2,
+                child: Container(
+                  width: size.width * 1.5,
+                  height: size.width * 1.5,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: skyColor,
                   ),
                 ),
               ),
-            );
-          },
-        );
-      }),
+
+              // Main Content
+              Column(
+                children: [
+                  const SizedBox(height: 80),
+
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        currentFact.category,
+                        style: headlineSmallStyle.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+
+                  Expanded(
+                    child: PageView.builder(
+                      controller: controller.pageController,
+                      onPageChanged: controller.onPageChanged,
+                      itemCount: controller.facts.length,
+                      itemBuilder: (context, index) {
+                        final fact = controller.facts[index];
+
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return Container(
+                                margin: const EdgeInsets.only(top: 50, bottom: 30),
+                                padding: const EdgeInsets.all(24),
+                                decoration: roundedDecorationWithShadow.copyWith(
+                                  color: Colors.white,
+                                ),
+                                constraints: BoxConstraints(
+                                  minHeight: size.height * 0.1,
+                                  maxHeight: size.height * 0.32,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: SingleChildScrollView(
+                                        physics: const BouncingScrollPhysics(),
+                                        child: Text(
+                                          fact.fact,
+                                          textAlign: TextAlign.center,
+                                          style: questiontextStyle.copyWith(
+                                            fontSize: 18,
+                                            color: blackTextColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Obx(() => IconButton(
+                                          onPressed: controller.currentPage.value > 0
+                                              ? controller.goToPreviousPage
+                                              : null,
+                                          icon: const Icon(Icons.arrow_back_ios_new),
+                                          color: controller.currentPage.value > 0
+                                              ? kBlack
+                                              : Colors.grey,
+                                          iconSize: 24,
+                                        )),
+                                        Obx(() => IconButton(
+                                          onPressed: controller.currentPage.value <
+                                              controller.facts.length - 1
+                                              ? controller.goToNextPage
+                                              : null,
+                                          icon: const Icon(Icons.arrow_forward_ios),
+                                          color: controller.currentPage.value <
+                                              controller.facts.length - 1
+                                              ? kBlack
+                                              : Colors.grey,
+                                          iconSize: 24,
+                                        )),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+
+
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
+                  Obx(() {
+                    final totalDots = min(6, controller.facts.length);
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(totalDots, (dotIndex) {
+                        final realIndex = controller.currentPage.value % totalDots;
+                        return AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          height: 8,
+                          width: realIndex == dotIndex ? 20 : 8,
+                          decoration: BoxDecoration(
+                            color: realIndex == dotIndex ? skyColor : greyColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        );
+                      }),
+                    );
+                  }),
+
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+
+
+
+
+                ],
+              ),
+            ],
+          );
+        }),
+      ),
     );
   }
 }

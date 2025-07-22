@@ -173,4 +173,39 @@ const TextStyle questiontextStyle = TextStyle(  // use in Question Text
 );
 
 
+final BoxDecoration funFactsCardGradientDecoration = BoxDecoration(
+  borderRadius: BorderRadius.circular(24),
+  gradient: LinearGradient(
+    begin: Alignment.bottomRight,
+    end: Alignment.topLeft,
+    colors: [
+
+      skyColor,
+      skyColor,
+
+    ],
+  ),
+);
+
+
+// Used for the circular icon behind the image in the card
+final BoxDecoration funFactsCircleIconDecoration = BoxDecoration(
+  shape: BoxShape.circle,
+  color: kWhite,
+  boxShadow: [
+    BoxShadow(
+      color: kBlack,
+      blurRadius: 4,
+      offset: Offset(0, 2),
+    ),
+  ],
+  border: Border.all(
+    color: skyColor,
+    width: 2,
+  ),
+);
+
+
+
+
 

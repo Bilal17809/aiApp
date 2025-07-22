@@ -40,12 +40,12 @@ class HomePage extends GetView<HomeController> {
           ClipPath(
             clipper: BottomCurveClipper(),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.50,
+              height: MediaQuery.of(context).size.height * 0.45,
               color: skyColor,
               child: Stack(
                 children: [
                   Positioned(
-                    left: MediaQuery.of(context).size.width * 0.05,
+                    left: MediaQuery.of(context).size.width * 0.01,
                     top: MediaQuery.of(context).size.height * 0.06,
                     child: Builder(
                       builder: (context) => IconButton(
@@ -59,8 +59,8 @@ class HomePage extends GetView<HomeController> {
 
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.12,
-                      vertical: MediaQuery.of(context).size.height * 0.04,
+                      horizontal: MediaQuery.of(context).size.width * 0.15,
+                      vertical: MediaQuery.of(context).size.height * 0.07,
                     ),
                     child: Align(
                       alignment: Alignment.topCenter,
@@ -76,13 +76,13 @@ class HomePage extends GetView<HomeController> {
                     ),
                   ),
                   Positioned(
-                    top: (MediaQuery.of(context).size.height * 0.5) - 300,
+                    top: (MediaQuery.of(context).size.height * 0.5) - 280,
                     left: 0,
                     right: 0,
                     child: Center(
                       child: LayoutBuilder(
                         builder: (context, constraints) {
-                          final double imageSize = constraints.maxWidth * 0.90;
+                          final double imageSize = constraints.maxWidth * 0.70;
                           final double vsOffset = imageSize * 0.25;
 
                           return Stack(
@@ -121,11 +121,11 @@ class HomePage extends GetView<HomeController> {
                               Positioned(
                                 bottom: vsOffset,
                                 child: Container(
-                                  padding: const EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(5),
                                   decoration: circleWhiteShadowDecoration,
                                   child: Text(
                                     'VS',
-                                    style: headlineMediumStyle,
+                                    style: headlineMediumStyle.copyWith(fontSize: 25),
                                   ),
                                 ),
                               ),
@@ -140,7 +140,7 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: Column(
               children: [
                 Row(
@@ -148,7 +148,7 @@ class HomePage extends GetView<HomeController> {
                     Expanded(
                       child: _CategoryTile(
                         title: "General Knowledge",
-                        imagePath: "assets/images/book.png",
+                        imagePath: "assets/images/General Knowledge.png",
                         interstitialAdController: interstitialAdController,
                       ),
                     ),
@@ -156,7 +156,7 @@ class HomePage extends GetView<HomeController> {
                     Expanded(
                       child: _CategoryTile(
                         title: "Science",
-                        imagePath: "assets/images/search.png",
+                        imagePath: "assets/images/science.png",
                         interstitialAdController: interstitialAdController,
                       ),
                     ),
@@ -168,7 +168,7 @@ class HomePage extends GetView<HomeController> {
                     Expanded(
                       child: _CategoryTile(
                         title: "History",
-                        imagePath: "assets/images/employment-records.png",
+                        imagePath: "assets/images/history.png",
                         interstitialAdController: interstitialAdController,
                       ),
                     ),
@@ -176,7 +176,7 @@ class HomePage extends GetView<HomeController> {
                     Expanded(
                       child: _CategoryTile(
                         title: "Word Power",
-                        imagePath: "assets/images/spell-check.png",
+                        imagePath: "assets/images/wordpower.png",
                         interstitialAdController: interstitialAdController,
                       ),
                     ),
@@ -186,12 +186,78 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
 
-          ElevatedButton(
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               Get.offAllNamed(AppRoutes.facts);
             },
-            child: const Text("View Fun Facts"),
+            child: Center(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final maxWidth = MediaQuery.of(context).size.width * 0.9;
+                  final height = MediaQuery.of(context).size.height * 0.8;
+
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      height: height * 0.13,
+                      width: maxWidth,
+                      padding: const EdgeInsets.all(12),
+                      decoration: funFactsCardGradientDecoration,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: height * 0.075,
+                            width: height * 0.075,
+                            decoration: funFactsCircleIconDecoration,
+                            padding: const EdgeInsets.all(6),
+                            child: Image.asset(
+                              'assets/images/fact.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+
+                          const SizedBox(width: 16),
+
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Fun Facts',
+                                  style: titleSmallStyle
+
+                                ),
+                                const SizedBox(height: 2),
+                                Flexible(
+                                  child: Text(
+                                    'Explore amazing facts across categories',
+                                    style: questiontextStyle.copyWith(
+                                      fontSize: 12,
+                                      color: kBlack.withOpacity(0.9),
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
+
+
+
 
           Obx(() {
             if (adController.isAdLoaded.value) {
@@ -209,7 +275,6 @@ class HomePage extends GetView<HomeController> {
     );
   }
 }
-
 class _CategoryTile extends StatelessWidget {
   final String title;
   final String imagePath;
@@ -230,30 +295,52 @@ class _CategoryTile extends StatelessWidget {
         }
         Get.to(() => QuizQuestionPage(category: title));
       },
-      child: Container(
-        decoration: roundedDecorationWithShadow,
-        padding: const EdgeInsets.all(18),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 70,
-              width: 70,
-              padding: const EdgeInsets.all(8),
-              decoration: skyTransparentBoxDecoration,
-              child: Image.asset(imagePath, fit: BoxFit.contain),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final width = constraints.maxWidth;
+          final outerSize = width;
+
+          return Container(
+            height: outerSize * 0.8,
+            width: outerSize * 0.8,
+            decoration: roundedDecorationWithShadow,
+            padding:const EdgeInsets.only(
+              left: 8,
+              right: 8,
+              top: 16,
+              bottom: 8
+
             ),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: titleSmallStyle,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: outerSize * 0.45,
+                  width: outerSize * 0.45,
+                  padding: const EdgeInsets.all(8),
+                  decoration: skyTransparentBoxDecoration,
+                  child: Image.asset(
+                    imagePath,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Flexible(
+                  child: Text(
+                    title,
+                    style: titleSmallStyle,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 }
+
+
