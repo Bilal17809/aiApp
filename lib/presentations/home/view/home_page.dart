@@ -298,6 +298,7 @@ class _CategoryTile extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (interstitialAdController.isAdLoaded.value) {
+          interstitialAdController.resetAdFlag();
           interstitialAdController.showAdOnce();
         }
         Get.to(() => QuizQuestionPage(category: title));
