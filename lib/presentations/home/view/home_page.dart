@@ -1,9 +1,10 @@
 import 'dart:ui';
 import 'package:ai_app/presentations/pages.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:lottie/lottie.dart';
 import '../../../core/routes/app_routes.dart';
-import '../../Banner/banner_ad_controller.dart';
-import '../../Banner/interstitial_ad_controller.dart';
+import '../../Ads/Banner/controller/banner_ad_controller.dart';
+import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../../Drawer/view/customdrawer.dart';
 import '../../home/controller/home_contrl.dart';
 import 'package:flutter/material.dart';
@@ -185,7 +186,6 @@ class HomePage extends GetView<HomeController> {
               ],
             ),
           ),
-
           GestureDetector(
             onTap: () {
               Get.offAllNamed(AppRoutes.facts);
@@ -196,65 +196,72 @@ class HomePage extends GetView<HomeController> {
                   final maxWidth = MediaQuery.of(context).size.width * 0.9;
                   final height = MediaQuery.of(context).size.height * 0.8;
 
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    elevation: 4,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    child: Container(
-                      height: height * 0.13,
-                      width: maxWidth,
-                      padding: const EdgeInsets.all(12),
-                      decoration: funFactsCardGradientDecoration,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: height * 0.075,
-                            width: height * 0.075,
-                            decoration: funFactsCircleIconDecoration,
-                            padding: const EdgeInsets.all(6),
-                            child: Image.asset(
-                              'assets/images/fact.png',
-                              fit: BoxFit.contain,
-                            ),
+                  return Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      // Main card
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: Container(
+                          height: height * 0.13,
+                          width: maxWidth,
+                          padding: EdgeInsets.only(
+                            left: height * 0.1 + 12,
+                            right: 12,
+                            top: 12,
+                            bottom: 12,
                           ),
-
-                          const SizedBox(width: 16),
-
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Fun Facts',
-                                  style: titleSmallStyle
-
+                          decoration: funFactsCardGradientDecoration,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Fun Facts',
+                                style: titleSmallStyle.copyWith(
+                                  fontSize: 20,
+                                  color: kWhite,
                                 ),
-                                const SizedBox(height: 2),
-                                Flexible(
-                                  child: Text(
-                                    'Explore amazing facts across categories',
-                                    style: questiontextStyle.copyWith(
-                                      fontSize: 12,
-                                      color: kBlack.withOpacity(0.9),
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Explore amazing facts across categories',
+                                style: questiontextStyle.copyWith(
+                                  fontSize: 12,
+                                  color: kWhite.withOpacity(0.9),
                                 ),
-                              ],
-                            ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+
+
+                      Positioned(
+                        left: -20,
+                        top: -height * 0.01,
+                        child: SizedBox(
+                          height: height * 0.18,
+                          width: height * 0.18,
+                          child: Lottie.asset(
+                            'assets/images/factMedal.json',
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),
             ),
           ),
+
 
 
 

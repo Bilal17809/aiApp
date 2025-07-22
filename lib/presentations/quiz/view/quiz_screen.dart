@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/audio_player.dart';
-import '../../Banner/interstitial_ad_controller.dart';
+import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../controller/quiz_controller.dart';
 
 class QuizQuestionPage extends StatelessWidget {
@@ -17,7 +17,6 @@ class QuizQuestionPage extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.resetQuiz();
       adController.showAdOnce();
-
 
       controller.loadQuestions(category);
 
@@ -41,9 +40,6 @@ class QuizQuestionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        adController.resetAdFlag();
-        adController.showAdOnce();
-
         Get.delete<QuizController>(tag: category);
         controller.resetQuiz();
         SoundPlayer.stop();
@@ -187,27 +183,46 @@ class QuizQuestionPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 30),
                         ...List.generate(question.options.length, (index) {
-                          final hasAnswered = controller.selectedIndex.value != -1;
+                          final hasAnswered =
+                              controller.selectedIndex.value != -1;
                           final isCorrect = index == question.answerIndex;
-                          final isUserSelected = controller.userSelectedIndex.value == index;
-                          final isAiCorrected = controller.aiCorrectedIndex.value == index;
+                          final isUserSelected =
+                              controller.userSelectedIndex.value == index;
+                          final isAiCorrected =
+                              controller.aiCorrectedIndex.value == index;
 
                           Color bgColor = getOptionColor(index);
                           Widget? trailingIcon;
 
                           if (hasAnswered) {
-                            if (isAiCorrected && index == controller.aiCorrectedIndex.value) {
-                              trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
+                            if (isAiCorrected &&
+                                index == controller.aiCorrectedIndex.value) {
+                              trailingIcon = const Icon(
+                                Icons.check,
+                                color: kMediumGreen2,
+                              );
                             } else if (isUserSelected &&
                                 index == controller.userSelectedIndex.value &&
-                                controller.userSelectedIndex.value != controller.aiCorrectedIndex.value) {
-                              trailingIcon = const Icon(Icons.close, color: kRed);
-                            } else if (index == controller.selectedIndex.value &&
+                                controller.userSelectedIndex.value !=
+                                    controller.aiCorrectedIndex.value) {
+                              trailingIcon = const Icon(
+                                Icons.close,
+                                color: kRed,
+                              );
+                            } else if (index ==
+                                    controller.selectedIndex.value &&
                                 index == question.answerIndex) {
-                              trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
-                            } else if (index == controller.selectedIndex.value &&
+                              trailingIcon = const Icon(
+                                Icons.check,
+                                color: kMediumGreen2,
+                              );
+                            } else if (index ==
+                                    controller.selectedIndex.value &&
                                 index != question.answerIndex) {
-                              trailingIcon = const Icon(Icons.close, color: kRed);
+                              trailingIcon = const Icon(
+                                Icons.close,
+                                color: kRed,
+                              );
                             }
                           }
 
@@ -215,7 +230,10 @@ class QuizQuestionPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GestureDetector(
-                                onTap: !hasAnswered ? () => controller.selectAnswer(index) : null,
+                                onTap:
+                                    !hasAnswered
+                                        ? () => controller.selectAnswer(index)
+                                        : null,
                                 child: Container(
                                   width: double.infinity,
                                   margin: const EdgeInsets.only(bottom: 14),
@@ -223,10 +241,11 @@ class QuizQuestionPage extends StatelessWidget {
                                     vertical: 14,
                                     horizontal: 20,
                                   ),
-                                  decoration:
-                                  roundedgreyBorderDecoration.copyWith(color: bgColor),
+                                  decoration: roundedgreyBorderDecoration
+                                      .copyWith(color: bgColor),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Flexible(
                                         child: Text(
@@ -240,9 +259,22 @@ class QuizQuestionPage extends StatelessWidget {
                                 ),
                               ),
                               if (hasAnswered &&
-                                  ((isUserSelected && controller.userSelectedIndex.value != controller.aiCorrectedIndex.value && index == controller.userSelectedIndex.value) ||
-                                      (isAiCorrected && index == controller.aiCorrectedIndex.value) ||
-                                      (index == controller.selectedIndex.value)))
+                                  ((isUserSelected &&
+                                          controller.userSelectedIndex.value !=
+                                              controller
+                                                  .aiCorrectedIndex
+                                                  .value &&
+                                          index ==
+                                              controller
+                                                  .userSelectedIndex
+                                                  .value) ||
+                                      (isAiCorrected &&
+                                          index ==
+                                              controller
+                                                  .aiCorrectedIndex
+                                                  .value) ||
+                                      (index ==
+                                          controller.selectedIndex.value)))
                                 Padding(
                                   padding: const EdgeInsets.only(
                                     bottom: 8,
@@ -253,7 +285,10 @@ class QuizQuestionPage extends StatelessWidget {
                                         ? "Correct ✅"
                                         : "Wrong ❌",
                                     style: TextStyle(
-                                      color: (isCorrect || isAiCorrected) ? kMediumGreen2 : kRed,
+                                      color:
+                                          (isCorrect || isAiCorrected)
+                                              ? kMediumGreen2
+                                              : kRed,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
                                     ),
@@ -262,8 +297,6 @@ class QuizQuestionPage extends StatelessWidget {
                             ],
                           );
                         }),
-
-
                       ],
                     ),
                   ),
@@ -276,7 +309,6 @@ class QuizQuestionPage extends StatelessWidget {
     );
   }
 
-
   Color getOptionColor(int index) {
     final quiz = Get.find<QuizController>();
     final question = quiz.questions[quiz.currentQuestionIndex.value];
@@ -285,19 +317,19 @@ class QuizQuestionPage extends StatelessWidget {
     final userSelected = quiz.userSelectedIndex.value;
     final aiCorrected = quiz.aiCorrectedIndex.value;
 
-
     if (aiCorrected != -1) {
       if (index == aiCorrected) return kMediumGreen2.withAlpha(50);
-      if (index == userSelected && userSelected != aiCorrected) return kRed.withAlpha(50);
+      if (index == userSelected && userSelected != aiCorrected)
+        return kRed.withAlpha(50);
     }
 
-
     if (selected != -1) {
-      if (index == selected && index == question.answerIndex) return kMediumGreen2.withAlpha(50);
-      if (index == selected && index != question.answerIndex) return kRed.withAlpha(50);
+      if (index == selected && index == question.answerIndex)
+        return kMediumGreen2.withAlpha(50);
+      if (index == selected && index != question.answerIndex)
+        return kRed.withAlpha(50);
     }
 
     return kWhite;
   }
-
 }

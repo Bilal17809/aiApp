@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../core/common_wgt/native_ad_widget.dart';
 import '../../../core/routes/app_routes.dart';
-import '../../home/view/home_page.dart';
+import '../../Ads/native/controller/native_ad_controller.dart';
 import '../controller/splash_controller.dart';
 import '../../../core/theme/app_colors.dart';
 
@@ -146,6 +147,9 @@ class SplashScreen extends StatelessWidget {
               }),
 
               SizedBox(height: size.height * 0.05),
+              //const NativeAdWidget(sizeType: NativeAdSizeType.medium),
+
+
             ],
           ),
         ],

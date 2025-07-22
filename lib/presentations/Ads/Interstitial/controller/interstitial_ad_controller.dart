@@ -4,9 +4,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class InterstitialAdController extends GetxController {
   InterstitialAd? _interstitialAd;
   var isAdLoaded = false.obs;
-  bool hasAdShown = false; // ✅ Prevent repeat showing
+  bool hasAdShown = false;
 
-  final String adUnitId = 'ca-app-pub-3940256099942544/1033173712'; // ✅ test ad
+  final String adUnitId = 'ca-app-pub-3940256099942544/1033173712';
 
   @override
   void onInit() {
@@ -51,7 +51,7 @@ class InterstitialAdController extends GetxController {
   }
 
   void resetAdFlag() {
-    hasAdShown = false; // Call this if you want to show ad again later
+    hasAdShown = false;
   }
 
   @override

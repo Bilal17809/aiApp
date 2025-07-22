@@ -174,7 +174,7 @@ const TextStyle questiontextStyle = TextStyle(  // use in Question Text
 
 
 final BoxDecoration funFactsCardGradientDecoration = BoxDecoration(
-  borderRadius: BorderRadius.circular(24),
+  borderRadius: BorderRadius.circular(16),
   gradient: LinearGradient(
     begin: Alignment.bottomRight,
     end: Alignment.topLeft,
