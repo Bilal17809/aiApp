@@ -4,8 +4,14 @@ import 'package:get/get.dart';
 import 'package:ai_app/core/theme/app_colors.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
+import '../../../core/theme/app_theme.dart';
 import '../controller/fact_controller.dart';
 
+> define this in content file just call and use here
+height: MediaQuery.of(context).size.height
+
+inside the constant check there is already body height define, use it
+*/
 class FactPage extends StatelessWidget {
   const FactPage({super.key});
 
@@ -20,6 +26,7 @@ class FactPage extends StatelessWidget {
         return false;
       },
       child: Scaffold(
+
         backgroundColor: bgColor,
         body: Obx(() {
           if (controller.facts.isEmpty) {
@@ -62,6 +69,7 @@ class FactPage extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 30),
+
 
                   Expanded(
                     child: PageView.builder(
@@ -165,6 +173,8 @@ class FactPage extends StatelessWidget {
                             },
                           ),
                         );
+
+
                       },
                     ),
                   ),
@@ -193,6 +203,10 @@ class FactPage extends StatelessWidget {
                   }),
 
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+
+
+
+
                 ],
               ),
             ],

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'dart:async';
-
+/*
+ This is possible with one Function
+*/
 class SplashController extends GetxController {
   var showButton = false.obs;
   var vsVisible = false.obs;

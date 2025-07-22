@@ -6,7 +6,15 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/audio_player.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../controller/quiz_controller.dart';
+/*
+this file code is not accepted.
+ define all color in theme, just use here/
+ why we need this  WidgetsBinding.instance.addPostFrameCallback????/
 
+ for good hierarchy make private stateless class below/
+  expended-Single will be in separate stateless class
+
+*/
 class QuizQuestionPage extends StatelessWidget {
   final String category;
   final adController = Get.find<InterstitialAdController>();
@@ -297,6 +305,8 @@ class QuizQuestionPage extends StatelessWidget {
                             ],
                           );
                         }),
+
+
                       ],
                     ),
                   ),
@@ -309,6 +319,7 @@ class QuizQuestionPage extends StatelessWidget {
     );
   }
 
+
   Color getOptionColor(int index) {
     final quiz = Get.find<QuizController>();
     final question = quiz.questions[quiz.currentQuestionIndex.value];
@@ -316,6 +327,7 @@ class QuizQuestionPage extends StatelessWidget {
     final selected = quiz.selectedIndex.value;
     final userSelected = quiz.userSelectedIndex.value;
     final aiCorrected = quiz.aiCorrectedIndex.value;
+
 
     if (aiCorrected != -1) {
       if (index == aiCorrected) return kMediumGreen2.withAlpha(50);

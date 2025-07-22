@@ -8,7 +8,17 @@ import '../../../core/routes/app_routes.dart';
 import '../../Ads/native/controller/native_ad_controller.dart';
 import '../controller/splash_controller.dart';
 import '../../../core/theme/app_colors.dart';
+/*
+Already use them then why you use color here?????
+ TextStyle(
+                              color: blackTextColor,
+                              fontSize: size.width * 0.05,
+                              fontWeight: FontWeight.bold,
+                            ),
 
+
+ note correct this all this code not accepted!
+*/
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
 

@@ -6,7 +6,10 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import '../controller/quiz_controller.dart';
 import 'package:lottie/lottie.dart';
+/*
+don't return widget use stateless class
 
+*/
 class QuizResultPage extends StatelessWidget {
   const QuizResultPage({super.key});
 

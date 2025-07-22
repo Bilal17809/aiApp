@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 import 'package:ai_app/data/services/mistral_api_service.dart';
 import 'package:ai_app/core/common_wgt/ai_feedback_messages.dart';
-
 import '../../../core/utils/audio_player.dart';
+
+/*
+Make this controller short as well as you can
+remove unnecessary code condition
+*/
 
 class QuizController extends GetxController {
   final RxList<_QuizQuestion> questions = <_QuizQuestion>[].obs;
@@ -19,13 +23,6 @@ class QuizController extends GetxController {
   final RxString selectedCategory = ''.obs;
   final RxInt userSelectedIndex = (-1).obs;
   final RxInt aiCorrectedIndex = (-1).obs;
-
-
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<void> loadQuestions(String category) async {
     if (isLoading.value) return;
