@@ -5,7 +5,6 @@ import '../../../core/common_wgt/elevated_button.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../quiz_screen/controller/quiz_controller.dart';
 
 class QuizResultPage extends StatelessWidget {
