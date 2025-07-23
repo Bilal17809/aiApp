@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:ai_app/core/constants/constants.dart';
 import 'package:ai_app/presentations/pages.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart';
@@ -12,8 +13,9 @@ import 'package:get/get.dart';
 import '../../../core/common_wgt/bottom_curve_clipper.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_styles.dart';
-import '../../quiz/view/quiz_screen.dart';
 import 'package:ai_app/core/utils/network_utils.dart';
+
+import '../../quiz_screen/view/quiz_screen.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -41,13 +43,13 @@ class HomePage extends GetView<HomeController> {
           ClipPath(
             clipper: BottomCurveClipper(),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: mobileHeight(context) * 0.45,
               color: skyColor,
               child: Stack(
                 children: [
                   Positioned(
-                    left: MediaQuery.of(context).size.width * 0.01,
-                    top: MediaQuery.of(context).size.height * 0.06,
+                    left: mobileWidth(context) * 0.01,
+                    top: mobileHeight(context) * 0.06,
                     child: Builder(
                       builder: (context) => IconButton(
                         icon: const Icon(Icons.menu, color: Colors.white),
@@ -60,8 +62,8 @@ class HomePage extends GetView<HomeController> {
 
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.15,
-                      vertical: MediaQuery.of(context).size.height * 0.07,
+                      horizontal: mobileWidth(context)* 0.15,
+                      vertical: mobileHeight(context) * 0.07,
                     ),
                     child: Align(
                       alignment: Alignment.topCenter,
@@ -77,7 +79,7 @@ class HomePage extends GetView<HomeController> {
                     ),
                   ),
                   Positioned(
-                    top: (MediaQuery.of(context).size.height * 0.5) - 280,
+                    top: (mobileHeight(context)* 0.5) - 280,
                     left: 0,
                     right: 0,
                     child: Center(
@@ -193,8 +195,8 @@ class HomePage extends GetView<HomeController> {
             child: Center(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final maxWidth = MediaQuery.of(context).size.width * 0.9;
-                  final height = MediaQuery.of(context).size.height * 0.8;
+                  final maxWidth = mobileWidth(context) * 0.9;
+                  final height = mobileHeight(context) * 0.8;
 
                   return Stack(
                     clipBehavior: Clip.none,

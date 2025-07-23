@@ -2,9 +2,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/core/theme/app_colors.dart';
+import '../../../core/constants/constants.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import '../controller/fact_controller.dart';
+
 
 class FactPage extends StatelessWidget {
   const FactPage({super.key});
@@ -12,12 +14,13 @@ class FactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FactController>();
-    final size = MediaQuery.of(context).size;
 
-    return WillPopScope(
-      onWillPop: () async {
-        Get.offAllNamed(AppRoutes.home);
-        return false;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop,value) {
+        if (!didPop) {
+          Get.offAllNamed(AppRoutes.home);
+        }
       },
       child: Scaffold(
         backgroundColor: bgColor,
@@ -33,11 +36,11 @@ class FactPage extends StatelessWidget {
           return Stack(
             children: [
               Positioned(
-                top: -size.width * 0.4,
-                left: -size.width * 0.2,
+                top: -screenSize(context).width * 0.4,
+                left: -screenSize(context).width * 0.2,
                 child: Container(
-                  width: size.width * 1.5,
-                  height: size.width * 1.5,
+                  width: screenSize(context).width * 1.5,
+                  height: screenSize(context).width * 1.5,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: skyColor,
@@ -84,8 +87,8 @@ class FactPage extends StatelessWidget {
                                 decoration: roundedDecorationWithShadow
                                     .copyWith(color: Colors.white),
                                 constraints: BoxConstraints(
-                                  minHeight: size.height * 0.1,
-                                  maxHeight: size.height * 0.32,
+                                  minHeight: screenSize(context).height * 0.1,
+                                  maxHeight: screenSize(context).height * 0.32,
                                 ),
                                 child: Column(
                                   mainAxisAlignment:
@@ -127,7 +130,7 @@ class FactPage extends StatelessWidget {
                                             color:
                                                 controller.currentPage.value > 0
                                                     ? kBlack
-                                                    : Colors.grey,
+                                                    : greyColor,
                                             iconSize: 24,
                                           ),
 
@@ -153,7 +156,7 @@ class FactPage extends StatelessWidget {
                                                 controller.currentPage.value <
                                                         total - 1
                                                     ? kBlack
-                                                    : Colors.grey,
+                                                    : greyColor,
                                             iconSize: 24,
                                           ),
                                         ],
@@ -169,7 +172,7 @@ class FactPage extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  SizedBox(height: mobileHeight(context) * 0.05),
 
                   Obx(() {
                     final totalDots = min(6, controller.facts.length);
@@ -183,16 +186,13 @@ class FactPage extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(horizontal: 4),
                           height: 8,
                           width: realIndex == dotIndex ? 20 : 8,
-                          decoration: BoxDecoration(
-                            color: realIndex == dotIndex ? skyColor : greyColor,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
+                          decoration:getDotDecoration(realIndex == dotIndex),
                         );
                       }),
                     );
                   }),
 
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                  SizedBox(height: mobileHeight(context) * 0.04),
                 ],
               ),
             ],

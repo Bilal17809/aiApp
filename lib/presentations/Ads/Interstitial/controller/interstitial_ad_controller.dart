@@ -46,7 +46,7 @@ class InterstitialAdController extends GetxController {
     );
 
     _interstitialAd!.show();
-    hasAdShown = true; // ✅ Prevent future shows
+    hasAdShown = true;
     isAdLoaded.value = false;
   }
 

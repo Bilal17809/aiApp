@@ -1,12 +1,20 @@
-import 'package:ai_app/presentations/quiz/view/quiz_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/audio_player.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
+import '../../quiz_result_screen/view/quiz_result_page.dart';
 import '../controller/quiz_controller.dart';
+/*
+this file code is not accepted.
+ define all color in theme, just use here/
+ why we need this  WidgetsBinding.instance.addPostFrameCallback????/
 
+ for good hierarchy make private stateless class below/
+  expended-Single will be in separate stateless class
+
+*/
 class QuizQuestionPage extends StatelessWidget {
   final String category;
   final adController = Get.find<InterstitialAdController>();
@@ -14,9 +22,10 @@ class QuizQuestionPage extends StatelessWidget {
   QuizQuestionPage({super.key, required this.category}) {
     final controller = Get.find<QuizController>();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_)
+    {
       controller.resetQuiz();
-      adController.showAdOnce();
+      //adController.showAdOnce();
 
       controller.loadQuestions(category);
 
@@ -31,20 +40,24 @@ class QuizQuestionPage extends StatelessWidget {
           });
         }
       });
-    });
+    }
+    );
   }
 
   final controller = Get.find<QuizController>();
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Get.delete<QuizController>(tag: category);
-        controller.resetQuiz();
-        SoundPlayer.stop();
+    return PopScope(
+      canPop: false,
+        onPopInvokedWithResult: (didPop,value) {
+          if (!didPop) {
+            Get.delete<QuizController>(tag: category);
+            controller.resetQuiz();
+            SoundPlayer.stop();
+          }
 
-        return true;
+
       },
       child: Obx(() {
         if (controller.isLoading.value) {
@@ -54,9 +67,8 @@ class QuizQuestionPage extends StatelessWidget {
         }
 
         if (controller.questions.isEmpty) {
-          return const Scaffold(
-            body: Center(child: Text("No questions available")),
-          );
+          return const
+           Center(child: Text("No questions available"));
         }
 
         final question =
@@ -195,36 +207,23 @@ class QuizQuestionPage extends StatelessWidget {
                           Widget? trailingIcon;
 
                           if (hasAnswered) {
-                            if (isAiCorrected &&
-                                index == controller.aiCorrectedIndex.value) {
-                              trailingIcon = const Icon(
-                                Icons.check,
-                                color: kMediumGreen2,
-                              );
-                            } else if (isUserSelected &&
-                                index == controller.userSelectedIndex.value &&
-                                controller.userSelectedIndex.value !=
-                                    controller.aiCorrectedIndex.value) {
-                              trailingIcon = const Icon(
-                                Icons.close,
-                                color: kRed,
-                              );
-                            } else if (index ==
-                                    controller.selectedIndex.value &&
-                                index == question.answerIndex) {
-                              trailingIcon = const Icon(
-                                Icons.check,
-                                color: kMediumGreen2,
-                              );
-                            } else if (index ==
-                                    controller.selectedIndex.value &&
-                                index != question.answerIndex) {
-                              trailingIcon = const Icon(
-                                Icons.close,
-                                color: kRed,
-                              );
+
+                            if (isUserSelected && index == question.answerIndex) {
+                              trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
+                            }
+
+                            else if (isAiCorrected && index == controller.aiCorrectedIndex.value) {
+                              trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
+                            }
+
+                            else if (isUserSelected && index == controller.userSelectedIndex.value) {
+                              trailingIcon = const Icon(Icons.close, color: kRed);
                             }
                           }
+
+
+
+
 
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -297,6 +296,8 @@ class QuizQuestionPage extends StatelessWidget {
                             ],
                           );
                         }),
+
+
                       ],
                     ),
                   ),
@@ -309,6 +310,7 @@ class QuizQuestionPage extends StatelessWidget {
     );
   }
 
+
   Color getOptionColor(int index) {
     final quiz = Get.find<QuizController>();
     final question = quiz.questions[quiz.currentQuestionIndex.value];
@@ -316,6 +318,7 @@ class QuizQuestionPage extends StatelessWidget {
     final selected = quiz.selectedIndex.value;
     final userSelected = quiz.userSelectedIndex.value;
     final aiCorrected = quiz.aiCorrectedIndex.value;
+
 
     if (aiCorrected != -1) {
       if (index == aiCorrected) return kMediumGreen2.withAlpha(50);

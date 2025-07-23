@@ -85,7 +85,7 @@ final BoxDecoration roundedDecorationWithShadow = BoxDecoration( // use in categ
     ),
   ],
 );
-final BoxDecoration roundedDecoration = BoxDecoration(  // use for Ai message value on quiz screen
+final BoxDecoration roundedDecoration = BoxDecoration(  // use for Ai message value on quiz_screen screen
   color: Colors.white,
   borderRadius: BorderRadius.circular(10),
   boxShadow: [
@@ -203,6 +203,13 @@ final BoxDecoration funFactsCircleIconDecoration = BoxDecoration(
     color: skyColor,
     width: 2,
   ),
+);
+
+
+//use in fact pages for dots
+BoxDecoration getDotDecoration(bool isActive) => BoxDecoration(
+  color: isActive ? skyColor : greyColor,
+  borderRadius: BorderRadius.circular(8),
 );
 
 

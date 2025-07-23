@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import '../../presentations/Facts/bindings/fact_binding.dart';
 import '../../presentations/Facts/view/fact_page.dart';
 import '../../presentations/home/view/home_page.dart';
-import '../../presentations/quiz/view/quiz_result_page.dart';
+import '../../presentations/quiz_result_screen/view/quiz_result_page.dart';
 import '../../presentations/splash/view/splash_screen.dart';
 import '../bindings/app_binding.dart';
 import 'app_routes.dart';

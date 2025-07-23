@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import '../../../core/common_wgt/elevated_button.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
-import '../controller/quiz_controller.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../quiz_screen/controller/quiz_controller.dart';
 
 class QuizResultPage extends StatelessWidget {
   const QuizResultPage({super.key});
@@ -43,13 +44,13 @@ class QuizResultPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _scoreCard(
+                      _ScoreCard(
                         title: 'You',
                         image: 'assets/images/man-avatar_home_Screen.png',
                         score: controller.userScore.value,
                       ),
                       const Text('VS', style: titleLargeStyle),
-                      _scoreCard(
+                      _ScoreCard(
                         title: 'AI',
                         image: 'assets/images/robot-assistant.png',
                         score: controller.aiScore.value,
@@ -84,11 +85,21 @@ class QuizResultPage extends StatelessWidget {
     );
   }
 
-  Widget _scoreCard({
-    required String title,
-    required String image,
-    required int score,
-  }) {
+}
+
+class _ScoreCard extends StatelessWidget {
+  final String title;
+  final String image;
+  final int score;
+
+  const _ScoreCard({
+    required this.title,
+    required this.image,
+    required this.score,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         CircleAvatar(backgroundImage: AssetImage(image), radius: 40),
@@ -103,3 +114,4 @@ class QuizResultPage extends StatelessWidget {
     );
   }
 }
+
