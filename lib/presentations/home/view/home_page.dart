@@ -13,30 +13,31 @@ import 'package:get/get.dart';
 import '../../../core/common_wgt/bottom_curve_clipper.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_styles.dart';
-import 'package:ai_app/core/utils/network_utils.dart';
+
 
 import '../../quiz_screen/view/quiz_screen.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
 
+
+
+
   @override
   Widget build(BuildContext context) {
     final BannerAdController adController = Get.put(BannerAdController());
     final interstitialAdController = Get.put(InterstitialAdController());
+    final HomeController controller = Get.put(HomeController());
+    var isDrawerOpen = false.obs;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      NetworkUtils.checkInternet(context);
 
-      await Future.delayed(const Duration(seconds: 1));
 
-      if (interstitialAdController.isAdLoaded.value) {
-        interstitialAdController.showAdOnce();
-      }
-    });
 
     return Scaffold(
       drawer: const CustomDrawer(),
+      onDrawerChanged: (isOpen) {
+        isDrawerOpen.value = isOpen;
+      },
       extendBodyBehindAppBar: true,
       body: Column(
         children: [
@@ -150,7 +151,7 @@ class HomePage extends GetView<HomeController> {
                   children: [
                     Expanded(
                       child: _CategoryTile(
-                        title: "General Knowledge",
+                        title: "GK",
                         imagePath: "assets/images/General Knowledge.png",
                         interstitialAdController: interstitialAdController,
                       ),
@@ -269,6 +270,8 @@ class HomePage extends GetView<HomeController> {
 
 
           Obx(() {
+            if (isDrawerOpen.value) return const SizedBox.shrink();
+
             if (adController.isAdLoaded.value) {
               return SizedBox(
                 height: adController.bannerAd.size.height.toDouble(),
@@ -301,6 +304,7 @@ class _CategoryTile extends StatelessWidget {
       onTap: () async {
         if (interstitialAdController.isAdLoaded.value) {
           interstitialAdController.resetAdFlag();
+
           interstitialAdController.showAdOnce();
         }
         Get.to(() => QuizQuestionPage(category: title));

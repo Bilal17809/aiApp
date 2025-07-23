@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/audio_player.dart';
-import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
-import '../../quiz_result_screen/view/quiz_result_page.dart';
 import '../controller/quiz_controller.dart';
-
 
 class QuestionAndOptionsSection extends StatelessWidget {
   final QuizController controller;
@@ -15,7 +10,8 @@ class QuestionAndOptionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final question = controller.questions[controller.currentQuestionIndex.value];
+    final question =
+        controller.questions[controller.currentQuestionIndex.value];
 
     return Expanded(
       child: SingleChildScrollView(
@@ -32,7 +28,8 @@ class QuestionAndOptionsSection extends StatelessWidget {
             ...List.generate(question.options.length, (index) {
               final hasAnswered = controller.selectedIndex.value != -1;
               final isCorrect = index == question.answerIndex;
-              final isUserSelected = controller.userSelectedIndex.value == index;
+              final isUserSelected =
+                  controller.userSelectedIndex.value == index;
               final isAiCorrected = controller.aiCorrectedIndex.value == index;
 
               Color bgColor = getOptionColor(index, controller);
@@ -52,12 +49,20 @@ class QuestionAndOptionsSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: !hasAnswered ? () => controller.selectAnswer(index) : null,
+                    onTap:
+                        !hasAnswered
+                            ? () => controller.selectAnswer(index)
+                            : null,
                     child: Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(bottom: 14),
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-                      decoration: roundedgreyBorderDecoration.copyWith(color: bgColor),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 14,
+                        horizontal: 20,
+                      ),
+                      decoration: roundedgreyBorderDecoration.copyWith(
+                        color: bgColor,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -74,17 +79,21 @@ class QuestionAndOptionsSection extends StatelessWidget {
                   ),
                   if (hasAnswered &&
                       ((isUserSelected &&
-                          controller.userSelectedIndex.value !=
-                              controller.aiCorrectedIndex.value &&
-                          index == controller.userSelectedIndex.value) ||
-                          (isAiCorrected && index == controller.aiCorrectedIndex.value) ||
+                              controller.userSelectedIndex.value !=
+                                  controller.aiCorrectedIndex.value &&
+                              index == controller.userSelectedIndex.value) ||
+                          (isAiCorrected &&
+                              index == controller.aiCorrectedIndex.value) ||
                           (index == controller.selectedIndex.value)))
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8, left: 12),
                       child: Text(
                         (isCorrect || isAiCorrected) ? "Correct ✅" : "Wrong ❌",
                         style: TextStyle(
-                          color: (isCorrect || isAiCorrected) ? kMediumGreen2 : kRed,
+                          color:
+                              (isCorrect || isAiCorrected)
+                                  ? kMediumGreen2
+                                  : kRed,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -123,5 +132,4 @@ class QuestionAndOptionsSection extends StatelessWidget {
 
     return kWhite;
   }
-
 }

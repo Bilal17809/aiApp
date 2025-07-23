@@ -6,9 +6,9 @@ import 'app_styles.dart';
 abstract class AppTheme {
   static const fontFamily = 'Montserrat';
 
-  // BUTTON STYLES
+  // BUTTON STYLES use for no inter net
   static final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: primaryColor,
+    backgroundColor: skyColor,
     textStyle: buttonTextStyle,
     foregroundColor: Colors.white,
     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -104,6 +104,13 @@ abstract class AppTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: outlinedButtonStyle,
+    ),
+  );
+
+  static final ButtonStyle splashButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: yellowButtonColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
     ),
   );
 }

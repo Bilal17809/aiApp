@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'dart:async';
-/*
- This is possible with one Function
-*/
+
 class SplashController extends GetxController {
   var showButton = false.obs;
   var vsVisible = false.obs;
@@ -11,20 +9,17 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _startSequence();
+  }
 
+  void _startSequence() async {
+    await Future.delayed(const Duration(seconds: 2));
+    vsVisible.value = true;
 
-    Timer(const Duration(seconds: 2), () {
-      vsVisible.value = true;
-    });
+    await Future.delayed(const Duration(seconds: 3));
+    aiVisible.value = true;
 
-
-    Timer(const Duration(seconds: 3), () {
-      aiVisible.value = true;
-    });
-
-
-    Timer(const Duration(seconds: 4), () {
-      showButton.value = true;
-    });
+    await Future.delayed(const Duration(seconds: 4));
+    showButton.value = true;
   }
 }

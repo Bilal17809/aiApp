@@ -27,10 +27,10 @@ class QuizController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // Show ad once when quiz starts
+
     adController.showAdOnce();
 
-    // Listen to quiz completion
+
     ever(isQuizCompleted, (completed) {
       if (completed == true) {
         Future.delayed(const Duration(milliseconds: 200), () {
@@ -136,7 +136,7 @@ class QuizController extends GetxController {
 
     userSelectedIndex.value = index;
 
-    if (aiShouldHelp.value) {
+    if (aiShouldHelp.value && index != q.answerIndex) {
       selectedIndex.value = aiCorrectedIndex.value = q.answerIndex;
       final fix = AIFeedbackMessages.getFixMessage();
       aiMessage.value = fix.text;

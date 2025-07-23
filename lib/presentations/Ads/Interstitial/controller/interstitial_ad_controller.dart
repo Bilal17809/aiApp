@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../ad_open_App/controller/open_ad_controller.dart';
+
 class InterstitialAdController extends GetxController {
   InterstitialAd? _interstitialAd;
   var isAdLoaded = false.obs;
@@ -32,11 +34,14 @@ class InterstitialAdController extends GetxController {
 
   void showAdOnce() {
     if (!isAdLoaded.value || hasAdShown || _interstitialAd == null) return;
+    final openAdController = Get.find<AppOpenAdController>();
+    openAdController.temporarilySuppressOpenAd();
 
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
         ad.dispose();
         isAdLoaded.value = false;
+        hasAdShown = false;
         _loadAd();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {

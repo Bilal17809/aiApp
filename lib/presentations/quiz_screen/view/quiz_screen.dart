@@ -1,60 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/audio_player.dart';
-import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
-import '../../quiz_result_screen/view/quiz_result_page.dart';
 import '../controller/quiz_controller.dart';
 import '../widget/QuestionAndOptionsSection.dart';
-/*
-this file code is not accepted.
- define all color in theme, just use here/
- why we need this  WidgetsBinding.instance.addPostFrameCallback????/
-
- for good hierarchy make private stateless class below/
-  expended-Single will be in separate stateless class
-
-*/
 class QuizQuestionPage extends StatelessWidget {
   final String category;
 
-  final adController = Get.find<InterstitialAdController>();
+
   final QuizController controller = Get.put(QuizController());
 
   QuizQuestionPage({super.key, required this.category}) {
     controller.resetQuiz();
     controller.loadQuestions(category);
   }
-  // final String category;
-  // final adController = Get.find<InterstitialAdController>();
-  //
-  // QuizQuestionPage({super.key, required this.category}) {
-  //   final controller = Get.find<QuizController>();
-  //
-  //   WidgetsBinding.instance.addPostFrameCallback((_)
-  //   {
-  //     controller.resetQuiz();
-  //     //adController.showAdOnce();
-  //
-  //     controller.loadQuestions(category);
-  //
-  //     ever(controller.isQuizCompleted, (completed) {
-  //       if (completed == true) {
-  //         Future.delayed(const Duration(milliseconds: 200), () {
-  //           adController.resetAdFlag();
-  //
-  //           adController.showAdOnce();
-  //
-  //           Get.off(() => const QuizResultPage());
-  //         });
-  //       }
-  //     });
-  //   }
-  //   );
-  // }
-  //
-  // final controller = Get.find<QuizController>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +23,14 @@ class QuizQuestionPage extends StatelessWidget {
       canPop: false,
         onPopInvokedWithResult: (didPop,value) {
           if (!didPop) {
-            Get.delete<QuizController>(tag: category);
-            controller.resetQuiz();
+            Get.offAllNamed(AppRoutes.home);
             SoundPlayer.stop();
+
           }
 
 
       },
-      child: Obx(() {
+      child: Obx(() {                        //when use only Center without Scaffold and body screen is totally black with circular progress indicator
         if (controller.isLoading.value) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -77,12 +38,14 @@ class QuizQuestionPage extends StatelessWidget {
         }
 
         if (controller.questions.isEmpty) {
-          return const
-           Center(child: Text("No questions available"));
+          return const Scaffold(
+            body:
+            Center(child: Text("No questions available")));
         }
 
-        final question =
-            controller.questions[controller.currentQuestionIndex.value];
+
+
+
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -189,129 +152,7 @@ class QuizQuestionPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Expanded(
-                //   child: SingleChildScrollView(
-                //     padding: const EdgeInsets.symmetric(
-                //       horizontal: 24,
-                //       vertical: 20,
-                //     ),
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Text(
-                //           question.question,
-                //           style: questiontextStyle,
-                //           textAlign: TextAlign.left,
-                //         ),
-                //         const SizedBox(height: 30),
-                //         ...List.generate(question.options.length, (index) {
-                //           final hasAnswered =
-                //               controller.selectedIndex.value != -1;
-                //           final isCorrect = index == question.answerIndex;
-                //           final isUserSelected =
-                //               controller.userSelectedIndex.value == index;
-                //           final isAiCorrected =
-                //               controller.aiCorrectedIndex.value == index;
-                //
-                //           Color bgColor = getOptionColor(index);
-                //           Widget? trailingIcon;
-                //
-                //           if (hasAnswered) {
-                //
-                //             if (isUserSelected && index == question.answerIndex) {
-                //               trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
-                //             }
-                //
-                //             else if (isAiCorrected && index == controller.aiCorrectedIndex.value) {
-                //               trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
-                //             }
-                //
-                //             else if (isUserSelected && index == controller.userSelectedIndex.value) {
-                //               trailingIcon = const Icon(Icons.close, color: kRed);
-                //             }
-                //           }
-                //
-                //
-                //
-                //
-                //
-                //           return Column(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             children: [
-                //               GestureDetector(
-                //                 onTap:
-                //                     !hasAnswered
-                //                         ? () => controller.selectAnswer(index)
-                //                         : null,
-                //                 child: Container(
-                //                   width: double.infinity,
-                //                   margin: const EdgeInsets.only(bottom: 14),
-                //                   padding: const EdgeInsets.symmetric(
-                //                     vertical: 14,
-                //                     horizontal: 20,
-                //                   ),
-                //                   decoration: roundedgreyBorderDecoration
-                //                       .copyWith(color: bgColor),
-                //                   child: Row(
-                //                     mainAxisAlignment:
-                //                         MainAxisAlignment.spaceBetween,
-                //                     children: [
-                //                       Flexible(
-                //                         child: Text(
-                //                           question.options[index],
-                //                           style: titleSmallStyle,
-                //                         ),
-                //                       ),
-                //                       if (trailingIcon != null) trailingIcon,
-                //                     ],
-                //                   ),
-                //                 ),
-                //               ),
-                //               if (hasAnswered &&
-                //                   ((isUserSelected &&
-                //                           controller.userSelectedIndex.value !=
-                //                               controller
-                //                                   .aiCorrectedIndex
-                //                                   .value &&
-                //                           index ==
-                //                               controller
-                //                                   .userSelectedIndex
-                //                                   .value) ||
-                //                       (isAiCorrected &&
-                //                           index ==
-                //                               controller
-                //                                   .aiCorrectedIndex
-                //                                   .value) ||
-                //                       (index ==
-                //                           controller.selectedIndex.value)))
-                //                 Padding(
-                //                   padding: const EdgeInsets.only(
-                //                     bottom: 8,
-                //                     left: 12,
-                //                   ),
-                //                   child: Text(
-                //                     (isCorrect || isAiCorrected)
-                //                         ? "Correct ✅"
-                //                         : "Wrong ❌",
-                //                     style: TextStyle(
-                //                       color:
-                //                           (isCorrect || isAiCorrected)
-                //                               ? kMediumGreen2
-                //                               : kRed,
-                //                       fontWeight: FontWeight.bold,
-                //                       fontSize: 16,
-                //                     ),
-                //                   ),
-                //                 ),
-                //             ],
-                //           );
-                //         }),
-                //
-                //
-                //       ],
-                //     ),
-                //   ),
-                // ),
+
                 QuestionAndOptionsSection(controller: controller),
 
               ],
@@ -323,28 +164,4 @@ class QuizQuestionPage extends StatelessWidget {
   }
 
 
-  Color getOptionColor(int index) {
-    final quiz = Get.find<QuizController>();
-    final question = quiz.questions[quiz.currentQuestionIndex.value];
-
-    final selected = quiz.selectedIndex.value;
-    final userSelected = quiz.userSelectedIndex.value;
-    final aiCorrected = quiz.aiCorrectedIndex.value;
-
-
-    if (aiCorrected != -1) {
-      if (index == aiCorrected) return kMediumGreen2.withAlpha(50);
-      if (index == userSelected && userSelected != aiCorrected)
-        return kRed.withAlpha(50);
-    }
-
-    if (selected != -1) {
-      if (index == selected && index == question.answerIndex)
-        return kMediumGreen2.withAlpha(50);
-      if (index == selected && index != question.answerIndex)
-        return kRed.withAlpha(50);
-    }
-
-    return kWhite;
-  }
 }

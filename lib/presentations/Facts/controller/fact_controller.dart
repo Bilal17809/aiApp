@@ -2,13 +2,15 @@ import 'package:ai_app/data/data_sources/local_fact_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/models/fact_model.dart';
+import 'dart:math';
 
 class FactController extends GetxController {
   final RxList<FactModel> facts = <FactModel>[].obs;
   final RxInt currentPage = 0.obs;
 
 
-  final PageController pageController = PageController();
+  late PageController pageController;
+
 
   @override
   void onInit() {
@@ -16,9 +18,23 @@ class FactController extends GetxController {
     loadFacts();
   }
 
+
+
+  void initializeRandomPage() {
+    if (facts.isNotEmpty) {
+      final randomIndex = Random().nextInt(facts.length);
+      currentPage.value = randomIndex;
+      pageController = PageController(initialPage: randomIndex);
+    }
+  }
+
+
+
   void loadFacts() async {
     final loadedFacts = await LocalFactData.loadFacts();
     facts.assignAll(loadedFacts);
+    initializeRandomPage();
+
   }
 
   void onPageChanged(int index) {

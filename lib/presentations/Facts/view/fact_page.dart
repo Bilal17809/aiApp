@@ -7,7 +7,6 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import '../controller/fact_controller.dart';
 
-
 class FactPage extends StatelessWidget {
   const FactPage({super.key});
 
@@ -17,7 +16,7 @@ class FactPage extends StatelessWidget {
 
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop,value) {
+      onPopInvokedWithResult: (didPop, value) {
         if (!didPop) {
           Get.offAllNamed(AppRoutes.home);
         }
@@ -97,67 +96,88 @@ class FactPage extends StatelessWidget {
                                     Expanded(
                                       child: SingleChildScrollView(
                                         physics: const BouncingScrollPhysics(),
-                                        child: Text(
-                                          fact.fact,
-                                          textAlign: TextAlign.center,
-                                          style: questiontextStyle.copyWith(
-                                            fontSize: 18,
-                                            color: blackTextColor,
-                                            fontWeight: FontWeight.w500,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            top:
+                                                (screenSize(context).height) *
+                                                0.08,
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment.topCenter,
+                                            child: Text(
+                                              fact.fact,
+                                              textAlign: TextAlign.center,
+                                              style: questiontextStyle.copyWith(
+                                                fontSize: 18,
+                                                color: blackTextColor,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 12),
-                                    Obx(() {
-                                      final total = controller.facts.length;
-                                      final current =
-                                          controller.currentPage.value + 1;
 
+                                    const SizedBox(height: 12),
+
+                                    Obx(() {
                                       return Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          IconButton(
-                                            onPressed:
-                                                controller.currentPage.value > 0
-                                                    ? controller
-                                                        .goToPreviousPage
-                                                    : null,
-                                            icon: const Icon(
-                                              Icons.arrow_back_ios_new,
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade200,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                            color:
-                                                controller.currentPage.value > 0
-                                                    ? kBlack
-                                                    : greyColor,
-                                            iconSize: 24,
+                                            child: IconButton(
+                                              onPressed:
+                                                  controller.currentPage.value >
+                                                          0
+                                                      ? controller
+                                                          .goToPreviousPage
+                                                      : null,
+                                              icon: const Icon(
+                                                Icons.arrow_back_ios_new,
+                                              ),
+                                              color:
+                                                  controller.currentPage.value >
+                                                          0
+                                                      ? kBlack
+                                                      : greyColor,
+                                              iconSize: 24,
+                                            ),
                                           ),
 
-                                          Text(
-                                            '$current / $total',
-                                            style: questiontextStyle.copyWith(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: kBlack,
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade200,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                          ),
-
-                                          IconButton(
-                                            onPressed:
-                                                controller.currentPage.value <
-                                                        total - 1
-                                                    ? controller.goToNextPage
-                                                    : null,
-                                            icon: const Icon(
-                                              Icons.arrow_forward_ios,
+                                            child: IconButton(
+                                              onPressed:
+                                                  controller.currentPage.value <
+                                                          (controller
+                                                                  .facts
+                                                                  .length) -
+                                                              1
+                                                      ? controller.goToNextPage
+                                                      : null,
+                                              icon: const Icon(
+                                                Icons.arrow_forward_ios,
+                                              ),
+                                              color:
+                                                  controller.currentPage.value <
+                                                          (controller
+                                                                  .facts
+                                                                  .length) -
+                                                              1
+                                                      ? kBlack
+                                                      : greyColor,
+                                              iconSize: 24,
                                             ),
-                                            color:
-                                                controller.currentPage.value <
-                                                        total - 1
-                                                    ? kBlack
-                                                    : greyColor,
-                                            iconSize: 24,
                                           ),
                                         ],
                                       );
@@ -186,7 +206,7 @@ class FactPage extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(horizontal: 4),
                           height: 8,
                           width: realIndex == dotIndex ? 20 : 8,
-                          decoration:getDotDecoration(realIndex == dotIndex),
+                          decoration: getDotDecoration(realIndex == dotIndex),
                         );
                       }),
                     );
