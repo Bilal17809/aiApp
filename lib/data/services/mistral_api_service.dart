@@ -16,7 +16,7 @@ class MistralApiService {
     final randomizer = DateTime.now().microsecondsSinceEpoch % 1000;
 
     final prompt = '''
-Generate $count quiz_screen questions about "$category", focusing on "$hint".
+Generate $count quiz questions about "$category", focusing on "$hint".
 
 Each question must be different from the previous question generated at [$timestamp] (ID: $randomizer).
 
