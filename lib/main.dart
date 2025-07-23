@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
   Get.put(AppOpenAdController());
-  Get.put(QuizController());
+  // Get.put(QuizController());
   runApp(const MyApp());
 }
 

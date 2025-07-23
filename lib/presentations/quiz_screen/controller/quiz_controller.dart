@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:ai_app/data/services/mistral_api_service.dart';
 import 'package:ai_app/core/common_wgt/ai_feedback_messages.dart';
 import '../../../core/utils/audio_player.dart';
+import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
+import '../../quiz_result_screen/view/quiz_result_page.dart';
 
 class QuizController extends GetxController {
   final RxList<_QuizQuestion> questions = <_QuizQuestion>[].obs;
@@ -18,6 +20,28 @@ class QuizController extends GetxController {
   final RxBool isQuizCompleted = false.obs;
   final RxString aiMessage = ''.obs;
   final RxString selectedCategory = ''.obs;
+
+  final InterstitialAdController adController = Get.find<InterstitialAdController>();
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    // Show ad once when quiz starts
+    adController.showAdOnce();
+
+    // Listen to quiz completion
+    ever(isQuizCompleted, (completed) {
+      if (completed == true) {
+        Future.delayed(const Duration(milliseconds: 200), () {
+          adController.resetAdFlag();
+          adController.showAdOnce();
+
+          Get.off(() => const QuizResultPage());
+        });
+      }
+    });
+  }
 
   Future<void> loadQuestions(String category) async {
     if (isLoading.value) return;
