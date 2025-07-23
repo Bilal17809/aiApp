@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/common_wgt/NoInternetDialog.dart';
+import '../../../core/common_wgt/no_internet_dialog.dart';
 
 class HomeController extends GetxController {
   bool _dialogShown = false;
