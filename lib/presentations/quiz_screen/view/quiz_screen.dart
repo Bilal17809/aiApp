@@ -6,6 +6,7 @@ import '../../../core/utils/audio_player.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../../quiz_result_screen/view/quiz_result_page.dart';
 import '../controller/quiz_controller.dart';
+import '../widget/QuestionAndOptionsSection.dart';
 /*
 this file code is not accepted.
  define all color in theme, just use here/
@@ -179,129 +180,131 @@ class QuizQuestionPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 20,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          question.question,
-                          style: questiontextStyle,
-                          textAlign: TextAlign.left,
-                        ),
-                        const SizedBox(height: 30),
-                        ...List.generate(question.options.length, (index) {
-                          final hasAnswered =
-                              controller.selectedIndex.value != -1;
-                          final isCorrect = index == question.answerIndex;
-                          final isUserSelected =
-                              controller.userSelectedIndex.value == index;
-                          final isAiCorrected =
-                              controller.aiCorrectedIndex.value == index;
+                // Expanded(
+                //   child: SingleChildScrollView(
+                //     padding: const EdgeInsets.symmetric(
+                //       horizontal: 24,
+                //       vertical: 20,
+                //     ),
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(
+                //           question.question,
+                //           style: questiontextStyle,
+                //           textAlign: TextAlign.left,
+                //         ),
+                //         const SizedBox(height: 30),
+                //         ...List.generate(question.options.length, (index) {
+                //           final hasAnswered =
+                //               controller.selectedIndex.value != -1;
+                //           final isCorrect = index == question.answerIndex;
+                //           final isUserSelected =
+                //               controller.userSelectedIndex.value == index;
+                //           final isAiCorrected =
+                //               controller.aiCorrectedIndex.value == index;
+                //
+                //           Color bgColor = getOptionColor(index);
+                //           Widget? trailingIcon;
+                //
+                //           if (hasAnswered) {
+                //
+                //             if (isUserSelected && index == question.answerIndex) {
+                //               trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
+                //             }
+                //
+                //             else if (isAiCorrected && index == controller.aiCorrectedIndex.value) {
+                //               trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
+                //             }
+                //
+                //             else if (isUserSelected && index == controller.userSelectedIndex.value) {
+                //               trailingIcon = const Icon(Icons.close, color: kRed);
+                //             }
+                //           }
+                //
+                //
+                //
+                //
+                //
+                //           return Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: [
+                //               GestureDetector(
+                //                 onTap:
+                //                     !hasAnswered
+                //                         ? () => controller.selectAnswer(index)
+                //                         : null,
+                //                 child: Container(
+                //                   width: double.infinity,
+                //                   margin: const EdgeInsets.only(bottom: 14),
+                //                   padding: const EdgeInsets.symmetric(
+                //                     vertical: 14,
+                //                     horizontal: 20,
+                //                   ),
+                //                   decoration: roundedgreyBorderDecoration
+                //                       .copyWith(color: bgColor),
+                //                   child: Row(
+                //                     mainAxisAlignment:
+                //                         MainAxisAlignment.spaceBetween,
+                //                     children: [
+                //                       Flexible(
+                //                         child: Text(
+                //                           question.options[index],
+                //                           style: titleSmallStyle,
+                //                         ),
+                //                       ),
+                //                       if (trailingIcon != null) trailingIcon,
+                //                     ],
+                //                   ),
+                //                 ),
+                //               ),
+                //               if (hasAnswered &&
+                //                   ((isUserSelected &&
+                //                           controller.userSelectedIndex.value !=
+                //                               controller
+                //                                   .aiCorrectedIndex
+                //                                   .value &&
+                //                           index ==
+                //                               controller
+                //                                   .userSelectedIndex
+                //                                   .value) ||
+                //                       (isAiCorrected &&
+                //                           index ==
+                //                               controller
+                //                                   .aiCorrectedIndex
+                //                                   .value) ||
+                //                       (index ==
+                //                           controller.selectedIndex.value)))
+                //                 Padding(
+                //                   padding: const EdgeInsets.only(
+                //                     bottom: 8,
+                //                     left: 12,
+                //                   ),
+                //                   child: Text(
+                //                     (isCorrect || isAiCorrected)
+                //                         ? "Correct ✅"
+                //                         : "Wrong ❌",
+                //                     style: TextStyle(
+                //                       color:
+                //                           (isCorrect || isAiCorrected)
+                //                               ? kMediumGreen2
+                //                               : kRed,
+                //                       fontWeight: FontWeight.bold,
+                //                       fontSize: 16,
+                //                     ),
+                //                   ),
+                //                 ),
+                //             ],
+                //           );
+                //         }),
+                //
+                //
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                QuestionAndOptionsSection(controller: controller),
 
-                          Color bgColor = getOptionColor(index);
-                          Widget? trailingIcon;
-
-                          if (hasAnswered) {
-
-                            if (isUserSelected && index == question.answerIndex) {
-                              trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
-                            }
-
-                            else if (isAiCorrected && index == controller.aiCorrectedIndex.value) {
-                              trailingIcon = const Icon(Icons.check, color: kMediumGreen2);
-                            }
-
-                            else if (isUserSelected && index == controller.userSelectedIndex.value) {
-                              trailingIcon = const Icon(Icons.close, color: kRed);
-                            }
-                          }
-
-
-
-
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GestureDetector(
-                                onTap:
-                                    !hasAnswered
-                                        ? () => controller.selectAnswer(index)
-                                        : null,
-                                child: Container(
-                                  width: double.infinity,
-                                  margin: const EdgeInsets.only(bottom: 14),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 14,
-                                    horizontal: 20,
-                                  ),
-                                  decoration: roundedgreyBorderDecoration
-                                      .copyWith(color: bgColor),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          question.options[index],
-                                          style: titleSmallStyle,
-                                        ),
-                                      ),
-                                      if (trailingIcon != null) trailingIcon,
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              if (hasAnswered &&
-                                  ((isUserSelected &&
-                                          controller.userSelectedIndex.value !=
-                                              controller
-                                                  .aiCorrectedIndex
-                                                  .value &&
-                                          index ==
-                                              controller
-                                                  .userSelectedIndex
-                                                  .value) ||
-                                      (isAiCorrected &&
-                                          index ==
-                                              controller
-                                                  .aiCorrectedIndex
-                                                  .value) ||
-                                      (index ==
-                                          controller.selectedIndex.value)))
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 8,
-                                    left: 12,
-                                  ),
-                                  child: Text(
-                                    (isCorrect || isAiCorrected)
-                                        ? "Correct ✅"
-                                        : "Wrong ❌",
-                                    style: TextStyle(
-                                      color:
-                                          (isCorrect || isAiCorrected)
-                                              ? kMediumGreen2
-                                              : kRed,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          );
-                        }),
-
-
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
