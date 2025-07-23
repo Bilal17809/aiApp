@@ -262,10 +262,6 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
 
-
-
-
-
           Obx(() {
             if (adController.isAdLoaded.value) {
               return SizedBox(

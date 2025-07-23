@@ -17,32 +17,40 @@ this file code is not accepted.
 */
 class QuizQuestionPage extends StatelessWidget {
   final String category;
-  final adController = Get.find<InterstitialAdController>();
+  final controller = Get.put(QuizController());
 
   QuizQuestionPage({super.key, required this.category}) {
-    final controller = Get.find<QuizController>();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.resetQuiz();
-      adController.showAdOnce();
-
-      controller.loadQuestions(category);
-
-      ever(controller.isQuizCompleted, (completed) {
-        if (completed == true) {
-          Future.delayed(const Duration(milliseconds: 200), () {
-            adController.resetAdFlag();
-
-            adController.showAdOnce();
-
-            Get.off(() => const QuizResultPage());
-          });
-        }
-      });
-    });
+    controller.resetQuiz();
+    controller.loadQuestions(category);
   }
 
-  final controller = Get.find<QuizController>();
+  // final String category;
+  // final adController = Get.find<InterstitialAdController>();
+  //
+  // QuizQuestionPage({super.key, required this.category}) {
+  //   final controller = Get.find<QuizController>();
+  //
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     controller.resetQuiz();
+  //     adController.showAdOnce();
+  //
+  //     controller.loadQuestions(category);
+  //
+  //     ever(controller.isQuizCompleted, (completed) {
+  //       if (completed == true) {
+  //         Future.delayed(const Duration(milliseconds: 200), () {
+  //           adController.resetAdFlag();
+  //
+  //           adController.showAdOnce();
+  //
+  //           Get.off(() => const QuizResultPage());
+  //         });
+  //       }
+  //     });
+  //   });
+  // }
+  //
+  // final controller = Get.find<QuizController>();
 
   @override
   Widget build(BuildContext context) {
