@@ -15,8 +15,7 @@ class QuizResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<QuizController>();
     final double percentage =
-        ((controller.userScore.value / (controller.questions.length)) *
-                100)
+        ((controller.userScore.value / (controller.questions.length)) * 100)
             .roundToDouble();
 
     final bool isWinner = percentage > 50;
@@ -84,7 +83,6 @@ class QuizResultPage extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class _ScoreCard extends StatelessWidget {
@@ -114,4 +112,3 @@ class _ScoreCard extends StatelessWidget {
     );
   }
 }
-

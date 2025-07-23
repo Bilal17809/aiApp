@@ -6,9 +6,9 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/audio_player.dart';
 import '../controller/quiz_controller.dart';
 import '../widget/QuestionAndOptionsSection.dart';
+
 class QuizQuestionPage extends StatelessWidget {
   final String category;
-
 
   final QuizController controller = Get.put(QuizController());
 
@@ -21,16 +21,14 @@ class QuizQuestionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-        onPopInvokedWithResult: (didPop,value) {
-          if (!didPop) {
-            Get.offAllNamed(AppRoutes.home);
-            SoundPlayer.stop();
-
-          }
-
-
+      onPopInvokedWithResult: (didPop, value) {
+        if (!didPop) {
+          Get.offAllNamed(AppRoutes.home);
+          SoundPlayer.stop();
+        }
       },
-      child: Obx(() {                        //when use only Center without Scaffold and body screen is totally black with circular progress indicator
+      child: Obx(() {
+        //when use only Center without Scaffold and body screen is totally black with circular progress indicator
         if (controller.isLoading.value) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -39,13 +37,9 @@ class QuizQuestionPage extends StatelessWidget {
 
         if (controller.questions.isEmpty) {
           return const Scaffold(
-            body:
-            Center(child: Text("No questions available")));
+            body: Center(child: Text("No questions available")),
+          );
         }
-
-
-
-
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -154,7 +148,6 @@ class QuizQuestionPage extends StatelessWidget {
                 ),
 
                 QuestionAndOptionsSection(controller: controller),
-
               ],
             ),
           ),
@@ -162,6 +155,4 @@ class QuizQuestionPage extends StatelessWidget {
       }),
     );
   }
-
-
 }

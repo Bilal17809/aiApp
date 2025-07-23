@@ -13,25 +13,17 @@ import 'package:get/get.dart';
 import '../../../core/common_wgt/bottom_curve_clipper.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_styles.dart';
-
-
 import '../../quiz_screen/view/quiz_screen.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
 
-
-
-
   @override
   Widget build(BuildContext context) {
     final BannerAdController adController = Get.put(BannerAdController());
     final interstitialAdController = Get.put(InterstitialAdController());
-    final HomeController controller = Get.put(HomeController());
+    final _ = Get.put(HomeController());
     var isDrawerOpen = false.obs;
-
-
-
 
     return Scaffold(
       drawer: const CustomDrawer(),
@@ -52,18 +44,19 @@ class HomePage extends GetView<HomeController> {
                     left: mobileWidth(context) * 0.01,
                     top: mobileHeight(context) * 0.06,
                     child: Builder(
-                      builder: (context) => IconButton(
-                        icon: const Icon(Icons.menu, color: Colors.white),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
+                      builder:
+                          (context) => IconButton(
+                            icon: const Icon(Icons.menu, color: Colors.white),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                          ),
                     ),
                   ),
 
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: mobileWidth(context)* 0.15,
+                      horizontal: mobileWidth(context) * 0.15,
                       vertical: mobileHeight(context) * 0.07,
                     ),
                     child: Align(
@@ -80,7 +73,7 @@ class HomePage extends GetView<HomeController> {
                     ),
                   ),
                   Positioned(
-                    top: (mobileHeight(context)* 0.5) - 280,
+                    top: (mobileHeight(context) * 0.5) - 280,
                     left: 0,
                     right: 0,
                     child: Center(
@@ -108,8 +101,9 @@ class HomePage extends GetView<HomeController> {
                                         width: imageSize,
                                         height: imageSize,
                                         fit: BoxFit.contain,
-                                        color:
-                                        greyBorderColor.withOpacity(0.7),
+                                        color: greyBorderColor.withAlpha(
+                                          (0.7 * 255).round(),
+                                        ),
                                         colorBlendMode: BlendMode.srcATop,
                                       ),
                                     ),
@@ -129,7 +123,9 @@ class HomePage extends GetView<HomeController> {
                                   decoration: circleWhiteShadowDecoration,
                                   child: Text(
                                     'VS',
-                                    style: headlineMediumStyle.copyWith(fontSize: 25),
+                                    style: headlineMediumStyle.copyWith(
+                                      fontSize: 25,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -235,7 +231,7 @@ class HomePage extends GetView<HomeController> {
                                 'Explore amazing facts across categories',
                                 style: questiontextStyle.copyWith(
                                   fontSize: 12,
-                                  color: kWhite.withOpacity(0.9),
+                                  color: kWhite.withAlpha((0.9 * 255).round()),
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -244,7 +240,6 @@ class HomePage extends GetView<HomeController> {
                           ),
                         ),
                       ),
-
 
                       Positioned(
                         left: -20,
@@ -265,10 +260,6 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
 
-
-
-
-
           Obx(() {
             if (isDrawerOpen.value) return const SizedBox.shrink();
 
@@ -287,6 +278,7 @@ class HomePage extends GetView<HomeController> {
     );
   }
 }
+
 class _CategoryTile extends StatelessWidget {
   final String title;
   final String imagePath;
@@ -318,12 +310,11 @@ class _CategoryTile extends StatelessWidget {
             height: outerSize * 0.8,
             width: outerSize * 0.8,
             decoration: roundedDecorationWithShadow,
-            padding:const EdgeInsets.only(
+            padding: const EdgeInsets.only(
               left: 8,
               right: 8,
               top: 16,
-              bottom: 8
-
+              bottom: 8,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -333,10 +324,7 @@ class _CategoryTile extends StatelessWidget {
                   width: outerSize * 0.45,
                   padding: const EdgeInsets.all(8),
                   decoration: skyTransparentBoxDecoration,
-                  child: Image.asset(
-                    imagePath,
-                    fit: BoxFit.contain,
-                  ),
+                  child: Image.asset(imagePath, fit: BoxFit.contain),
                 ),
                 const SizedBox(height: 4),
                 Flexible(
@@ -356,5 +344,3 @@ class _CategoryTile extends StatelessWidget {
     );
   }
 }
-
-
