@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-//Zain
 
 
 void main() async {
