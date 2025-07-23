@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../../presentations/quiz_screen/controller/quiz_controller.dart';
+import 'package:ai_app/presentations/quiz/controller/quiz_controller.dart';
 
 class QuizBinding extends Bindings {
   final String category;
