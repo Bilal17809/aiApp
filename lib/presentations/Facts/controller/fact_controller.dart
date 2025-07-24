@@ -16,10 +16,18 @@ class FactController extends GetxController {
     loadFacts();
   }
 
+  // void loadFacts() async {
+  //   final loadedFacts = await LocalFactData.loadFacts();
+  //   facts.assignAll(loadedFacts);
+  // }
   void loadFacts() async {
     final loadedFacts = await LocalFactData.loadFacts();
+    loadedFacts.shuffle();
     facts.assignAll(loadedFacts);
+    currentPage.value = 0;
+    pageController.jumpToPage(0);
   }
+
 
   void onPageChanged(int index) {
     currentPage.value = index;
