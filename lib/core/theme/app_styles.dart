@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../constants/constants.dart';
 import 'app_colors.dart';
 
@@ -210,6 +211,32 @@ final BoxDecoration funFactsCircleIconDecoration = BoxDecoration(
 BoxDecoration getDotDecoration(bool isActive) => BoxDecoration(
   color: isActive ? skyColor : greyColor,
   borderRadius: BorderRadius.circular(8),
+);
+
+// use in let's go button
+final splashButtonTextStyle = TextStyle(
+  color: blackTextColor,
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+);
+
+final splashYouTextStyle = GoogleFonts.bebasNeue(
+  color: textWhiteColor,
+  fontWeight: FontWeight.bold,
+);
+
+/// Used for the 'VS' text in SplashScreen.
+final splashVsTextStyle = TextStyle(
+  fontSize: 24,
+  color: textWhiteColor,
+  fontWeight: FontWeight.bold,
+);
+
+/// Used for the 'Ai' text in SplashScreen.
+final splashAiTextStyle = GoogleFonts.orbitron(
+  fontSize: 96,
+  color: textWhiteColor,
+  fontWeight: FontWeight.bold,
 );
 
 

@@ -1,23 +1,13 @@
+import 'package:ai_app/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../core/routes/app_routes.dart';
+import '../../../core/theme/app_styles.dart';
 import '../controller/splash_controller.dart';
 import '../../../core/theme/app_colors.dart';
-/*
-Already use them then why you use color here?????
- TextStyle(
-                              color: blackTextColor,
-                              fontSize: size.width * 0.05,
-                              fontWeight: FontWeight.bold,
-                            ),
 
-
- note correct this all this code not accepted!
-*/
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
 
@@ -50,11 +40,8 @@ class SplashScreen extends StatelessWidget {
                         animatedTexts: [
                           TyperAnimatedText(
                             'YOU',
-                            textStyle: GoogleFonts.bebasNeue(
-                              fontSize: size.width * 0.3,
-                              color: textWhiteColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            textStyle: splashYouTextStyle.copyWith(fontSize: (size.width) * 0.3 ),
+
                             speed: const Duration(milliseconds: 100),
                           ),
                         ],
@@ -72,11 +59,7 @@ class SplashScreen extends StatelessWidget {
                                   animatedTexts: [
                                     TyperAnimatedText(
                                       'VS',
-                                      textStyle: TextStyle(
-                                        fontSize: size.width * 0.08,
-                                        fontWeight: FontWeight.bold,
-                                        color: textWhiteColor,
-                                      ),
+                                      textStyle:splashVsTextStyle.copyWith(fontSize: size.width * 0.05 ),
                                       speed: const Duration(milliseconds: 80),
                                     ),
                                   ],
@@ -96,11 +79,7 @@ class SplashScreen extends StatelessWidget {
                                   animatedTexts: [
                                     TyperAnimatedText(
                                       'Ai',
-                                      textStyle: GoogleFonts.orbitron(
-                                        fontSize: size.width * 0.3,
-                                        color: textWhiteColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      textStyle: splashAiTextStyle.copyWith(fontSize: size.width * 0.3 ),
                                       speed: const Duration(milliseconds: 100),
                                     ),
                                   ],
@@ -122,28 +101,25 @@ class SplashScreen extends StatelessWidget {
                       ),
                       child: SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: yellowButtonColor,
-                            padding: EdgeInsets.symmetric(
-                              vertical: size.height * 0.02,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                        child:ElevatedButton(
+                          style: AppTheme.splashButtonStyle.copyWith(
+                            padding: WidgetStatePropertyAll(
+                              EdgeInsets.symmetric(
+                                vertical: size.height * 0.02,
+                              ),
                             ),
                           ),
                           onPressed: () {
-                            //Get.off(() => const HomePage());
+
                             Get.offAllNamed(AppRoutes.home);
                           },
                           child: Text(
                             'Let\'s Go',
-                            style: TextStyle(
-                              color: blackTextColor,
-                              fontSize: size.width * 0.05,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: splashButtonTextStyle.copyWith(
+                          fontSize: size.width * 0.05,
                           ),
+
+                        ),
                         ),
                       ),
                     )

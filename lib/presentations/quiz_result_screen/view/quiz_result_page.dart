@@ -5,7 +5,6 @@ import '../../../core/common_wgt/elevated_button.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../quiz_screen/controller/quiz_controller.dart';
 
 class QuizResultPage extends StatelessWidget {
@@ -15,8 +14,7 @@ class QuizResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<QuizController>();
     final double percentage =
-        ((controller.userScore.value / (controller.questions.length)) *
-                100)
+        ((controller.userScore.value / (controller.questions.length)) * 100)
             .roundToDouble();
 
     final bool isWinner = percentage > 50;
@@ -84,7 +82,6 @@ class QuizResultPage extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class _ScoreCard extends StatelessWidget {
@@ -114,4 +111,3 @@ class _ScoreCard extends StatelessWidget {
     );
   }
 }
-

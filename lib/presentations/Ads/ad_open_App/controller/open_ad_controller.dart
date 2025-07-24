@@ -7,6 +7,8 @@ class AppOpenAdController extends GetxController with WidgetsBindingObserver {
   bool _isShowingopenAd = false;
   bool _isFirstOpen = true;
   DateTime? _adLoadTime;
+  bool suppressOpenAd = false;
+
   final Duration maxCacheDuration = Duration(hours: 4);
 
   @override
@@ -28,6 +30,14 @@ class AppOpenAdController extends GetxController with WidgetsBindingObserver {
       _showAdIfAvailable();
     }
   }
+
+  void temporarilySuppressOpenAd({Duration duration = const Duration(seconds: 5)}) {
+    suppressOpenAd = true;
+    Future.delayed(duration, () {
+      suppressOpenAd = false;
+    });
+  }
+
 
   void _loadAd() {
     AppOpenAd.load(
@@ -58,12 +68,11 @@ class AppOpenAdController extends GetxController with WidgetsBindingObserver {
   }
 
   void _showAdIfAvailable() {
-    if (!_isAdAvailable() || _isShowingopenAd) return;
+    if (!_isAdAvailable() || _isShowingopenAd || suppressOpenAd) return;
 
     _appOpenAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (_) {
         _isShowingopenAd = true;
-
       },
       onAdDismissedFullScreenContent: (ad) {
         _isShowingopenAd = false;
@@ -79,4 +88,5 @@ class AppOpenAdController extends GetxController with WidgetsBindingObserver {
 
     _appOpenAd!.show();
   }
+
 }
