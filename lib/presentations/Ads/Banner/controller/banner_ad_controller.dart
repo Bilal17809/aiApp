@@ -1,42 +1,49 @@
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:get/get.dart';
-import 'package:flutter/foundation.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class BannerAdController extends GetxController {
   late BannerAd bannerAd;
-  var isAdLoaded = false.obs;
 
-  final String realAdUnitId = 'ca-app-pub-9147322774066422/4288161923';
-
-
-  final String testAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
+  final isAdLoaded = false.obs;
+  final isVisible = true.obs;
 
 
-  String get adUnitId => kReleaseMode ? realAdUnitId : testAdUnitId;
+  final String _testAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
+
+  String get adUnitId =>  _testAdUnitId;
 
   @override
   void onInit() {
     super.onInit();
-    _loadBannerAd();
+    loadBannerAd();
   }
 
-  void _loadBannerAd() {
+  void loadBannerAd() {
     bannerAd = BannerAd(
-      size: AdSize.banner,
       adUnitId: adUnitId,
+      size: AdSize.banner,
+      request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
           isAdLoaded.value = true;
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
           ad.dispose();
-
+          isAdLoaded.value = false;
         },
       ),
-      request: const AdRequest(),
     );
 
     bannerAd.load();
+  }
+
+  void hideAd() {
+    isVisible.value = false;
+  }
+
+  void showAdAgain() {
+    isVisible.value = true;
+    loadBannerAd();
   }
 
   @override

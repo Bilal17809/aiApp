@@ -1,12 +1,14 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 import '../../ad_open_App/controller/open_ad_controller.dart';
 
 class InterstitialAdController extends GetxController {
   InterstitialAd? _interstitialAd;
   var isAdLoaded = false.obs;
   bool hasAdShown = false;
+  int _interactionCount = 0;
 
   final String adUnitId = 'ca-app-pub-3940256099942544/1033173712';
 
@@ -32,31 +34,47 @@ class InterstitialAdController extends GetxController {
     );
   }
 
-  void showAdOnce() {
-    if (!isAdLoaded.value || hasAdShown || _interstitialAd == null) return;
-    final openAdController = Get.find<AppOpenAdController>();
-    openAdController.temporarilySuppressOpenAd();
+  void handleTap({required Function onNavigate}) {
+    _interactionCount++;
 
-    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        ad.dispose();
-        isAdLoaded.value = false;
-        hasAdShown = false;
-        _loadAd();
-      },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        ad.dispose();
-        isAdLoaded.value = false;
-      },
-    );
 
-    _interstitialAd!.show();
-    hasAdShown = true;
-    isAdLoaded.value = false;
+
+    if (_interactionCount >= 4) {
+      _interactionCount = 0;
+      showAdThenNavigate(onNavigate);
+    } else {
+      onNavigate();
+    }
   }
 
-  void resetAdFlag() {
-    hasAdShown = false;
+  void showAdThenNavigate(Function onComplete) {
+    if (isAdLoaded.value && _interstitialAd != null) {
+      final openAdController = Get.find<AppOpenAdController>();
+      openAdController.temporarilySuppressOpenAd();
+
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          ad.dispose();
+          _loadAd();
+          isAdLoaded.value = false;
+          onComplete();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+          isAdLoaded.value = false;
+          onComplete();
+        },
+      );
+
+      _interstitialAd!.show();
+      isAdLoaded.value = false;
+    } else {
+      onComplete();
+    }
+  }
+
+  void forceShowAdAfterQuiz({required VoidCallback onComplete}) {
+    showAdThenNavigate(onComplete);
   }
 
   @override

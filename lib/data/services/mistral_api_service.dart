@@ -52,8 +52,7 @@ Rules:
     );
 
     if (res.statusCode != 200) {
-      print('${res.statusCode}: ${res.body}');
-      throw Exception('HTTP ${res.statusCode}: ${res.body}');
+
     }
 
     final content = jsonDecode(res.body)['choices'][0]['message']['content'] as String;

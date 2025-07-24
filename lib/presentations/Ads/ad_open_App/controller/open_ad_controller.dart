@@ -49,17 +49,19 @@ class AppOpenAdController extends GetxController with WidgetsBindingObserver {
           _adLoadTime = DateTime.now();
 
 
-          if (_isFirstOpen) {
-            _showAdIfAvailable();
-            _isFirstOpen = false;
-          }
+          // if (_isFirstOpen) {
+          //   _showAdIfAvailable();
+          //   _isFirstOpen = false;
+          // }
+
+          _isFirstOpen = false; // Just reset flag without showing ad
         },
         onAdFailedToLoad: (error) {
-
         },
       ),
     );
   }
+
 
   bool _isAdAvailable() {
     return _appOpenAd != null &&

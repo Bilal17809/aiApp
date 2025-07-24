@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/common_wgt/dialog_helpers.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_colors.dart';
@@ -28,18 +29,48 @@ class QuizQuestionPage extends StatelessWidget {
         }
       },
       child: Obx(() {
-        //when use only Center without Scaffold and body screen is totally black with circular progress indicator
+
         if (controller.isLoading.value) {
+          Future.delayed(const Duration(seconds: 5), () {
+            if (controller.isLoading.value) {
+              showNetworkDialog(
+                context: context,
+                title: 'Network Issue',
+                message: 'Your internet is too slow. Please try again.',
+                onRetry: () {
+                  Navigator.of(context).pop();
+                  controller.loadQuestions(category);
+                },
+              );
+            }
+          });
+
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
 
+
+
         if (controller.questions.isEmpty) {
+          Future.microtask(() {
+            showNetworkDialog(
+              context: context,
+              onRetry: () {
+                Navigator.of(context).pop();
+                controller.loadQuestions(category);
+              },
+            );
+          });
+
           return const Scaffold(
-            body: Center(child: Text("No questions available")),
+            backgroundColor: Colors.white,
+            body: SizedBox.shrink(),
           );
         }
+
+
+
 
         return Scaffold(
           backgroundColor: Colors.white,

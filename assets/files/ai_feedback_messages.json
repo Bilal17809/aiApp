@@ -1,0 +1,106 @@
+{
+  "correctMessages": [
+    {
+      "text": "Nice one! You’re keeping up with AI! 💪",
+      "soundPath": "feedbacksounds/Nice one! You’re keeping up with Ai.mp3"
+    },
+    {
+      "text": "Smart choice – even AI is impressed! 🧠✨",
+      "soundPath": "feedbacksounds/Smart choice – even AI is impressed!.mp3"
+    },
+    {
+      "text": "You nailed it. Keep going! 🔨🔥",
+      "soundPath": "feedbacksounds/You nailed it. Keep going!.mp3"
+    },
+    {
+      "text": "Correct! You’re on fire! 🔥",
+      "soundPath": "feedbacksounds/Correct! You’re on fire!.mp3"
+    },
+    {
+      "text": "That’s the spirit! Right again! 🎯",
+      "soundPath": "feedbacksounds/That’s the spirit! Right again!.mp3"
+    },
+    {
+      "text": "You and AI are neck and neck! 🤖👤",
+      "soundPath": "feedbacksounds/You and AI are neck and neck!.mp3"
+    },
+    {
+      "text": "Spot on! The AI didn’t see that coming! 👀",
+      "soundPath": "feedbacksounds/Spot on! The AI didn’t see that coming!.mp3"
+    },
+    {
+      "text": "Whoa! Right answer. AI’s watching you closely now. 👓",
+      "soundPath": "feedbacksounds/Whoa! Right answer. AI’s watching you closely now.mp3"
+    },
+    {
+      "text": "Boom! Right answer unlocked. 💥",
+      "soundPath": "feedbacksounds/Boom! Right answer unlocked.mp3"
+    },
+    {
+      "text": "You're winning this round. Let's go! 🚀",
+      "soundPath": "feedbacksounds/You're winning this round. Let's go!.mp3"
+    }
+  ],
+  "incorrectMessages": [
+    {
+      "text": "Hmm... interesting choice 😅",
+      "soundPath": "feedbacksounds/interesting_choice.mp3"
+    },
+    {
+      "text": "You sure about that? 🤔",
+      "soundPath": "feedbacksounds/sure_about.mp3"
+    },
+    {
+      "text": "Don't worry, even AI makes mistakes 🧠",
+      "soundPath": "feedbacksounds/Ai_mistakes.mp3"
+    },
+    {
+      "text": "Try thinking like an AI 🧠💡",
+      "soundPath": "feedbacksounds/try_thinking.mp3"
+    },
+    {
+      "text": "Next time, just trust me 😎",
+      "soundPath": "feedbacksounds/trust_me.mp3"
+    },
+    {
+      "text": "I’d offer help, but this is more fun 😈",
+      "soundPath": "feedbacksounds/more_fun.mp3"
+    },
+    {
+      "text": "Almost had it! AI took the lead this time. 🏁",
+      "soundPath": "feedbacksounds/Almost had it! AI took the lead this time.mp3"
+    },
+    {
+      "text": "Wrong one, but hey, it's all part of the game! 🎮",
+      "soundPath": "feedbacksounds/Wrong one, but hey, it's all part of the game!.mp3"
+    },
+    {
+      "text": "AI got that one... but the next one's yours! 🔄",
+      "soundPath": "feedbacksounds/AI got that one... but the next one's yours!.mp3"
+    },
+    {
+      "text": "Close, but the AI edged you out. 📉",
+      "soundPath": "feedbacksounds/Close, but the AI edged you out.mp3"
+    },
+    {
+      "text": "Mistakes make masters. Keep going! 📘",
+      "soundPath": "feedbacksounds/Mistakes make masters. Keep going!.mp3"
+    },
+    {
+      "text": "Well, that didn’t go as planned! 🫣",
+      "soundPath": "feedbacksounds/Well, that didn’t go as planned!.mp3"
+    },
+    {
+      "text": "Not the right one, but you’ve got this! 👍",
+      "soundPath": "feedbacksounds/Not the right one, but you’ve got this!.mp3"
+    }
+  ],
+  "fixMessage": {
+    "text": "Oops! Let me fix that one for you 😉",
+    "soundPath": "feedbacksounds/fix forYou.mp3"
+  },
+  "praiseMessage": {
+    "text": "Nice one! You're getting smarter 🤓",
+    "soundPath": "feedbacksounds/getting smarter.mp3"
+  }
+}

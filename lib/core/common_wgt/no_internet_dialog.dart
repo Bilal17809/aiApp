@@ -5,8 +5,22 @@ import '../../../core/theme/app_theme.dart';
 
 class NoInternetDialog extends StatelessWidget {
   final VoidCallback onRetry;
+  final String title;
+  final String message;
+  final String button_text;
 
-  const NoInternetDialog({super.key, required this.onRetry});
+  final String? secondaryButtonText;
+  final VoidCallback? onSecondary;
+
+  const NoInternetDialog({
+    super.key,
+    required this.onRetry,
+    this.message = "Please connect to the internet to continue.",
+    this.title = 'No Internet',
+    this.button_text = 'Retry',
+    this.secondaryButtonText,
+    this.onSecondary,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +38,10 @@ class NoInternetDialog extends StatelessWidget {
             height: 100,
             width: 100,
             fit: BoxFit.contain,
-
           ),
           const SizedBox(height: 12),
           Text(
-            "No Internet",
+            title,
             style: titleLargeStyle.copyWith(
               color: kBlack,
               fontWeight: FontWeight.bold,
@@ -37,19 +50,52 @@ class NoInternetDialog extends StatelessWidget {
         ],
       ),
       content: Text(
-        "Please connect to the internet to continue.",
-        style: bodyMediumStyle.copyWith(
-          color: textGreyColor,
-        ),
+        message,
+        style: bodyMediumStyle.copyWith(color: textGreyColor),
         textAlign: TextAlign.center,
       ),
-      actionsAlignment: MainAxisAlignment.center,
       actions: [
-        ElevatedButton(
-          onPressed: onRetry,
-          style: AppTheme.elevatedButtonStyle,
-          child: const Text("Retry"),
-        ),
+        if (secondaryButtonText != null && onSecondary != null)
+          Row(
+            children: [
+              // Retry button
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: onRetry,
+                  style: AppTheme.elevatedButtonStyle,
+                  child: Text(button_text),
+                ),
+              ),
+              const SizedBox(width: 12),
+              // Exit button in colored container
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: skyColor,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: TextButton(
+                    onPressed: onSecondary,
+                    child: Text(
+                      secondaryButtonText!,
+                      style: titleSmallStyle.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        else
+          Center(
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: onRetry,
+                style: AppTheme.elevatedButtonStyle,
+                child: Text(button_text),
+              ),
+            ),
+          ),
       ],
     );
   }

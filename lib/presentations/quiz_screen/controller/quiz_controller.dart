@@ -1,6 +1,8 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/data/services/mistral_api_service.dart';
 import 'package:ai_app/core/common_wgt/ai_feedback_messages.dart';
+import '../../../core/common_wgt/no_internet_dialog.dart';
 import '../../../core/utils/audio_player.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../../quiz_result_screen/view/quiz_result_page.dart';
@@ -21,26 +23,30 @@ class QuizController extends GetxController {
   final RxString aiMessage = ''.obs;
   final RxString selectedCategory = ''.obs;
 
-  final InterstitialAdController adController = Get.find<InterstitialAdController>();
+
+  final InterstitialAdController adController =
+      Get.find<InterstitialAdController>();
 
   @override
   void onInit() {
     super.onInit();
 
-
-    adController.showAdOnce();
-
-
     ever(isQuizCompleted, (completed) {
       if (completed == true) {
         Future.delayed(const Duration(milliseconds: 200), () {
-          adController.resetAdFlag();
-          adController.showAdOnce();
-
-          Get.off(() => const QuizResultPage());
+          adController.forceShowAdAfterQuiz(
+            onComplete: () => Get.off(() => const QuizResultPage()),
+          );
         });
       }
     });
+  }
+
+
+
+  Future<bool> hasInternetConnection() async {
+    final result = await Connectivity().checkConnectivity();
+    return result != ConnectivityResult.none;
   }
 
   Future<void> loadQuestions(String category) async {
@@ -50,24 +56,28 @@ class QuizController extends GetxController {
     selectedCategory.value = category;
     questions.clear();
     preloadedQuestionQueue.clear();
+
     selectedIndex.value =
-        userScore.value = aiScore.value = currentQuestionIndex.value =
-        wrongAnswersCount.value = userSelectedIndex.value =
-        aiCorrectedIndex.value = 0;
+        userScore.value =
+            aiScore.value =
+                currentQuestionIndex.value =
+                    wrongAnswersCount.value =
+                        userSelectedIndex.value = aiCorrectedIndex.value = 0;
     selectedIndex.value = userSelectedIndex.value = aiCorrectedIndex.value = -1;
     aiMessage.value = '';
     aiShouldHelp.value = isQuizCompleted.value = false;
 
     try {
       final list = await MistralApiService.fetchQuestions(category, 1);
-      questions.add(_QuizQuestion(
-        question: list[0]['question'],
-        options: List<String>.from(list[0]['options']),
-        answerIndex: list[0]['answer'],
-      ));
+      questions.add(
+        _QuizQuestion(
+          question: list[0]['question'],
+          options: List<String>.from(list[0]['options']),
+          answerIndex: list[0]['answer'],
+        ),
+      );
       _preloadNextQuestion();
     } catch (e) {
-      Get.snackbar("Error", e.toString());
     } finally {
       isLoading.value = false;
     }
@@ -87,20 +97,62 @@ class QuizController extends GetxController {
       return;
     }
 
-    selectedIndex.value =
-        userSelectedIndex.value = aiCorrectedIndex.value = -1;
+    selectedIndex.value = userSelectedIndex.value = aiCorrectedIndex.value = -1;
     aiMessage.value = '';
 
     if (preloadedQuestionQueue.isNotEmpty) {
       questions.add(preloadedQuestionQueue.removeAt(0));
     } else {
-      final list =
-      await MistralApiService.fetchQuestions(selectedCategory.value, 1);
-      questions.add(_QuizQuestion(
-        question: list[0]['question'],
-        options: List<String>.from(list[0]['options']),
-        answerIndex: list[0]['answer'],
-      ));
+      final isConnected = await hasInternetConnection();
+      if (!isConnected)
+      {
+        Get.dialog(
+          NoInternetDialog(
+            title: 'No Internet',
+            message: 'Can\'t load more questions without internet.',
+            button_text: 'Retry',
+            onRetry: () {
+              Get.back();
+              checkAndFinishQuiz();
+            },
+            secondaryButtonText: 'Exit',
+            onSecondary: () {
+              Get.back();
+              Get.offAllNamed('/home');
+
+            },
+          ),
+          barrierDismissible: false,
+        );
+        return;
+      }
+
+
+      try {
+        final list = await MistralApiService.fetchQuestions(
+          selectedCategory.value,
+          1,
+        );
+        questions.add(
+          _QuizQuestion(
+            question: list[0]['question'],
+            options: List<String>.from(list[0]['options']),
+            answerIndex: list[0]['answer'],
+          ),
+        );
+      } catch (_) {
+        Get.dialog(
+          NoInternetDialog(
+            title: 'Error',
+            message: 'Something went wrong. Please try again.',
+            onRetry: () {
+              Get.back();
+              checkAndFinishQuiz();
+            },
+          ),
+        );
+        return;
+      }
     }
 
     currentQuestionIndex.value++;
@@ -109,22 +161,30 @@ class QuizController extends GetxController {
 
   void _preloadNextQuestion() async {
     if (questions.length + preloadedQuestionQueue.length >= 10) return;
+
+    final isConnected = await hasInternetConnection();
+    if (!isConnected) return;
+
     try {
-      final list =
-      await MistralApiService.fetchQuestions(selectedCategory.value, 1);
-      preloadedQuestionQueue.add(_QuizQuestion(
-        question: list[0]['question'],
-        options: List<String>.from(list[0]['options']),
-        answerIndex: list[0]['answer'],
-      ));
+      final list = await MistralApiService.fetchQuestions(
+        selectedCategory.value,
+        1,
+      );
+      preloadedQuestionQueue.add(
+        _QuizQuestion(
+          question: list[0]['question'],
+          options: List<String>.from(list[0]['options']),
+          answerIndex: list[0]['answer'],
+        ),
+      );
     } catch (_) {}
   }
 
   void resetQuiz() {
     questions.clear();
     preloadedQuestionQueue.clear();
-    currentQuestionIndex.value = userScore.value = aiScore.value =
-        wrongAnswersCount.value = 0;
+    currentQuestionIndex.value =
+        userScore.value = aiScore.value = wrongAnswersCount.value = 0;
     selectedIndex.value = userSelectedIndex.value = aiCorrectedIndex.value = -1;
     isLoading.value = aiShouldHelp.value = isQuizCompleted.value = false;
     aiMessage.value = '';
@@ -178,4 +238,3 @@ class _QuizQuestion {
     required this.answerIndex,
   });
 }
-

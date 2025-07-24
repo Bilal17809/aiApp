@@ -239,6 +239,18 @@ final splashAiTextStyle = GoogleFonts.orbitron(
   fontWeight: FontWeight.bold,
 );
 
+final BoxDecoration arrowButtonDecoration = BoxDecoration(
+  color: greyColor.withAlpha(40),
+  borderRadius: BorderRadius.circular(12),
+);
+
+const TextStyle factTextStyle = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  color: blackTextColor,
+);
+
+
 
 
 
