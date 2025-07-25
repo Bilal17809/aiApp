@@ -37,8 +37,6 @@ class InterstitialAdController extends GetxController {
   void handleTap({required Function onNavigate}) {
     _interactionCount++;
 
-
-
     if (_interactionCount >= 4) {
       _interactionCount = 0;
       showAdThenNavigate(onNavigate);

@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../core/GlobalKey/global_key.dart';
-import '../../core/constants/constants.dart';
+import 'hints_data.dart';
 
 class MistralApiService {
   static final String _apiKey = global_key;
-  static const String _url = 'https://api.mistral.ai/v1/chat/completions';
+  static final String _url = api_url;
   static final Map<String, int> _hintIndices = {};
 
-  static Future<List<Map<String, dynamic>>> fetchQuestions(String category, int count) async {
-
+  static Future<List<Map<String, dynamic>>> fetchQuestions(
+    String category,
+    int count,
+  ) async {
     final hint = _getHint(category);
     final timestamp = DateTime.now().millisecondsSinceEpoch;
 
@@ -36,7 +38,6 @@ Rules:
 - Use a mix of difficulties (easy/medium/hard).
 ''';
 
-
     final res = await http.post(
       Uri.parse(_url),
       headers: {
@@ -46,16 +47,15 @@ Rules:
       body: jsonEncode({
         "model": "mistral-small",
         "messages": [
-          {"role": "user", "content": prompt}
+          {"role": "user", "content": prompt},
         ],
       }),
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != 200) {}
 
-    }
-
-    final content = jsonDecode(res.body)['choices'][0]['message']['content'] as String;
+    final content =
+        jsonDecode(res.body)['choices'][0]['message']['content'] as String;
 
     return _parseQuestionsFromText(content);
   }
@@ -96,23 +96,17 @@ Rules:
     return questions;
   }
 
-
-
-
   static String _getHint(String category) {
-    final key = hints.keys.firstWhere(
-          (k) => category.toLowerCase().contains(k),
+    final key = HintsData.hints.keys.firstWhere(
+      (k) => category.toLowerCase().contains(k),
       orElse: () => 'general',
     );
 
-    final list = hints[key]!;
+    final list = HintsData.hints[key]!;
     final index = (_hintIndices[key] ?? 0) % list.length;
-
 
     _hintIndices[key] = index + 1;
 
     return list[index];
   }
-
-
 }

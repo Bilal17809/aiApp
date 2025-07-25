@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/core/theme/app_colors.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../../../core/common_wgt/shimmer_ad_placeholder.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
@@ -15,14 +16,6 @@ class FactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FactController>();
     final bannerController = controller.bannerAdController;
-
-
-
-
-
-
-
-
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, value) {
@@ -116,7 +109,7 @@ class FactPage extends StatelessWidget {
                                             child: Text(
                                               fact.fact,
                                               textAlign: TextAlign.center,
-                                              style: factTextStyle
+                                              style: factTextStyle,
                                             ),
                                           ),
                                         ),
@@ -188,17 +181,16 @@ class FactPage extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(height: 12),
 
-// Dot Indicator
                   Obx(() {
                     final totalDots = min(6, controller.facts.length);
+                    final realIndex = controller.currentPage.value % totalDots;
+
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(top: 16, bottom: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(totalDots, (dotIndex) {
-                          final realIndex = controller.currentPage.value % totalDots;
                           return AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
                             margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -211,51 +203,31 @@ class FactPage extends StatelessWidget {
                     );
                   }),
 
+                  const SizedBox(height: 20),
+
                   Obx(() {
-                    if (bannerController.isAdLoaded.value && bannerController.isVisible.value) {
-                      return SizedBox(
-                        height: bannerController.bannerAd.size.height.toDouble(),
-                        width: bannerController.bannerAd.size.width.toDouble(),
-                        child: AdWidget(ad: bannerController.bannerAd),
+                    if (bannerController.isAdLoaded.value &&
+                        bannerController.isVisible.value) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: SizedBox(
+                          height:
+                              bannerController.bannerAd.size.height.toDouble(),
+                          width:
+                              bannerController.bannerAd.size.width.toDouble(),
+                          child: AdWidget(ad: bannerController.bannerAd),
+                        ),
                       );
                     } else {
-                      return const SizedBox(height: 50); // reserve space
+                      return const ShimmerAdPlaceholder();
                     }
                   }),
 
-
                   const SizedBox(height: 15),
-
-
-                  //SizedBox(height: mobileHeight(context) * 0.05),
-
-                //   Obx(() {
-                //     final totalDots = min(6, controller.facts.length);
-                //     return Row(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: List.generate(totalDots, (dotIndex) {
-                //         final realIndex =
-                //             controller.currentPage.value % totalDots;
-                //         return AnimatedContainer(
-                //           duration: const Duration(milliseconds: 300),
-                //           margin: const EdgeInsets.symmetric(horizontal: 4),
-                //           height: 8,
-                //           width: realIndex == dotIndex ? 20 : 8,
-                //           decoration: getDotDecoration(realIndex == dotIndex),
-                //         );
-                //       }),
-                //     );
-                //   }),
-                //
-                //   SizedBox(height: mobileHeight(context) * 0.19),
-                 ],
-
+                ],
               ),
-
             ],
-
           );
-
         }),
       ),
     );

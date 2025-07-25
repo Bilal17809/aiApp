@@ -4,6 +4,7 @@ import 'package:ai_app/presentations/pages.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart';
 import '../../../core/common_wgt/exitConfirmationDialog.dart';
+import '../../../core/common_wgt/shimmer_ad_placeholder.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../../Drawer/view/customdrawer.dart';
@@ -21,20 +22,19 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final interstitialAdController = Get.find<InterstitialAdController>();
-    final controller = Get.put(HomeController());
+    final controller = Get.find<HomeController>();
     return PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, value) {
-      if (!didPop) {
-        if (controller.isDrawerOpen.value) {
-         Get.back();
-
-        } else {
-
-          showExitConfirmationDialog(context);
+      canPop: false,
+      onPopInvokedWithResult: (didPop, value) {
+        if (!didPop) {
+          if (controller.isDrawerOpen.value) {
+            Get.back();
+          } else {
+            showExitConfirmationDialog(context);
+          }
         }
-      }
-      }, child: Scaffold(
+      },
+      child: Scaffold(
         drawer: const CustomDrawer(),
         onDrawerChanged: (isOpen) {
           controller.isDrawerOpen.value = isOpen;
@@ -88,7 +88,8 @@ class HomePage extends GetView<HomeController> {
                       child: Center(
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            final double imageSize = constraints.maxWidth * 0.70;
+                            final double imageSize =
+                                constraints.maxWidth * 0.70;
                             final double vsOffset = imageSize * 0.25;
 
                             return Stack(
@@ -196,11 +197,9 @@ class HomePage extends GetView<HomeController> {
             ),
             GestureDetector(
               onTap: () {
-
                 interstitialAdController.handleTap(
-                  onNavigate: () =>Get.offAllNamed(AppRoutes.facts),
+                  onNavigate: () => Get.offAllNamed(AppRoutes.facts),
                 );
-
               },
               child: Center(
                 child: LayoutBuilder(
@@ -244,7 +243,9 @@ class HomePage extends GetView<HomeController> {
                                   'Explore amazing facts across categories',
                                   style: questiontextStyle.copyWith(
                                     fontSize: 12,
-                                    color: kWhite.withAlpha((0.9 * 255).round()),
+                                    color: kWhite.withAlpha(
+                                      (0.9 * 255).round(),
+                                    ),
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -278,15 +279,15 @@ class HomePage extends GetView<HomeController> {
 
               if (controller.adController.isAdLoaded.value) {
                 return SizedBox(
-                  height: controller.adController.bannerAd.size.height.toDouble(),
+                  height:
+                      controller.adController.bannerAd.size.height.toDouble(),
                   width: controller.adController.bannerAd.size.width.toDouble(),
                   child: AdWidget(ad: controller.adController.bannerAd),
                 );
               } else {
-                return const SizedBox.shrink();
+                return const ShimmerAdPlaceholder();
               }
             }),
-
           ],
         ),
       ),

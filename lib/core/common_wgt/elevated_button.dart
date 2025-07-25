@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_styles.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/constants/constants.dart'; // Assuming you place borderRadius etc. here
+import '../../core/constants/constants.dart';
 
 class CommonFilledButton extends StatelessWidget {
   final String text;

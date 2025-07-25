@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_styles.dart';
 
-
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
@@ -25,14 +24,14 @@ class CustomDrawer extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/images/logo.png',
-                    width: 55,
-                    height: 55,
+                    width: 80,
+                    height: 80,
                     fit: BoxFit.contain,
                   ),
 
                   const SizedBox(height: 8),
                   Text(
-                    "QUIZ DUEL",
+                    "YOU VS AI",
                     style: headlineMediumStyle.copyWith(color: Colors.white),
                   ),
                 ],

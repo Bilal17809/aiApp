@@ -18,7 +18,7 @@ class NativeAdWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(
       NativeAdController(sizeType: sizeType, customHeight: customHeight),
-      tag: UniqueKey().toString(), // avoid conflict in multiple instances
+      tag: UniqueKey().toString(),
     );
 
     return Obx(() {

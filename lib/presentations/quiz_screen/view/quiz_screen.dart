@@ -29,7 +29,6 @@ class QuizQuestionPage extends StatelessWidget {
         }
       },
       child: Obx(() {
-
         if (controller.isLoading.value) {
           Future.delayed(const Duration(seconds: 5), () {
             if (controller.isLoading.value) {
@@ -50,8 +49,6 @@ class QuizQuestionPage extends StatelessWidget {
           );
         }
 
-
-
         if (controller.questions.isEmpty) {
           Future.microtask(() {
             showNetworkDialog(
@@ -68,9 +65,6 @@ class QuizQuestionPage extends StatelessWidget {
             body: SizedBox.shrink(),
           );
         }
-
-
-
 
         return Scaffold(
           backgroundColor: Colors.white,

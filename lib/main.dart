@@ -1,3 +1,4 @@
+import 'package:ai_app/presentations/Ads/Banner/controller/banner_ad_controller.dart';
 import 'package:ai_app/presentations/Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import 'package:ai_app/presentations/Ads/ad_open_App/controller/open_ad_controller.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ void main() async {
   await MobileAds.instance.initialize();
   Get.put(AppOpenAdController());
   Get.put(InterstitialAdController());
+  Get.put(BannerAdController(), permanent: true);
 
   runApp(const MyApp());
 }

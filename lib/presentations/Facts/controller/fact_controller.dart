@@ -19,7 +19,6 @@ class FactController extends GetxController {
     super.onInit();
     loadFacts();
 
-
     bannerAdController = Get.put(BannerAdController(), permanent: true);
     bannerAdController.loadBannerAd();
   }
@@ -40,14 +39,15 @@ class FactController extends GetxController {
   void goToNextPage() {
     if (currentPage.value < facts.length - 1) {
       pageController.nextPage(duration: 300.milliseconds, curve: Curves.easeIn);
-
     }
   }
 
   void goToPreviousPage() {
     if (currentPage.value > 0) {
-      pageController.previousPage(duration: 300.milliseconds, curve: Curves.easeIn);
-
+      pageController.previousPage(
+        duration: 300.milliseconds,
+        curve: Curves.easeIn,
+      );
     }
   }
 

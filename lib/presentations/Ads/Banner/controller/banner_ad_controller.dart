@@ -7,10 +7,9 @@ class BannerAdController extends GetxController {
   final isAdLoaded = false.obs;
   final isVisible = true.obs;
 
-
   final String _testAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
 
-  String get adUnitId =>  _testAdUnitId;
+  String get adUnitId => _testAdUnitId;
 
   @override
   void onInit() {

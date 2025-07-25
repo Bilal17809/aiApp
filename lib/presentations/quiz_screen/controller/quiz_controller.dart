@@ -1,9 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/data/services/mistral_api_service.dart';
-import 'package:ai_app/core/common_wgt/ai_feedback_messages.dart';
 import '../../../core/common_wgt/no_internet_dialog.dart';
 import '../../../core/utils/audio_player.dart';
+import '../../../data/data_sources/ai_feedback_loader.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../../quiz_result_screen/view/quiz_result_page.dart';
 
@@ -23,13 +23,13 @@ class QuizController extends GetxController {
   final RxString aiMessage = ''.obs;
   final RxString selectedCategory = ''.obs;
 
-
   final InterstitialAdController adController =
       Get.find<InterstitialAdController>();
 
   @override
   void onInit() {
     super.onInit();
+    AIFeedbackLoader().loadMessages();
 
     ever(isQuizCompleted, (completed) {
       if (completed == true) {
@@ -42,8 +42,6 @@ class QuizController extends GetxController {
     });
   }
 
-
-
   Future<bool> hasInternetConnection() async {
     final result = await Connectivity().checkConnectivity();
     return result != ConnectivityResult.none;
@@ -52,6 +50,7 @@ class QuizController extends GetxController {
   Future<void> loadQuestions(String category) async {
     if (isLoading.value) return;
     isLoading.value = true;
+    AIFeedbackLoader().resetUsedIndexes();
 
     selectedCategory.value = category;
     questions.clear();
@@ -104,8 +103,7 @@ class QuizController extends GetxController {
       questions.add(preloadedQuestionQueue.removeAt(0));
     } else {
       final isConnected = await hasInternetConnection();
-      if (!isConnected)
-      {
+      if (!isConnected) {
         Get.dialog(
           NoInternetDialog(
             title: 'No Internet',
@@ -119,14 +117,12 @@ class QuizController extends GetxController {
             onSecondary: () {
               Get.back();
               Get.offAllNamed('/home');
-
             },
           ),
           barrierDismissible: false,
         );
         return;
       }
-
 
       try {
         final list = await MistralApiService.fetchQuestions(
@@ -193,14 +189,16 @@ class QuizController extends GetxController {
   void selectAnswer(int index) {
     if (selectedIndex.value != -1) return;
     final q = questions[currentQuestionIndex.value];
-
+    final loader = AIFeedbackLoader();
     userSelectedIndex.value = index;
 
     if (aiShouldHelp.value && index != q.answerIndex) {
       selectedIndex.value = aiCorrectedIndex.value = q.answerIndex;
-      final fix = AIFeedbackMessages.getFixMessage();
+
+      final fix = loader.getFixMessage();
       aiMessage.value = fix.text;
       SoundPlayer.play(fix.soundPath);
+
       userScore.value++;
       aiShouldHelp.value = false;
       wrongAnswersCount.value = 0;
@@ -210,16 +208,24 @@ class QuizController extends GetxController {
 
       if (index == q.answerIndex) {
         userScore.value++;
-        final praise = AIFeedbackMessages.getPraiseMessage();
+
+        final praise = loader.getCorrectMessage();
         aiMessage.value = praise.text;
         SoundPlayer.play(praise.soundPath);
       } else {
         wrongAnswersCount.value++;
         aiScore.value++;
-        final fb = AIFeedbackMessages.getRandomFeedback();
-        aiMessage.value = fb.text;
-        if (fb.soundPath.isNotEmpty) SoundPlayer.play(fb.soundPath);
-        if (wrongAnswersCount.value >= 3) aiShouldHelp.value = true;
+
+        final feedback = loader.getIncorrectMessage();
+        aiMessage.value = feedback.text;
+
+        if (feedback.soundPath.isNotEmpty) {
+          SoundPlayer.play(feedback.soundPath);
+        }
+
+        if (wrongAnswersCount.value >= 3) {
+          aiShouldHelp.value = true;
+        }
       }
     }
 

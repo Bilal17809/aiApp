@@ -19,7 +19,7 @@ class SplashController extends GetxController {
     await Future.delayed(const Duration(seconds: 3));
     aiVisible.value = true;
 
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 3));
     showButton.value = true;
   }
 }

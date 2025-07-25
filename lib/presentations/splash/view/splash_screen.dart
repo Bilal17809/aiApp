@@ -40,7 +40,9 @@ class SplashScreen extends StatelessWidget {
                         animatedTexts: [
                           TyperAnimatedText(
                             'YOU',
-                            textStyle: splashYouTextStyle.copyWith(fontSize: (size.width) * 0.3 ),
+                            textStyle: splashYouTextStyle.copyWith(
+                              fontSize: (size.width) * 0.3,
+                            ),
 
                             speed: const Duration(milliseconds: 100),
                           ),
@@ -59,7 +61,9 @@ class SplashScreen extends StatelessWidget {
                                   animatedTexts: [
                                     TyperAnimatedText(
                                       'VS',
-                                      textStyle:splashVsTextStyle.copyWith(fontSize: size.width * 0.05 ),
+                                      textStyle: splashVsTextStyle.copyWith(
+                                        fontSize: size.width * 0.05,
+                                      ),
                                       speed: const Duration(milliseconds: 80),
                                     ),
                                   ],
@@ -79,7 +83,9 @@ class SplashScreen extends StatelessWidget {
                                   animatedTexts: [
                                     TyperAnimatedText(
                                       'Ai',
-                                      textStyle: splashAiTextStyle.copyWith(fontSize: size.width * 0.3 ),
+                                      textStyle: splashAiTextStyle.copyWith(
+                                        fontSize: size.width * 0.3,
+                                      ),
                                       speed: const Duration(milliseconds: 100),
                                     ),
                                   ],
@@ -101,7 +107,7 @@ class SplashScreen extends StatelessWidget {
                       ),
                       child: SizedBox(
                         width: double.infinity,
-                        child:ElevatedButton(
+                        child: ElevatedButton(
                           style: AppTheme.splashButtonStyle.copyWith(
                             padding: WidgetStatePropertyAll(
                               EdgeInsets.symmetric(
@@ -110,16 +116,14 @@ class SplashScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-
                             Get.offAllNamed(AppRoutes.home);
                           },
                           child: Text(
                             'Let\'s Go',
                             style: splashButtonTextStyle.copyWith(
-                          fontSize: size.width * 0.05,
+                              fontSize: size.width * 0.05,
+                            ),
                           ),
-
-                        ),
                         ),
                       ),
                     )
@@ -132,9 +136,8 @@ class SplashScreen extends StatelessWidget {
               }),
 
               SizedBox(height: size.height * 0.05),
+
               //const NativeAdWidget(sizeType: NativeAdSizeType.medium),
-
-
             ],
           ),
         ],

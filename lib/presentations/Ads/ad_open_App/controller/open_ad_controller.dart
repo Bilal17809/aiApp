@@ -5,7 +5,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class AppOpenAdController extends GetxController with WidgetsBindingObserver {
   AppOpenAd? _appOpenAd;
   bool _isShowingopenAd = false;
-  bool _isFirstOpen = true;
   DateTime? _adLoadTime;
   bool suppressOpenAd = false;
 
@@ -31,37 +30,28 @@ class AppOpenAdController extends GetxController with WidgetsBindingObserver {
     }
   }
 
-  void temporarilySuppressOpenAd({Duration duration = const Duration(seconds: 5)}) {
+  void temporarilySuppressOpenAd({
+    Duration duration = const Duration(seconds: 5),
+  }) {
     suppressOpenAd = true;
     Future.delayed(duration, () {
       suppressOpenAd = false;
     });
   }
 
-
   void _loadAd() {
     AppOpenAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/9257395921', // Test ID
+      adUnitId: 'ca-app-pub-3940256099942544/9257395921',
       request: const AdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {
           _appOpenAd = ad;
           _adLoadTime = DateTime.now();
-
-
-          // if (_isFirstOpen) {
-          //   _showAdIfAvailable();
-          //   _isFirstOpen = false;
-          // }
-
-          _isFirstOpen = false; // Just reset flag without showing ad
         },
-        onAdFailedToLoad: (error) {
-        },
+        onAdFailedToLoad: (error) {},
       ),
     );
   }
-
 
   bool _isAdAvailable() {
     return _appOpenAd != null &&
@@ -90,5 +80,4 @@ class AppOpenAdController extends GetxController with WidgetsBindingObserver {
 
     _appOpenAd!.show();
   }
-
 }

@@ -95,12 +95,27 @@
       "soundPath": "feedbacksounds/Not the right one, but you’ve got this!.mp3"
     }
   ],
-  "fixMessage": {
-    "text": "Oops! Let me fix that one for you 😉",
-    "soundPath": "feedbacksounds/fix forYou.mp3"
-  },
-  "praiseMessage": {
-    "text": "Nice one! You're getting smarter 🤓",
-    "soundPath": "feedbacksounds/getting smarter.mp3"
-  }
+  "fixMessages": [
+    {
+      "text": "Oops! Let me fix that one for you 😉",
+      "soundPath": "feedbacksounds/fix_forYou.mp3"
+    },
+    {
+      "text": "Let me help you out this time! 😅",
+      "soundPath": "feedbacksounds/Let me help you out this time!.mp3"
+    },
+    {
+      "text": "Got your back! Auto-fixed. ✅",
+      "soundPath": "feedbacksounds/Got your back! Auto-fixed.mp3"
+    },
+    {
+      "text": "I’ve handled that one for you. 😎",
+      "soundPath": "feedbacksounds/I’ve handled that one for you.mp3"
+    },
+    {
+      "text": "Let the AI take care of it! 🛠️",
+      "soundPath": "feedbacksounds/Let the AI take care of it!.mp3"
+    }
+  ]
+
 }

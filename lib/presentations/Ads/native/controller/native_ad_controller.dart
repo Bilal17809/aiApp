@@ -10,7 +10,10 @@ class NativeAdController extends GetxController {
   final NativeAdSizeType sizeType;
   final double? customHeight;
 
-  NativeAdController({this.sizeType = NativeAdSizeType.medium, this.customHeight});
+  NativeAdController({
+    this.sizeType = NativeAdSizeType.medium,
+    this.customHeight,
+  });
 
   AdSize get adSize {
     switch (sizeType) {
@@ -30,14 +33,13 @@ class NativeAdController extends GetxController {
     super.onInit();
 
     _bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // ✅ Test ID
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
       size: adSize,
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (_) => isLoaded.value = true,
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          print("❌ Native-style Banner failed: $error");
         },
       ),
     )..load();
