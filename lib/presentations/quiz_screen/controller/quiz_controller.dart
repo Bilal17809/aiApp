@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/data/services/mistral_api_service.dart';
 import '../../../core/common_wgt/no_internet_dialog.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/audio_player.dart';
 import '../../../data/data_sources/ai_feedback_loader.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
@@ -116,7 +117,7 @@ class QuizController extends GetxController {
             secondaryButtonText: 'Exit',
             onSecondary: () {
               Get.back();
-              Get.offAllNamed('/home');
+              Get.offAllNamed(AppRoutes.home);
             },
           ),
           barrierDismissible: false,
@@ -229,7 +230,7 @@ class QuizController extends GetxController {
       }
     }
 
-    Future.delayed(const Duration(seconds: 3), checkAndFinishQuiz);
+    Future.delayed(const Duration(seconds: 4), checkAndFinishQuiz);
   }
 }
 
