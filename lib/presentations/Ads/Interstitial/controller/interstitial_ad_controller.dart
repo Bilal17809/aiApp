@@ -71,7 +71,7 @@ class InterstitialAdController extends GetxController {
     }
   }
 
-  void forceShowAdAfterQuiz({required VoidCallback onComplete}) {
+  void ShowAdAfterQuiz({required VoidCallback onComplete}) {
     showAdThenNavigate(onComplete);
   }
 

@@ -4,7 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AppOpenAdController extends GetxController with WidgetsBindingObserver {
   AppOpenAd? _appOpenAd;
-  bool _isShowingopenAd = false;
+  bool _isShowingOpenAd = false;
   DateTime? _adLoadTime;
   bool suppressOpenAd = false;
 
@@ -60,19 +60,19 @@ class AppOpenAdController extends GetxController with WidgetsBindingObserver {
   }
 
   void _showAdIfAvailable() {
-    if (!_isAdAvailable() || _isShowingopenAd || suppressOpenAd) return;
+    if (!_isAdAvailable() || _isShowingOpenAd || suppressOpenAd) return;
 
     _appOpenAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (_) {
-        _isShowingopenAd = true;
+        _isShowingOpenAd = true;
       },
       onAdDismissedFullScreenContent: (ad) {
-        _isShowingopenAd = false;
+        _isShowingOpenAd = false;
         _appOpenAd = null;
         _loadAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
-        _isShowingopenAd = false;
+        _isShowingOpenAd = false;
         _appOpenAd = null;
         _loadAd();
       },

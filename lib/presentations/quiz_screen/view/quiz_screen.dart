@@ -178,7 +178,7 @@ class QuizQuestionPage extends StatelessWidget {
                 Obx(() {
                   if (controller.shouldNavigateToResult.value) {
                     controller.shouldNavigateToResult.value = false;
-                    Get.find<InterstitialAdController>().forceShowAdAfterQuiz(
+                    Get.find<InterstitialAdController>().ShowAdAfterQuiz(
                       onComplete: () => Get.off(() => const QuizResultPage()),
                     );
                   }
