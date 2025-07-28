@@ -6,7 +6,7 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/audio_player.dart';
 import '../../../data/data_sources/ai_feedback_loader.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
-import '../../quiz_result_screen/view/quiz_result_page.dart';
+
 
 class QuizController extends GetxController {
   final RxList<_QuizQuestion> questions = <_QuizQuestion>[].obs;
@@ -23,6 +23,8 @@ class QuizController extends GetxController {
   final RxBool isQuizCompleted = false.obs;
   final RxString aiMessage = ''.obs;
   final RxString selectedCategory = ''.obs;
+  final RxBool shouldNavigateToResult = false.obs;
+
 
   final InterstitialAdController adController =
       Get.find<InterstitialAdController>();
@@ -32,15 +34,6 @@ class QuizController extends GetxController {
     super.onInit();
     AIFeedbackLoader().loadMessages();
 
-    ever(isQuizCompleted, (completed) {
-      if (completed == true) {
-        Future.delayed(const Duration(milliseconds: 200), () {
-          adController.forceShowAdAfterQuiz(
-            onComplete: () => Get.off(() => const QuizResultPage()),
-          );
-        });
-      }
-    });
   }
 
   Future<bool> hasInternetConnection() async {
@@ -94,6 +87,7 @@ class QuizController extends GetxController {
   void checkAndFinishQuiz() async {
     if (questions.length >= 10) {
       isQuizCompleted.value = true;
+      shouldNavigateToResult.value = true;
       return;
     }
 

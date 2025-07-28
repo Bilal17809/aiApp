@@ -5,6 +5,8 @@ import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/audio_player.dart';
+import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
+import '../../quiz_result_screen/view/quiz_result_page.dart';
 import '../controller/quiz_controller.dart';
 import '../widget/QuestionAndOptionsSection.dart';
 
@@ -173,7 +175,16 @@ class QuizQuestionPage extends StatelessWidget {
                 ),
 
                 QuestionAndOptionsSection(controller: controller),
-              ],
+                Obx(() {
+                  if (controller.shouldNavigateToResult.value) {
+                    controller.shouldNavigateToResult.value = false;
+                    Get.find<InterstitialAdController>().forceShowAdAfterQuiz(
+                      onComplete: () => Get.off(() => const QuizResultPage()),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }),
+          ],
             ),
           ),
         );
