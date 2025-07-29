@@ -1,4 +1,4 @@
-package com.example.ai_app
+package com.modernschool.youvsaiquiz
 
 import io.flutter.embedding.android.FlutterActivity
 

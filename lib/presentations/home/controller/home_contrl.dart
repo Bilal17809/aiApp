@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,21 +14,44 @@ class HomeController extends GetxController {
   static bool _firstTime = true;
 
   @override
+  void onInit(){
+    super.onInit();
+    requestTrackingPermission();
+  }
+
+  @override
   void onReady() {
     super.onReady();
+    adController.loadBannerAd('ad1');
     if (_firstTime) {
       _checkInternetOnStart();
       _firstTime = false;
     }
-    if (adController.isAdLoaded.value) {
-      adController.bannerAd.dispose();
-      adController.isAdLoaded.value = false;
-    }
-    _loadBannerAd();
   }
 
-  void _loadBannerAd() {
-    adController.loadBannerAd();
+  Future<void> requestTrackingPermission() async {
+    if (!Platform.isIOS) {
+      return;
+    }
+    final trackingStatus =
+    await AppTrackingTransparency.requestTrackingAuthorization();
+
+    switch (trackingStatus) {
+      case TrackingStatus.notDetermined:
+        debugPrint('User has not yet decided');
+        break;
+      case TrackingStatus.denied:
+        debugPrint('User denied tracking');
+        break;
+      case TrackingStatus.authorized:
+        debugPrint('User granted tracking permission');
+        break;
+      case TrackingStatus.restricted:
+        debugPrint('Tracking restricted');
+        break;
+      default:
+        debugPrint('Unknown tracking status');
+    }
   }
 
   Future<void> _checkInternetOnStart() async {

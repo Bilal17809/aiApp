@@ -1,12 +1,17 @@
+import 'dart:io';
+import 'package:ai_app/presentations/premium_screen/premium_screen.dart';
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_styles.dart';
+import 'package:get/get.dart';
+import '/core/theme/app_colors.dart';
+import '/core/theme/app_styles.dart';
+import '../drawer_controller/drawer_controller.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final DrawerContlr drawerController=Get.put(DrawerContlr());
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,14 +47,29 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.apps),
             title: const Text('More Apps'),
+            onTap:()=>drawerController.moreApp()
           ),
           ListTile(
             leading: const Icon(Icons.star_rate),
             title: const Text('Rate Us'),
+            onTap:(){
+              drawerController.rateUs();
+            },
           ),
           ListTile(
             leading: const Icon(Icons.privacy_tip),
             title: const Text('Privacy Policy'),
+            onTap:(){
+              drawerController.privacy();
+            },
+          ),
+          if(Platform.isIOS)
+          ListTile(
+              leading: const Icon(Icons.apps),
+              title: const Text('Ads Free'),
+              onTap:(){
+                Get.to(PremiumScreen());
+              }
           ),
         ],
       ),

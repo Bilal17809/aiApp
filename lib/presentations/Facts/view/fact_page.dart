@@ -1,12 +1,13 @@
 import 'dart:math';
+import 'package:ai_app/presentations/Ads/splash_interstitial.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/core/theme/app_colors.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import '../../../core/common_wgt/shimmer_ad_placeholder.dart';
-import '../../../core/constants/constants.dart';
-import '../../../core/routes/app_routes.dart';
-import '../../../core/theme/app_styles.dart';
+import '/core/constants/constants.dart';
+import '/core/routes/app_routes.dart';
+import '/core/theme/app_styles.dart';
+import '../../Ads/Banner/controller/banner_ad_controller.dart';
+import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../controller/fact_controller.dart';
 
 class FactPage extends StatelessWidget {
@@ -15,7 +16,6 @@ class FactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FactController>();
-    final bannerController = controller.bannerAdController;
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, value) {
@@ -202,32 +202,20 @@ class FactPage extends StatelessWidget {
                       ),
                     );
                   }),
-
-                  const SizedBox(height: 20),
-
-                  Obx(() {
-                    if (bannerController.isAdLoaded.value &&
-                        bannerController.isVisible.value) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: SizedBox(
-                          height:
-                              bannerController.bannerAd.size.height.toDouble(),
-                          width:
-                              bannerController.bannerAd.size.width.toDouble(),
-                          child: AdWidget(ad: bannerController.bannerAd),
-                        ),
-                      );
-                    } else {
-                      return const ShimmerAdPlaceholder();
-                    }
-                  }),
-
                   const SizedBox(height: 15),
                 ],
               ),
             ],
           );
+        }),
+        bottomNavigationBar: Obx(() {
+          final interstitial = Get.find<InterstitialAdController>();
+          final splInter= Get.find<SplashInterstitialAdController>();
+          final banner = Get.find<BannerAdController>();
+          return interstitial.isShowingInterstitialAd.value
+              || splInter.isShowingInterstitialAd.value
+              ? const SizedBox()
+              : banner.getBannerAdWidget('ad3');
         }),
       ),
     );

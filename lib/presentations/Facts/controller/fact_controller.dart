@@ -1,26 +1,20 @@
+import 'package:ai_app/presentations/Ads/Interstitial/controller/interstitial_ad_controller.dart';
+import 'package:ai_app/presentations/Ads/splash_interstitial.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/data/data_sources/local_fact_data.dart';
 import '../../../data/models/fact_model.dart';
-import '../../Ads/Banner/controller/banner_ad_controller.dart';
-import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 
 class FactController extends GetxController {
   final RxList<FactModel> facts = <FactModel>[].obs;
   final RxInt currentPage = 0.obs;
   final PageController pageController = PageController();
 
-  late final BannerAdController bannerAdController;
-  final int adTriggerInteractionCount = 5;
-  int interactionCount = 0;
-
   @override
   void onInit() {
     super.onInit();
     loadFacts();
-
-    bannerAdController = Get.put(BannerAdController(), permanent: true);
-    bannerAdController.loadBannerAd();
+    Get.find<InterstitialAdController>().checkAndShowAd();
   }
 
   void loadFacts() async {
@@ -31,10 +25,23 @@ class FactController extends GetxController {
     pageController.jumpToPage(0);
   }
 
+  // void onPageChanged(int index) {
+  //   currentPage.value = index;
+  //   if(currentPage.value==5 && Get.find<SplashInterstitialAdController>().isAdReady){
+  //     Get.find<SplashInterstitialAdController>().showInterstitialAd();
+  //   }
+  // }
   void onPageChanged(int index) {
     currentPage.value = index;
-    _handleInteraction();
+
+    if (index == 5) {
+      final splashAdController = Get.find<SplashInterstitialAdController>();
+      if (splashAdController.isAdReady) {
+        splashAdController.showInterstitialAd();
+      }
+    }
   }
+
 
   void goToNextPage() {
     if (currentPage.value < facts.length - 1) {
@@ -48,19 +55,6 @@ class FactController extends GetxController {
         duration: 300.milliseconds,
         curve: Curves.easeIn,
       );
-    }
-  }
-
-  void _handleInteraction() async {
-    interactionCount++;
-
-    if (interactionCount >= adTriggerInteractionCount) {
-      interactionCount = 0;
-      bannerAdController.hideAd();
-      final interstitialAdController = Get.find<InterstitialAdController>();
-      interstitialAdController.showAdThenNavigate(() {
-        bannerAdController.showAdAgain();
-      });
     }
   }
 

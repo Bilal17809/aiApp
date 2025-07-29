@@ -1,4 +1,6 @@
 import 'package:ai_app/core/theme/app_theme.dart';
+import 'package:ai_app/presentations/Ads/Banner/controller/banner_ad_controller.dart';
+import 'package:ai_app/presentations/Ads/splash_interstitial.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -8,11 +10,21 @@ import '../../../core/theme/app_styles.dart';
 import '../controller/splash_controller.dart';
 import '../../../core/theme/app_colors.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
 
-  final SplashController controller = Get.put(SplashController());
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
 
+class _SplashScreenState extends State<SplashScreen> {
+  final SplashController controller = Get.put(SplashController());
+  final SplashAds=Get.find<SplashInterstitialAdController>();
+@override
+  void initState() {
+    super.initState();
+    SplashAds.loadInterstitialAd();
+}
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -56,7 +68,7 @@ class SplashScreen extends StatelessWidget {
                       () =>
                           controller.vsVisible.value
                               ? Positioned(
-                                top: size.height * 0.19,
+                                top: size.height * 0.20,
                                 child: AnimatedTextKit(
                                   animatedTexts: [
                                     TyperAnimatedText(
@@ -116,8 +128,22 @@ class SplashScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Get.offAllNamed(AppRoutes.home);
+                            if (SplashAds.isAdReady) {
+                              SplashAds.showInterstitialAdWhen(
+                                onAdClosed: () {
+                                  Get.offAllNamed(AppRoutes.home);
+                                },
+                              );
+                            } else {
+                              Get.offAllNamed(AppRoutes.home);
+                            }
                           },
+                          // onPressed: () {
+                          //   // if(SplashAds.isAdReady){
+                          //   //   SplashAds.showInterstitialAd();
+                          //   // }
+                          //   Get.offAllNamed(AppRoutes.home);
+                          // },
                           child: Text(
                             'Let\'s Go',
                             style: splashButtonTextStyle.copyWith(
@@ -136,8 +162,6 @@ class SplashScreen extends StatelessWidget {
               }),
 
               SizedBox(height: size.height * 0.05),
-
-              //const NativeAdWidget(sizeType: NativeAdSizeType.medium),
             ],
           ),
         ],

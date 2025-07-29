@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/common_wgt/dialog_helpers.dart';
-import '../../../core/routes/app_routes.dart';
-import '../../../core/theme/app_styles.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/audio_player.dart';
+import '../../Ads/Banner/controller/banner_ad_controller.dart';
+import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
+import '/core/common_wgt/dialog_helpers.dart';
+import '/core/routes/app_routes.dart';
+import '/core/theme/app_styles.dart';
+import '/core/theme/app_colors.dart';
+import '/core/utils/audio_player.dart';
 import '../controller/quiz_controller.dart';
 import '../widget/QuestionAndOptionsSection.dart';
 
@@ -176,6 +178,13 @@ class QuizQuestionPage extends StatelessWidget {
               ],
             ),
           ),
+          bottomNavigationBar: Obx(() {
+            final interstitial = Get.find<InterstitialAdController>();
+            final banner = Get.find<BannerAdController>();
+            return interstitial.isShowingInterstitialAd.value
+                ? const SizedBox()
+                : banner.getBannerAdWidget('ad2');
+          }),
         );
       }),
     );

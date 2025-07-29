@@ -1,3 +1,4 @@
+import 'package:ai_app/presentations/Ads/splash_interstitial.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:ai_app/data/services/mistral_api_service.dart';
@@ -5,6 +6,7 @@ import '../../../core/common_wgt/no_internet_dialog.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/audio_player.dart';
 import '../../../data/data_sources/ai_feedback_loader.dart';
+import '../../Ads/Banner/controller/banner_ad_controller.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import '../../quiz_result_screen/view/quiz_result_page.dart';
 
@@ -23,21 +25,29 @@ class QuizController extends GetxController {
   final RxBool isQuizCompleted = false.obs;
   final RxString aiMessage = ''.obs;
   final RxString selectedCategory = ''.obs;
+  final SplashAds=Get.find<SplashInterstitialAdController>();
+  final IntertialAds=Get.find<InterstitialAdController>();
+  final BannerAdController adController = Get.put(BannerAdController());
 
-  final InterstitialAdController adController =
-      Get.find<InterstitialAdController>();
+
+  @override
+  void onReady() {
+    super.onReady();
+    adController.loadBannerAd('ad2');
+    if(IntertialAds.isAdReady.value){
+      IntertialAds.checkAndShowAd();
+    }
+  }
 
   @override
   void onInit() {
     super.onInit();
+    SplashAds.loadInterstitialAd();
     AIFeedbackLoader().loadMessages();
-
     ever(isQuizCompleted, (completed) {
       if (completed == true) {
         Future.delayed(const Duration(milliseconds: 200), () {
-          adController.forceShowAdAfterQuiz(
-            onComplete: () => Get.off(() => const QuizResultPage()),
-          );
+       Get.off(() => const QuizResultPage());
         });
       }
     });
@@ -187,11 +197,63 @@ class QuizController extends GetxController {
     aiMessage.value = '';
   }
 
-  void selectAnswer(int index) {
-    if (selectedIndex.value != -1) return;
+  // void selectAnswer(int index) {
+  //   if (selectedIndex.value != -1) return;
+  //   final q = questions[currentQuestionIndex.value];
+  //   final loader = AIFeedbackLoader();
+  //   userSelectedIndex.value = index;
+  //
+  //   if (aiShouldHelp.value && index != q.answerIndex) {
+  //     selectedIndex.value = aiCorrectedIndex.value = q.answerIndex;
+  //
+  //     final fix = loader.getFixMessage();
+  //     aiMessage.value = fix.text;
+  //     SoundPlayer.play(fix.soundPath);
+  //
+  //     userScore.value++;
+  //     aiShouldHelp.value = false;
+  //     wrongAnswersCount.value = 0;
+  //   } else {
+  //     selectedIndex.value = index;
+  //     aiCorrectedIndex.value = -1;
+  //
+  //     if (index == q.answerIndex) {
+  //       userScore.value++;
+  //
+  //       final praise = loader.getCorrectMessage();
+  //       aiMessage.value = praise.text;
+  //       SoundPlayer.play(praise.soundPath);
+  //     } else {
+  //       wrongAnswersCount.value++;
+  //       aiScore.value++;
+  //
+  //       final feedback = loader.getIncorrectMessage();
+  //       aiMessage.value = feedback.text;
+  //
+  //       if (feedback.soundPath.isNotEmpty) {
+  //         SoundPlayer.play(feedback.soundPath);
+  //       }
+  //
+  //       if (wrongAnswersCount.value >= 3) {
+  //         aiShouldHelp.value = true;
+  //       }
+  //     }
+  //   }
+  //   Future.delayed(const Duration(seconds: 4), checkAndFinishQuiz);
+  //   // If current question index is 2 (i.e. 3rd question), show ad then play sound
+  //   if (currentQuestionIndex.value == 2) {
+  //     Get.find<SplashInterstitialAdController>().showInterstitialAdWhen(
+  //       onAdClosed: () {
+  //         playFeedbackSound();
+  //       },
+  //     );
+  //   } else {
+  //     playFeedbackSound();
+  //   }
+  // }
+  void playFeedbackForAnswer(int index) {
     final q = questions[currentQuestionIndex.value];
     final loader = AIFeedbackLoader();
-    userSelectedIndex.value = index;
 
     if (aiShouldHelp.value && index != q.answerIndex) {
       selectedIndex.value = aiCorrectedIndex.value = q.answerIndex;
@@ -232,6 +294,21 @@ class QuizController extends GetxController {
 
     Future.delayed(const Duration(seconds: 4), checkAndFinishQuiz);
   }
+  void selectAnswer(int index) {
+    if (selectedIndex.value != -1) return;
+    userSelectedIndex.value = index;
+
+    if (currentQuestionIndex.value == 5 && Get.find<SplashInterstitialAdController>().isAdReady) {
+      Get.find<SplashInterstitialAdController>().showInterstitialAdWhen(
+        onAdClosed: () {
+          playFeedbackForAnswer(index);
+        },
+      );
+    } else {
+      playFeedbackForAnswer(index);
+    }
+  }
+
 }
 
 class _QuizQuestion {
