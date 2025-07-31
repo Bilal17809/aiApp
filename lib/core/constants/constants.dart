@@ -14,3 +14,6 @@ Size screenSize(BuildContext context) {
 }
 
 const EdgeInsets verticalButtonPadding = EdgeInsets.symmetric(vertical: 16);
+bool isTablet(BuildContext context) {
+  return MediaQuery.of(context).size.shortestSide >= 600;
+}
