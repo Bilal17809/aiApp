@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Terms_And_Conditions/view/terms_and_con_page.dart';
 import '../remove_ads_contrl/remove_ads_contrl.dart';
 final bool _kAutoConsume = Platform.isIOS || true;
 const String _kConsumableId = 'consumable';
@@ -360,7 +361,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                                     InkWell(
                                       child: const Text("Privacy | Terms"),
                                       onTap:(){
-                                        // Get.to(TermsScreen());
+                                        Get.to(TermsAndConPage());
                                       },
                                     ),
                                     const Text("Cancel Anytime"),
