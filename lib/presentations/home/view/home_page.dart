@@ -43,7 +43,8 @@ class HomePage extends GetView<HomeController> {
               ClipPath(
                 clipper: BottomCurveClipper(),
                 child: Container(
-                  height: isTablet(context) ? mobileHeight(context) * 0.55 : mobileHeight(context) * 0.45,
+                  height: isTablet(context) ? mobileHeight(context) * 0.48 : mobileHeight(context) * 0.45,
+
                   color: skyColor,
                   child: Stack(
                     children: [
@@ -60,6 +61,7 @@ class HomePage extends GetView<HomeController> {
                               ),
                         ),
                       ),
+                      SizedBox(height: isTablet(context) ? 20 : 10),
 
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -93,7 +95,10 @@ class HomePage extends GetView<HomeController> {
                         ),
                       ),
                       Positioned(
-                        top: (mobileHeight(context) * 0.5) - 280,
+                        top: isTablet(context)
+                            ? (mobileHeight(context) * 0.45) - 220
+                            : (mobileHeight(context) * 0.5) - 280,
+
                         left: 0,
                         right: 0,
                         child: Center(
@@ -210,8 +215,8 @@ class HomePage extends GetView<HomeController> {
                       final screenWidth = MediaQuery.of(context).size.width;
                       final screenHeight = MediaQuery.of(context).size.height;
                       final maxWidth = isTablet(context) ? screenWidth * 0.6 : screenWidth * 0.9;
-                      final cardHeight = isTablet(context) ? screenHeight * 0.14 : screenHeight * 0.13;
-                      final iconSize = isTablet(context) ? screenHeight * 0.15 : screenHeight * 0.18;
+                      final cardHeight = isTablet(context) ? screenHeight * 0.11 : screenHeight * 0.13;
+                      final iconSize = isTablet(context) ? screenHeight * 0.12 : screenHeight * 0.18;
 
                       return Stack(
                         clipBehavior: Clip.none,
@@ -320,18 +325,20 @@ class _CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-         Get.to(() => QuizQuestionPage(category: title));
-      },
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final width = constraints.maxWidth;
-          final outerSize = width;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final outerSize = width;
 
-          return Container(
-            height: outerSize * 0.8,
-            width: outerSize * 0.8,
+        return Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+            child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+        onTap: () => Get.to(() => QuizQuestionPage(category: title)),
+        child: Container(
+        height: isTablet(context) ? outerSize * 0.9 : outerSize * 0.85,
+        width: isTablet(context) ? outerSize * 0.9 : outerSize * 0.85,
             decoration: roundedDecorationWithShadow,
             padding: const EdgeInsets.only(
               left: 8,
@@ -343,8 +350,9 @@ class _CategoryTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: outerSize * 0.45,
-                  width: outerSize * 0.45,
+                  height: isTablet(context) ? outerSize * 0.5 : outerSize * 0.45,
+                  width: isTablet(context) ? outerSize * 0.5 : outerSize * 0.45,
+
                   padding: const EdgeInsets.all(8),
                   decoration: skyTransparentBoxDecoration,
                   child: Image.asset(imagePath, fit: BoxFit.contain),
@@ -361,11 +369,15 @@ class _CategoryTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                SizedBox(height: isTablet(context) ? 40 : 20),
+
+
+
               ],
-            ),
-          );
-        },
-      ),
+        ),
+        ),
+        ));
+      },
     );
-  }
+}
 }

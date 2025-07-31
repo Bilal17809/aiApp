@@ -4,7 +4,8 @@ class BottomCurveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final isTablet = size.width >= 600;
-    final curveDepth = isTablet ? 90.0 : 60.0;
+    final curveDepth = isTablet ? 65.0 : 60.0;
+
 
     final path = Path();
     path.lineTo(0, size.height - curveDepth);
