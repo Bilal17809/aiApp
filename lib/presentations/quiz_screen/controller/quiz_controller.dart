@@ -7,7 +7,6 @@ import '../../../core/utils/audio_player.dart';
 import '../../../data/data_sources/ai_feedback_loader.dart';
 import '../../Ads/Interstitial/controller/interstitial_ad_controller.dart';
 
-
 class QuizController extends GetxController {
   final RxList<_QuizQuestion> questions = <_QuizQuestion>[].obs;
   final RxList<_QuizQuestion> preloadedQuestionQueue = <_QuizQuestion>[].obs;
@@ -25,7 +24,6 @@ class QuizController extends GetxController {
   final RxString selectedCategory = ''.obs;
   final RxBool shouldNavigateToResult = false.obs;
 
-
   final InterstitialAdController adController =
       Get.find<InterstitialAdController>();
 
@@ -33,7 +31,6 @@ class QuizController extends GetxController {
   void onInit() {
     super.onInit();
     AIFeedbackLoader().loadMessages();
-
   }
 
   Future<bool> hasInternetConnection() async {
