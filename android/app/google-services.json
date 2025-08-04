@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "646791749756",
+    "project_id": "you-vs-ai-28803",
+    "storage_bucket": "you-vs-ai-28803.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:646791749756:android:0a94bbf9eb67269789e9f9",
+        "android_client_info": {
+          "package_name": "com.modernschool.youvsaiquiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDylBriqkjfIvk4guEaByxv7COtk-FK9r4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

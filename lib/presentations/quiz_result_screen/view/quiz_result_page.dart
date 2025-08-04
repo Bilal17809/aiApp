@@ -1,10 +1,12 @@
 import 'package:ai_app/core/theme/app_colors.dart';
+import 'package:ai_app/presentations/Ads/Interstitial/controller/interstitial_ad_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/common_wgt/elevated_button.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_styles.dart';
 import 'package:lottie/lottie.dart';
+import '../../Ads/Banner/controller/banner_ad_controller.dart';
 import '../../quiz_screen/controller/quiz_controller.dart';
 
 class QuizResultPage extends StatelessWidget {
@@ -80,6 +82,13 @@ class QuizResultPage extends StatelessWidget {
           },
         ),
       ),
+      bottomNavigationBar: Obx(() {
+        final interstitial = Get.find<InterstitialAdController>();
+        final banner = Get.find<BannerAdController>();
+        return interstitial.isShowingInterstitialAd.value
+            ? const SizedBox()
+            : banner.getBannerAdWidget('ad4');
+      }),
     );
   }
 }
