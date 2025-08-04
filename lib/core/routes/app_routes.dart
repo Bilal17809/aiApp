@@ -3,4 +3,5 @@ abstract class AppRoutes {
   static const home = '/home';
   static const quizResult = '/quiz-result';
   static const facts = '/facts';
+  static const reportIssue = '/report-issue';
 }

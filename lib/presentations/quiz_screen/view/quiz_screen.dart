@@ -63,20 +63,36 @@ class QuizQuestionPage extends StatelessWidget {
           });
 
           return const Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: kWhite,
             body: SizedBox.shrink(),
           );
         }
 
         return Scaffold(
-          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: skyColor,
+            actions: [
+              IconButton(
+                iconSize: 30,
+                icon: Icon(Icons.report,color: kWhite,),
+                tooltip: 'Report',
+                onPressed: () {
+
+                  Get.toNamed(AppRoutes.reportIssue);
+
+                },
+              ),
+            ],
+          ),
+
+          backgroundColor: kWhite,
           body: SafeArea(
             child: Column(
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
-                    vertical: 30,
+                    vertical: 8,
                   ),
                   color: skyColor,
                   child: Column(

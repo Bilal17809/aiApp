@@ -188,3 +188,11 @@ final BoxDecoration shimmerPlaceholderDecoration = BoxDecoration(
   color: Colors.white,
   borderRadius: BorderRadius.circular(6),
 );
+
+const TextStyle descriptionTextStyle = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  color: Colors.black54,
+);
+
+

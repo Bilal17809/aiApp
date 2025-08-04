@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:ai_app/presentations/premium_screen/premium_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/routes/app_routes.dart';
+import '../../report_issue/view/report_issue_page.dart';
 import '/core/theme/app_colors.dart';
 import '/core/theme/app_styles.dart';
 import '../drawer_controller/drawer_controller.dart';
@@ -69,6 +71,14 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('Ads Free'),
               onTap:(){
                 Get.to(PremiumScreen());
+              }
+          ),
+          ListTile(
+              leading: const Icon(Icons.report),
+              title: const Text('Report an Issue'),
+              onTap:(){
+                Get.to(ReportIssuePage());
+
               }
           ),
         ],
