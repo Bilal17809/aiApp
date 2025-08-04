@@ -71,15 +71,22 @@ class QuizQuestionPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: skyColor,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: kWhite,
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            ),
             actions: [
               IconButton(
                 iconSize: 30,
-                icon: Icon(Icons.report,color: kWhite,),
+                icon: Icon(Icons.report, color: kWhite),
                 tooltip: 'Report',
                 onPressed: () {
-
                   Get.toNamed(AppRoutes.reportIssue);
-
                 },
               ),
             ],
