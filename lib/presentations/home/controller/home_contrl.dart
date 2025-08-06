@@ -4,7 +4,7 @@ import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/common_wgt/no_internet_dialog.dart';
+import '/core/common_wgt/no_internet_dialog.dart';
 import '../../Ads/Banner/controller/banner_ad_controller.dart';
 
 class HomeController extends GetxController {

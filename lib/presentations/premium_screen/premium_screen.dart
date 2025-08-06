@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:ai_app/core/theme/app_styles.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../core/theme/app_colors.dart';
 import '../Terms_And_Conditions/view/terms_and_con_page.dart';
 import '../remove_ads_contrl/remove_ads_contrl.dart';
 final bool _kAutoConsume = Platform.isIOS || true;
@@ -302,14 +304,22 @@ class _PremiumScreenState extends State<PremiumScreen> {
     if (_queryProductError != null) {
       return Center(child: Text(_queryProductError!));
     }
+    final List<Map<String, dynamic>> items = [
+      {'icon': 'assets/images/person_robot.png', 'text': 'Quiz with AI'},
+      {'icon': 'assets/images/robot-assistant.png', 'text': 'robot-assistant'},
+      {'icon': 'assets/images/General Knowledge.png', 'text': 'General Knowledge'},
+      {'icon': 'assets/trial/interactive.png', 'text': 'Fun Facts'},
+    ];
     return Scaffold(
+      backgroundColor: appBarBgColor,
       body: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
           final height = constraints.maxHeight;
-
+          bool isSmallScreen = width < 600;
+          bool screenHeight = height < 600;
           return SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
+            // physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: height),
@@ -332,7 +342,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.white,
-                              offset: Offset(0, -120),
+                              offset: Offset(0, -100),
                               blurRadius: 110,
                               spreadRadius: 90,
                             ),
@@ -342,11 +352,54 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
                       // Main content
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 16),
+                            SizedBox(height:height*0.03),
+                            SizedBox(
+                              height: isSmallScreen ? 100 : height * 0.16,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: items.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      width: width * 0.4,
+                                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: roundedDecoration,
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Image.asset(
+                                              items[index]['icon'],
+                                              width: isSmallScreen ? 56 : height * 0.08,
+                                              height: isSmallScreen ? 56 : height * 0.08,
+                                              fit: BoxFit.contain,
+                                            ),
+                                            const SizedBox(height:4),
+                                            Flexible(
+                                              child: Text(
+                                                items[index]['text'],
+                                                style: TextStyle(
+                                                  fontSize: isSmallScreen ? 12 : height * 0.016,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(height:20),
                             _buildProductList(width,height),
                             Column(
                               children: [
@@ -354,7 +407,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                                     '>> Cancel anytime at least 24 hours before renewal',
                                     style:TextStyle(color: Colors.black,fontSize:14)
                                 ),
-                                const SizedBox(height: 12,),
+                                SizedBox(height: height*0.03,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -393,24 +446,11 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       ],
                     ),
                   ),
-
                   // Headings
-                  Positioned(
-                    top: height * 0.34,
-                    left: width * 0.35,
-                    child: const Text(
-                      "Learna pro",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                   Positioned(
                     left: width * 0.08,
                     right: width * 0.08,
-                    top: height * 0.38,
+                    top: height * 0.36,
                     child: const Text(
                       "Get Unlimited Access",
                       style: TextStyle(
@@ -424,7 +464,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                   Positioned(
                     left: width * 0.08,
                     right: width * 0.08,
-                    top: height * 0.44,
+                    top: height * 0.43,
                     child: const Text(
                       "Accessible anytime, anywhere for flexible learning.",
                       style: TextStyle(color: Colors.blue, fontSize: 16),
@@ -442,6 +482,13 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       height: height * 0.34,
                       fit: BoxFit.contain,
                     ),
+                  ),
+
+                  Positioned(
+                    left: width * 0.65,
+                    right: width * 0.01,
+                    top: height * 0.72,
+                    child: Image.asset("assets/images/offer.png",height:65,width:65,),
                   ),
 
                   if (_purchasePending)

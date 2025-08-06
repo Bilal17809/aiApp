@@ -31,9 +31,7 @@ class FactPage extends StatelessWidget {
               child: CircularProgressIndicator(color: kWhite),
             );
           }
-
           final currentFact = controller.facts[controller.currentPage.value];
-
           return Stack(
             children: [
               Positioned(
@@ -52,8 +50,18 @@ class FactPage extends StatelessWidget {
               // Main Content
               Column(
                 children: [
-                  const SizedBox(height: 80),
-
+                  const SizedBox(height:30),
+                  Padding(
+                    padding: const EdgeInsets.only(left:16.0),
+                    child: Row(
+                      children: [
+                        IconButton(onPressed:(){
+                          Get.offAllNamed(AppRoutes.home);
+                        }, icon:Icon(Icons.arrow_back_ios,color: Colors.white,)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height:10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Align(

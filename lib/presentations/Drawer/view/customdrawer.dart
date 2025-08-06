@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:ai_app/presentations/premium_screen/premium_screen.dart';
+import 'package:ai_app/presentations/remove_ads_contrl/remove_ads_contrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/routes/app_routes.dart';
@@ -13,6 +14,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RemoveAds removeAds =Get.put(RemoveAds());
     final DrawerContlr drawerController=Get.put(DrawerContlr());
     return Drawer(
       child: Column(
@@ -45,36 +47,36 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
           ),
-
           ListTile(
-            leading: const Icon(Icons.apps),
-            title: const Text('More Apps'),
-            onTap:()=>drawerController.moreApp()
-          ),
-          ListTile(
-            leading: const Icon(Icons.star_rate),
+            leading: const Icon(Icons.star_rate,color: Colors.blue,),
             title: const Text('Rate Us'),
             onTap:(){
               drawerController.rateUs();
             },
           ),
           ListTile(
-            leading: const Icon(Icons.privacy_tip),
+            leading: const Icon(Icons.privacy_tip,color: Colors.blue,),
             title: const Text('Privacy Policy'),
             onTap:(){
               drawerController.privacy();
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.apps,color: Colors.blue,),
+            title: const Text('More Apps'),
+            onTap:()=>drawerController.moreApp()
+          ),
           if(Platform.isIOS)
           ListTile(
-              leading: const Icon(Icons.apps),
-              title: const Text('Ads Free'),
+              leading: Image.asset('assets/trial/sub1.png',height: 32,width: 32,color: Colors.blue,),
+              title:  Text( removeAds.isSubscribedGet.value?'Ads Free Version!':'Remove Ads'),
               onTap:(){
                 Get.to(PremiumScreen());
               }
           ),
+          if(Platform.isAndroid)
           ListTile(
-              leading: const Icon(Icons.report),
+              leading: const Icon(Icons.report,color: Colors.blue,),
               title: const Text('Report an Issue'),
               onTap:(){
                 Get.to(ReportIssuePage());
