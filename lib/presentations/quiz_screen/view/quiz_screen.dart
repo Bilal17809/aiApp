@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Ads/Banner/controller/banner_ad_controller.dart';
@@ -67,26 +69,31 @@ class QuizQuestionPage extends StatelessWidget {
             body: SizedBox.shrink(),
           );
         }
-
+        if (controller.shouldNavigateToResult.value) {
+          Future.microtask(() {
+            controller.shouldNavigateToResult.value = false;
+            SoundPlayer.stop();
+            Get.offAllNamed(AppRoutes.quizResult, arguments: {
+              'userScore': controller.userScore.value,
+              'aiScore': controller.aiScore.value,
+              'category': controller.selectedCategory.value,
+            });
+          });
+        }
         return Scaffold(
           appBar: AppBar(
             backgroundColor: skyColor,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: kWhite,
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            ),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: [
+              if(Platform.isAndroid)
               IconButton(
                 iconSize: 30,
-                icon: Icon(Icons.report, color: kWhite),
+                icon: Icon(Icons.report,color: kWhite,),
                 tooltip: 'Report',
                 onPressed: () {
+
                   Get.toNamed(AppRoutes.reportIssue);
+
                 },
               ),
             ],
