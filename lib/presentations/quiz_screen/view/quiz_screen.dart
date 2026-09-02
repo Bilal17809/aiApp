@@ -14,9 +14,7 @@ import '../widget/QuestionAndOptionsSection.dart';
 
 class QuizQuestionPage extends StatelessWidget {
   final String category;
-
   final QuizController controller = Get.put(QuizController());
-
   QuizQuestionPage({super.key, required this.category}) {
     controller.resetQuiz();
     controller.loadQuestions(category);
@@ -32,6 +30,7 @@ class QuizQuestionPage extends StatelessWidget {
           SoundPlayer.stop();
         }
       },
+
       child: Obx(() {
         if (controller.isLoading.value) {
           Future.delayed(const Duration(seconds: 5), () {
